@@ -1,4 +1,4 @@
 djinn_forms
-===========
+===================
 
-Forms, widgets and fields for Djinn
+Djinn module for forms, fields and widgets.
