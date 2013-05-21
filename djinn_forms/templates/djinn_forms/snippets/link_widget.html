@@ -4,7 +4,7 @@
     <a data-toggle="modal"
        data-target="#MyModal"
        class="add"
-       href="{% url haystack_link_popup %}?callbackOnSelect=parent.djinn.forms.set_link&callbackArgs=target:{{ name }}"
+       href="{% url haystack_link_popup %}?callbackOnSelect=parent.djinn.forms.set_link&callbackArgs=tgt:{{ name }}"
        >
       <i class="icon-external-link"></i> {% trans "Select link" %}
     </a>
