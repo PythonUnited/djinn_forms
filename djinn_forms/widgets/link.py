@@ -13,18 +13,25 @@ class LinkWidget(Widget):
 
         value = data[name].split("::")
 
-        if len(value) == 3 and value[1] and value[2]:
+        assert(len(value) == 4)
+
+        if value[1] and value[2]:
             obj = get_object_by_ctype_id(value[1], value[2])
-            return object_to_urn(obj)
+            return object_to_urn(obj) + "::" + value[3]
         else:
-            return value[0]
+            return value[0] + "::" + value[3]
 
     def render(self, name, value, attrs=None):
 
-        if value and value.startswith("urn"):
-            lexval = urn_to_object(value).title
-        else:
-            lexval = value or ""
+        lexval = ""
+
+        if value:
+            url = value.split("::")[0]
+
+            if url.startswith("urn"):
+                lexval = urn_to_object(url).title
+            else:
+                lexval = url or ""
 
         context = {'name': name,
                    'lexical_value': lexval,
