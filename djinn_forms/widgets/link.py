@@ -11,9 +11,10 @@ class LinkWidget(Widget):
 
     def value_from_datadict(self, data, files, name):
 
-        value = data[name].split("::")
+        value = data.get(name, "").split("::")
 
-        assert(len(value) == 4)
+        if not len(value) == 4:
+            return None
 
         if value[1] and value[2]:
             obj = get_object_by_ctype_id(value[1], value[2])
