@@ -23,7 +23,7 @@ class AttachmentWidget(forms.widgets.Widget):
         if not hasattr(value, "__iter__"):
             value = [value]
             
-        return value
+        return filter(lambda x: self.model.objects.filter(pk=x).exists(), value)
 
     def render(self, name, value, attrs=None):
 
@@ -40,11 +40,7 @@ class AttachmentWidget(forms.widgets.Widget):
         attachments = []
 
         for val in value:
-            try:
-                # We can't really rely on existence of the attachment...
-                attachments.append(self.model.objects.get(pk=val))
-            except:
-                pass
+            attachments.append(self.model.objects.get(pk=val))
 
         context['attachments'] = attachments
         context.update(self.attrs)
