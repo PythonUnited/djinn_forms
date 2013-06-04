@@ -16,7 +16,10 @@ class AttachmentWidget(forms.widgets.Widget):
 
     def value_from_datadict(self, data, files, name):
 
-        return [int(val) for val in data.get(name, "").split(",") if val]
+        if self.attrs.get("multiple", False):
+            return [int(val) for val in data.get(name, "").split(",") if val]
+        else:
+            return data.get(name, None)
 
     def _normalize_value(self, value):
 
