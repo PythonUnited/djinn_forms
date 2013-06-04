@@ -61,6 +61,7 @@ djinn.forms.init_fileuploader = function(options) {
   
   $("input[type='file']").each(function() {
       
+      defaults['url'] = $(this).data("uploadurl");
       defaults['dropZone'] = $(this).attr("id");
       defaults['formData'] = {
         "attachment_id": $(this).hasClass("field") ? $($(this).data("valuefield")).val() : "",

@@ -39,7 +39,11 @@ class UploadView(View):
 
         attachments = []
         attachment_type = request.REQUEST.get("attachment_type", "document")    
-        attachment_id = request.REQUEST.get("attachment_id", None)
+
+        try:
+            attachment_id = int(request.REQUEST.get("attachment_id", None))
+        except:
+            attachment_id = None
 
         for filename in request.FILES.keys():
 
@@ -131,11 +135,17 @@ class UploadView(View):
         context['html'] = render_to_string(template,
                                            {'attachments': attachments})
 
+        context.update(self.extra_json_context(attachments))
+
         response = HttpResponse(json.dumps(context))
 
         response["X-Diazo-Off"] = "yes"
 
         return response
+
+    def extra_json_context(self, attachments):
+
+        return {}
 
     def generate_relative_file_path(self, file_name, mime_type,
                                     attachment_type):

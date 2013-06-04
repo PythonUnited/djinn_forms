@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
+from django.core.urlresolvers import reverse
 
 
 class AttachmentWidget(forms.widgets.Widget):
@@ -23,10 +24,14 @@ class AttachmentWidget(forms.widgets.Widget):
 
     def _normalize_value(self, value):
 
-        if not hasattr(value, "__iter__"):
-            value = [value]
+        if self.attrs.get("multiple", False):
+            if not hasattr(value, "__iter__"):
+                value = [value]
             
-        return filter(lambda x: self.model.objects.filter(pk=x).exists(), value)
+            return filter(lambda x: self.model.objects.filter(pk=x).exists(), 
+                          value)
+        else:
+            return value
 
     def render(self, name, value, attrs=None):
 
@@ -37,13 +42,22 @@ class AttachmentWidget(forms.widgets.Widget):
             'widget': self,
             'show_progress': True,
             'multiple': False,
-            'value': ",".join([str(val) for val in value])
+            'upload_url': reverse("djinn_forms_fileupload")
             }
+
+        if self.attrs.get("multiple", False):
+            context['value'] = ",".join([str(val) for val in value])
+        else:
+            context['value'] = value or ""
 
         attachments = []
 
-        for val in value:
-            attachments.append(self.model.objects.get(pk=val))
+        if value:
+            if hasattr(value, "__iter__"):
+                for val in value:
+                    attachments.append(self.model.objects.get(pk=val))
+            else:
+                attachments.append(self.model.objects.get(pk=value))
 
         context['attachments'] = attachments
         context.update(self.attrs)
