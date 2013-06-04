@@ -37,5 +37,6 @@ setup(name='djinn_forms',
       entry_points = """\
       [djinn.app]
       js=djinn_forms:get_js
+      urls=djinn_forms:get_urls
       """
       )
