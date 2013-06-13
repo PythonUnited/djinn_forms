@@ -3,15 +3,19 @@
 <div class="btn fileinput-button">
   <i class="icon-plus icon-white"></i>
 
-{% if multiple %}
-<span>{% trans "Select files..." %}</span>
-{% else %}
-{% if attachments %}
-<span>{% trans "Replace file..." %}</span>
-{% else %}
-<span>{% trans "Select file..." %}</span>
-{% endif %}
-{% endif %}
+  {% if button_label %}
+  <span>{{ button_label }}</span>
+  {% else %}
+  {% if multiple %}
+  <span>{% trans "Select files..." %}</span>
+  {% else %}
+  {% if attachments %}
+  <span>{% trans "Replace file..." %}</span>
+  {% else %}
+  <span>{% trans "Select file..." %}</span>
+  {% endif %}
+  {% endif %}
+  {% endif %}
 
   <input type="file" 
          {% if multiple %}

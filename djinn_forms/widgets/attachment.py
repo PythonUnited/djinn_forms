@@ -39,6 +39,7 @@ class AttachmentWidget(forms.widgets.Widget):
 
         context = {
             'name': name, 
+            'button_label': self.attrs.get("button_label", ""),
             'widget': self,
             'show_progress': True,
             'multiple': False,
