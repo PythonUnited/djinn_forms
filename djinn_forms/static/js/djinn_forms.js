@@ -36,15 +36,22 @@ djinn.forms.init_fileuploader = function(options) {
     done: function (e, data) {
       
       var valuetgt = $($(e.target).data("valuefield"));
-
-      if ($(e.target).attr("multiple")) {
-        $($(e.target).data("target")).append(data.result.html);        
+      var tgt = $(e.target);
+      
+      if (tgt.attr("multiple")) {
+        $(tgt.data("target")).append(data.result.html);        
         valuetgt.val(valuetgt.val() + "," + data.result.attachment_ids.join(","));
       } else {
-        $($(e.target).data("target")).html(data.result.html);
+        $(tgt.data("target")).html(data.result.html);
         valuetgt.val(data.result.attachment_ids.join(","));
       }
-      $($(e.target).data("progress") + " .bar").css("width", "100%");
+      $(tgt.data("progress") + " .bar").css("width", "100%");
+
+      if (tgt.data("callback")) {
+        
+        var callback = eval(tgt.data("callback"));
+        callback.apply(null, tgt);
+      }
     },
     send: function(e, data) {
       $($(e.target).data("progress")).show();      
@@ -61,8 +68,11 @@ djinn.forms.init_fileuploader = function(options) {
   
   $("input[type='file']").each(function() {
       
-      defaults['url'] = $(this).data("uploadurl");
+      if ($(this).data("uploadurl")) {
+        defaults['url'] = $(this).data("uploadurl");
+      }
       defaults['dropZone'] = $(this).attr("id");
+
       defaults['formData'] = {
         "attachment_id": $(this).hasClass("field") ? $($(this).data("valuefield")).val() : "",
         "attachment_type": $(this).data("attachmenttype"),

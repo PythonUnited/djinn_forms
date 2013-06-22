@@ -14,6 +14,16 @@ class ImageField(Field):
 
         self.model = model
 
+    def prepare_value(self, data):
+
+        if hasattr(data, "file"):
+            return data
+        else:
+            return ""
+
     def to_python(self, value):
 
-        return self.model.objects.get(pk=value).image        
+        try:
+            return self.model.objects.get(pk=value).image        
+        except:
+            return None

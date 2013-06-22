@@ -72,8 +72,6 @@ class UploadView(View):
                                     'msg': "Upload is not an image"
                                     }))
 
-                    response["X-Diazo-Off"] = "yes"
-
                     return response
 
                 if attachment_id:
@@ -124,6 +122,8 @@ class UploadView(View):
         if self.request.REQUEST.get("edit_type", "") == "field":
             if attachment_type == "image":
                 template = "pgcontent/snippets/image.html"
+            elif attachment_type == "avatar":
+                template = "pgcontent/snippets/avatar.html"
             else:
                 template = "pgcontent/snippets/document.html"
         else:
@@ -138,8 +138,6 @@ class UploadView(View):
         context.update(self.extra_json_context(attachments))
 
         response = HttpResponse(json.dumps(context))
-
-        response["X-Diazo-Off"] = "yes"
 
         return response
 
