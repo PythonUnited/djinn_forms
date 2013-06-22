@@ -137,7 +137,7 @@ class UploadView(View):
 
         context.update(self.extra_json_context(attachments))
 
-        response = HttpResponse(json.dumps(context))
+        response = HttpResponse(json.dumps(context), content_type="text/plain")
 
         return response
 

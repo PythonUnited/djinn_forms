@@ -52,9 +52,11 @@ djinn.forms.init_fileuploader = function(options) {
         var callback = eval(tgt.data("callback"));
         callback.apply(null, tgt);
       }
+
+      $(document).triggerHandler("djinn_forms_fileupload_done", [e.target]);
     },
     send: function(e, data) {
-      $($(e.target).data("progress")).show();      
+      $(document).triggerHandler("djinn_forms_fileupload_send", [e.target]);
     },
     progress: function (e, data) {
       var progress = parseInt(data.loaded / data.total * 100, 10);
