@@ -53,7 +53,7 @@ djinn.forms.init_fileuploader = function(options) {
         callback.apply(null, tgt);
       }
 
-      $(document).triggerHandler("djinn_forms_fileupload_done", [e.target]);
+      $(document).triggerHandler("djinn_forms_fileupload_done", [e.target, data.result]);
     },
     send: function(e, data) {
       $(document).triggerHandler("djinn_forms_fileupload_send", [e.target]);
