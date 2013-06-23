@@ -88,7 +88,7 @@ djinn.forms.init_fileuploader = function(options) {
 
 djinn.forms.remove_attachment = function(elt, attachment_id) {
 
-  var input = $(elt.parents(".uploaded-files").eq(0).parents(".controls").eq(0).find("input[type='file']").eq(0).data("valuefield"));
+  var input = $(elt.parents(".fileupload").find("input[type='file']").eq(0).data("valuefield"));
 
   pg.remove_value(input, attachment_id, ",");
 };
