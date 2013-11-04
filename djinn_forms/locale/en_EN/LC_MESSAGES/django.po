@@ -18,5 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: templates/djinn_forms/snippets/link_widget.html:9
+#: Link widget: label
 msgid "Select link"
 msgstr ""

@@ -18,6 +18,7 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
+#. Link widget label
 #: templates/djinn_forms/snippets/link_widget.html:9
 msgid "Select link"
 msgstr "Selecteer link"

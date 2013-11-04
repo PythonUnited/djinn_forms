@@ -94,3 +94,24 @@ djinn.forms.remove_attachment = function(elt, attachment_id) {
 
   $(document).triggerHandler("djinn_forms_fileupload_remove", elt);
 };
+
+
+$(document).ready(function() {
+    
+    $(".relate .autocomplete").each(function() {
+        $(this).autocomplete({
+            source: $(this).data("search_url"),
+              minLength: $(this).data("search_minlength"),
+              select: function(event, ui) {
+              $(this).val(ui.item.value);
+            }
+          });
+      });
+    
+    // No commit on empty query
+    $(".relate .autocomplete").submit(function() {
+        if (!$(this).val()) {
+          return false;
+        };
+      });
+  });
