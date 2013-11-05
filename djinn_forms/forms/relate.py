@@ -13,3 +13,9 @@ class RelateMixin(object):
 
                 val = self.cleaned_data.get(f_name, {'rm': [], 'add': []})
                 field.save_relations(self.instance, val)
+
+    def init_relation_fields(self):
+
+        for f_name, field in self.fields.items():
+            if isinstance(field, RelateField):
+                self.fields[f_name].instance = self.instance
