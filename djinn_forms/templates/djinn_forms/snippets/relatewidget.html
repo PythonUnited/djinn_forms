@@ -1,19 +1,30 @@
+{% load i18n %}
+
 <div class="relate">
   <div class="multiple-search">
     <input type="search" id="id-{{ name }}" name="{{ name }}" 
            class="autocomplete"
+           value=""
            data-search_minlength="{{ search_minlength }}"
            data-search_url="{{ search_url }}"
            placeholder="{{ hint }}">
-    <button class="submit">{% trans "Voeg toe" %}</button>
+    <input type="hidden" name="{{ name }}_rm" value="" class="rm-list" />
+    <input type="hidden" name="{{ name }}_add" value="" class="add-list" />
+    <button class="btn add">{% trans "Voeg toe" %}</button>
     <div class="searchresults ui-front">
     </div>
   </div>
   <ul>
+    <li class="tpl" style="display: none">
+      <a href="#">label</a> 
+      <a href="#" data-urn="value" 
+         class="delete">{% trans "Remove" %}</a>
+    </li>
     {% for related in value %}
     <li>
-      <a href="#">{{ related }}</a> 
-      <a href="#" class="delete">{% trans "Remove" %}</a>
+      <a href="#">{{ related.label }}</a> 
+      <a href="#" data-urn="{{ related.value }}" 
+         class="delete">{% trans "Remove" %}</a>
     </li>
     {% endfor %}
   </ul>

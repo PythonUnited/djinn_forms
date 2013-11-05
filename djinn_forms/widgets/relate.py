@@ -2,6 +2,7 @@ from django.forms.widgets import Widget
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
+from djinn_contenttypes.utils import urn_to_object, object_to_urn
 
 
 TPL = 'djinn_forms/snippets/relatewidget.html'
@@ -16,13 +17,12 @@ class RelateWidget(Widget):
      * src_obj Source object for relation
     """
 
-    def __init__(self, src_obj=None, content_types="",
-                 relation_type="", attrs=None):
+    def __init__(self, src_obj, relation_type, content_types=None, attrs=None):
 
         super(RelateWidget, self).__init__(attrs=attrs)
         self.relation_type = relation_type
         self.src_obj = src_obj
-        self.content_types = content_types
+        self.content_types = content_types or []
 
     def value_from_datadict(self, data, files, name):
 
@@ -34,27 +34,39 @@ class RelateWidget(Widget):
         result = {'rm': [], 'add': []}
 
         for item in data.get("%s_rm" % name, "").split(";;"):
-            pair = item.split(":")
-            if len(pair) == 2:
-                result['rm'].append(pair)
+
+            obj = urn_to_object(item)
+
+            if obj:
+                result['rm'].append(obj)
 
         for item in data.get("%s_add" % name, "").split(";;"):
-            pair = item.split(":")
-            if len(pair) == 2:
-                result['add'].append(pair)
+
+            obj = urn_to_object(item)
+
+            if obj:
+                result['add'].append(obj)
 
         return result
 
     def render(self, name, value, attrs=None):
 
+        url = self.attrs.get("search_url", reverse("djinn_forms_relatesearch"))
+        url = "%s?content_types=%s&searchfield=%s" % (
+            url,
+            ",".join(self.content_types),
+            self.attrs.get("searchfield", "title")
+            )
+
+        value = [{'label': rel.title, 'value': object_to_urn(rel)} for rel in \
+                     self.src_obj.get_related(self.relation_type)]
+
         context = {'name': name,
                    'label': self.label,
                    'hint': self.attrs.get("hint", ""),
-                   'value': value or "",
+                   'value': value,
                    'search_minlength': self.attrs.get("search_minlength", 2),
-                   'search_url':
-                   self.attrs.get("search_url",
-                                  reverse("pgsearch_autocomplete"))
+                   'search_url': url
                    }
 
         context.update(self.__dict__)

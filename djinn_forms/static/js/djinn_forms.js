@@ -11,6 +11,66 @@ djinn.forms = {};
 
 
 /**
+ * Given an input, remove the value from the list of values. Assumes
+ * that the input contains multiple values separated by <separator>.
+ * @param input Input element (jQuery object)
+ * @param value Value to remove
+ * @param separator Value separator, defaults to ';;'
+ */
+djinn.forms.removeValue = function(input, value, separator) {
+
+  var new_values = [];
+  var old_values = input.val() || "";
+  var sep = (separator || ";;");
+
+  old_values = old_values.split(sep);
+
+  for (var i = 0; i < old_values.length; i++) {
+
+    if (old_values[i] != value) {
+      new_values.push(old_values[i]);
+    }
+  }
+  input.val(new_values.join(sep));
+};
+
+
+/**
+ * Add value to ';;' separated values list.
+ * @param input Input element (jQuery object)
+ * @param value Value to add
+ * @param separator Value separator, defaults to ';;'
+ */
+djinn.forms.addValue = function(input, value, unique, separator) {
+
+  var sep = (separator || ";;");
+
+  if (!input.val()) {
+    input.val(value);
+  } else {
+    if (!unique) {
+      input.val(input.val() + sep + value);
+    } else {
+      var new_values = [];
+      var old_values = input.val();
+      
+      old_values = old_values.split(sep);
+      
+      for (var i = 0; i < old_values.length; i++) {
+        
+        if (old_values[i] != value) {
+          new_values.push(old_values[i]);
+        }
+      }
+      new_values.push(value);
+
+      input.val(new_values.join(sep));
+    }
+  }
+};
+
+
+/**
  * Set link data to widget input.
  */
 djinn.forms.set_link = function(url, content_type, obj_id, title, extra_args) {
@@ -99,19 +159,64 @@ djinn.forms.remove_attachment = function(elt, attachment_id) {
 $(document).ready(function() {
     
     $(".relate .autocomplete").each(function() {
-        $(this).autocomplete({
-            source: $(this).data("search_url"),
-              minLength: $(this).data("search_minlength"),
-              select: function(event, ui) {
-              $(this).val(ui.item.value);
+
+        var input = $(this);
+        var widget = $(this).parents(".relate");
+        widget.find(".add-list").val("");
+        widget.find(".rm-list").val("");
+        input.val("");
+
+        input.autocomplete({
+            source: input.data("search_url"),
+              minLength: input.data("search_minlength"),
+              select: function(e, ui) {
+              input.val(ui.item.label);
+              input.data("urn", ui.item.value);
+              e.preventDefault();
             }
           });
       });
     
-    // No commit on empty query
-    $(".relate .autocomplete").submit(function() {
-        if (!$(this).val()) {
-          return false;
-        };
+    $(".relate .add").click(function(e) {        
+
+        var input = $(e.currentTarget).parents(".relate").find(".autocomplete");
+        var widget = $(e.currentTarget).parents(".relate");
+        var tpl = widget.find("ul .tpl").eq(0).clone();
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!(input.val() && input.data("urn"))) {
+          return;
+        }
+
+        djinn.forms.addValue(widget.find(".add-list").eq(0),
+                             input.data("urn"));
+
+        tpl.attr("class", "");
+        tpl.attr("style", "");
+        tpl.find("a").eq(0).html(input.val());
+        tpl.find("a").eq(1).data("urn", input.data("urn"));
+
+        widget.find("ul").append(tpl);
+
+        input.val("");
+        input.data("urn", "");
+      });
+
+    $(document).on("click", ".relate .delete", function(e) {
+
+        e.preventDefault();
+        
+        var widget = $(e.currentTarget).parents(".relate");
+        var record = $(e.currentTarget).parents("li");
+        var link = $(e.currentTarget);
+
+        djinn.forms.removeValue(widget.find(".add-list").eq(0), 
+                                link.data("urn"));
+        djinn.forms.addValue(widget.find(".rm-list").eq(0),
+                             link.data("urn"));
+
+        record.remove();
       });
   });
