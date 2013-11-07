@@ -156,28 +156,39 @@ djinn.forms.remove_attachment = function(elt, attachment_id) {
 };
 
 
+/**
+ * Initialize the relate widget.
+ * @param widget Element to initialize.
+ */
+djinn.forms.initRelateWidget = function(widget) {
+
+  widget.find(".relate .autocomplete").each(function() {
+      
+      var input = $(this);
+      widget.find(".add-list").val("");
+      widget.find(".rm-list").val("");
+      input.val("");
+      
+      input.autocomplete({
+          source: input.data("search_url"),
+            minLength: input.data("search_minlength"),
+            select: function(e, ui) {
+            input.val(ui.item.label);
+            input.data("urn", ui.item.value);
+            e.preventDefault();
+          }
+        });
+    });
+};
+
+
 $(document).ready(function() {
-    
-    $(".relate .autocomplete").each(function() {
-
-        var input = $(this);
-        var widget = $(this).parents(".relate");
-        widget.find(".add-list").val("");
-        widget.find(".rm-list").val("");
-        input.val("");
-
-        input.autocomplete({
-            source: input.data("search_url"),
-              minLength: input.data("search_minlength"),
-              select: function(e, ui) {
-              input.val(ui.item.label);
-              input.data("urn", ui.item.value);
-              e.preventDefault();
-            }
-          });
+        
+    $(".relate").each(function() {
+        djinn.forms.initRelateWidget($(this));
       });
-    
-    $(".relate .add").click(function(e) {        
+
+    $(document).on("click", ".relate .add", function(e) {
 
         var input = $(e.currentTarget).parents(".relate").find(".autocomplete");
         var widget = $(e.currentTarget).parents(".relate");
