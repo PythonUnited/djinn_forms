@@ -162,7 +162,7 @@ djinn.forms.remove_attachment = function(elt, attachment_id) {
  */
 djinn.forms.initRelateWidget = function(widget) {
 
-  widget.find(".relate .autocomplete").each(function() {
+  widget.find(".autocomplete").each(function() {
       
       var input = $(this);
       widget.find(".add-list").val("");
