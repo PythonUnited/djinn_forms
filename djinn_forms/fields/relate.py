@@ -49,9 +49,9 @@ class RelateField(Field):
 
         relations = self.instance.get_related(self.relation_type)
 
-        relations = filter(lambda x: x not in data['rm'], relations)
-
-        relations += data['add']
+        if data:
+            relations = filter(lambda x: x not in data['rm'], relations)
+            relations += data['add']
 
         return [{'label': rel.title, 'value': object_to_urn(rel)} for rel in \
                     relations]
