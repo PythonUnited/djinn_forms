@@ -34,8 +34,12 @@ class RelateSearch(View):
         results = []
 
         for res in sqs:
-            results.append({"label": res.title,
-                            "value": object_to_urn(res.object)
-                            })
+            try:
+                results.append({"label": unicode(res.object),
+                                "value": object_to_urn(res.object)
+                                })
+            except:
+                # Silently fail when no object is found in res
+                pass
 
         return HttpResponse(json.dumps(results), mimetype='application/json')
