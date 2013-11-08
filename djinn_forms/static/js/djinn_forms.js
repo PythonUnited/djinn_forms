@@ -176,6 +176,9 @@ djinn.forms.initRelateWidget = function(widget) {
             input.val(ui.item.label);
             input.data("urn", ui.item.value);
             e.preventDefault();
+          },
+          focus: function(e, ui) {
+            e.preventDefault();
           }
         });
     });
