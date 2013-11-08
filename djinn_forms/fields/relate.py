@@ -55,4 +55,3 @@ class RelateField(Field):
 
         return [{'label': rel.title, 'value': object_to_urn(rel)} for rel in \
                     relations]
-                    
