@@ -2,6 +2,7 @@ from django.forms.widgets import Widget
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
 from djinn_contenttypes.utils import urn_to_object
 
 
@@ -53,6 +54,8 @@ class RelateWidget(Widget):
 
         context = {'name': name,
                    'hint': self.attrs.get("hint", ""),
+                   # Translators: djinn_forms relate add button label
+                   'add_label': self.attrs.get("add_label", _("Add")),
                    'value': value,
                    'search_minlength': self.attrs.get("search_minlength", 2),
                    'search_url': url
