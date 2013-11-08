@@ -41,7 +41,18 @@ class RelateField(Field):
 
     def prepare_value(self, data):
 
-        """ Return relations for this field """
+        """ Return relations for this field. If data is empty,
+        we simply get the related objects for the given type.
+        If data['rm'] has values, filter those out of the result.
+        If data['add'] has values, add those to the result
+        """
+
+        relations = self.instance.get_related(self.relation_type)
+
+        relations = filter(lambda x: x not in data['rm'], relations)
+
+        relations += data['add']
 
         return [{'label': rel.title, 'value': object_to_urn(rel)} for rel in \
-                    self.instance.get_related(self.relation_type)]
+                    relations]
+                    
