@@ -21,7 +21,7 @@ class RelateSearch(View):
                 mimetype='application/json')
 
         _filter = {
-            request.GET.get('searchfield'): Raw("*%s*" %term)
+            request.GET.get('searchfield'): Raw("*%s*" % term)
             }
 
         sqs = SearchQuerySet().filter(**_filter)
