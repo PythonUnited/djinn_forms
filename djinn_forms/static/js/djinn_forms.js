@@ -191,7 +191,7 @@ $(document).ready(function() {
         djinn.forms.initRelateWidget($(this));
       });
 
-    $(document).on("click", ".relate .add", function(e) {
+    $(document).on("click", ".relate .submit", function(e) {
 
         var input = $(e.currentTarget).parents(".relate").find(".autocomplete");
         var widget = $(e.currentTarget).parents(".relate");
