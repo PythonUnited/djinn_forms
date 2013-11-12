@@ -26,7 +26,7 @@
            {% if show_progress %}
            data-progress="#progress_{{ name }}"
            {% endif %}
-           data-attachmenttype="image"
+           data-attachmenttype="{{ attachment_type }}"
            data-valuefield="#id_{{ name }}"
            data-uploadurl="{{ upload_url }}"
            data-target="#uploads_{{ name }}" />
