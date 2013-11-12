@@ -56,9 +56,15 @@ class AttachmentWidget(forms.widgets.Widget):
         if value:
             if hasattr(value, "__iter__"):
                 for val in value:
-                    attachments.append(self.model.objects.get(pk=val))
+                    try:
+                        attachments.append(self.model.objects.get(pk=val))
+                    except:
+                        pass # too bad
             else:
-                attachments.append(self.model.objects.get(pk=value))
+                try:
+                    attachments.append(self.model.objects.get(pk=value))
+                except:
+                    pass # too bad
 
         context['attachments'] = attachments
         context.update(self.attrs)
