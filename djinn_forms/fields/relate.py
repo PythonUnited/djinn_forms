@@ -17,17 +17,39 @@ class RelateField(Field):
 
         super(RelateField, self).__init__(*args, **kwargs)
 
-    def save_relations(self, obj, data):
+    def save_relations(self, obj, data, commit):
 
         """ Save relations given in the data, by keys 'rm' and 'add' """
 
-        # Unrelate
-        for tgt in data.get('rm', []):
-            obj.rm_relation(self.relation_type, tgt)
+        class UpdateRelations(object):
 
-        # Relate
-        for tgt in data.get('add', []):
-            obj.add_relation(self.relation_type, tgt)
+            def __init__(self, instance, rms, adds, relation_type):
+                self.instance = instance
+                self.rms = rms
+                self.adds = adds
+                self.relation_type = relation_type
+
+            def update(self):
+                # Unrelate
+                for tgt in self.rms:
+                    self.instance.rm_relation(self.relation_type, tgt)
+                # Relate
+                for tgt in self.adds:
+                    self.instance.add_relation(self.relation_type, tgt)
+
+        relation_updater = UpdateRelations(
+            obj, data.get('rm', []), data.get('add', []), self.relation_type)
+
+        if commit:
+            relation_updater.update()
+
+        else:
+
+            # append the updater instance to the object. Note that it's a list
+            # since there can be more than one relation field per instance
+            if not hasattr(obj, '_relation_updater'):
+                obj._relation_updater = []
+            obj._relation_updater.append(relation_updater)
 
     def widget_attrs(self, widget):
 
@@ -59,5 +81,5 @@ class RelateField(Field):
         except:
             pass
 
-        return [{'label': rel.title, 'value': object_to_urn(rel)} for rel in \
-                    relations]
+        return [{'label': rel.title, 'value': object_to_urn(rel)} for rel in
+                relations]
