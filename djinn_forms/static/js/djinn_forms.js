@@ -216,6 +216,8 @@ $(document).ready(function() {
 
         input.val("");
         input.data("urn", "");
+
+        $(document).trigger("djinn_forms_relate", [widget]);
       });
 
     $(document).on("click", ".relate .delete", function(e) {
