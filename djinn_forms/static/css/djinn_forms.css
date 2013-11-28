@@ -1,4 +1,13 @@
 /* upload widgets */
+
+.progress {
+    display: none;
+}
+
+.loading .progress {
+    display: block;
+}
+
 .progress {
     margin-top: 20px;
 }
@@ -19,9 +28,21 @@
 }
 
 .imagewidget.empty .select-image {
-    display: block;
+    display: inline;
 }
 
 .imagewidget.empty .delete-image, .imagewidget.empty .replace-image {
     display: none;
+}
+
+.imagewidget .delete-image:hover {
+    text-decoration: none !important;
+}
+
+.imagewidget .image-action {
+    margin-right: 20px;
+}
+
+.fileinput-button:hover {
+    color: none !important;
 }

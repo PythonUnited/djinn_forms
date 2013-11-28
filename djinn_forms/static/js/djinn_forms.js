@@ -97,7 +97,7 @@ djinn.forms.init_fileuploader = function(options) {
       
       var valuetgt = $($(e.target).data("valuefield"));
       var tgt = $(e.target);
-      
+
       if (tgt.attr("multiple")) {
         $(tgt.data("target")).append(data.result.html);        
         valuetgt.val(valuetgt.val() + "," + data.result.attachment_ids.join(","));
@@ -113,10 +113,16 @@ djinn.forms.init_fileuploader = function(options) {
         callback.apply(null, tgt);
       }
 
+      tgt.parents(".imagewidget").removeClass("loading");
+
       $(document).triggerHandler("djinn_forms_fileupload_done", [e.target, data.result]);
     },
     send: function(e, data) {
       $(document).triggerHandler("djinn_forms_fileupload_send", [e.target]);
+      
+      var tgt = $(e.target);
+
+      tgt.parents(".imagewidget").addClass("loading");
     },
     progress: function (e, data) {
       var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -237,10 +243,12 @@ $(document).ready(function() {
       });
 
     $(document).on("click", ".imagewidget .delete-image", function(e) {
-        var link = $(e.currentTarget);
+        var tgt = $(e.currentTarget);
 
-        $(link.attr("target")).val("");
-        link.parents(".imagewidget").addClass("empty");
+        $(tgt.data("target")).val("");
+        tgt.parents(".imagewidget").addClass("empty");
+        tgt.parents(".imagewidget").find(".uploads").html("");
+
         e.preventDefault()
       });
 
