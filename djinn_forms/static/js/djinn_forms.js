@@ -235,4 +235,19 @@ $(document).ready(function() {
 
         record.remove();
       });
+
+    $(document).on("click", ".imagewidget .delete-image", function(e) {
+        var link = $(e.currentTarget);
+
+        $(link.attr("target")).val("");
+        link.parents(".imagewidget").addClass("empty");
+        e.preventDefault()
+      });
+
+    $(document).on("djinn_forms_fileupload_done", function(e, target, result) {
+
+        if ($(target).parents(".imagewidget")) {
+          $(target).parents(".imagewidget").removeClass("empty");
+        }
+      });
   });

@@ -11,8 +11,13 @@ class ImageWidget(forms.widgets.Widget):
 
     def render(self, name, value, attrs=None):
 
+        try:
+            value = self.model.objects.get(pk=value)
+        except:
+            pass
+
         context = {
-            'name': name, 
+            'name': name,
             'widget': self,
             'show_progress': True,
             'multiple': False,
@@ -20,7 +25,7 @@ class ImageWidget(forms.widgets.Widget):
             }
 
         context.update(self.attrs)
-        
+
         if attrs:
             context.update(attrs)
 

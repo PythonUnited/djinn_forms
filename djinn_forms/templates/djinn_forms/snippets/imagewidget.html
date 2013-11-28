@@ -1,36 +1,41 @@
 {% load i18n %}
 
-<div class="btn fileinput-button">
-  <i class="icon-plus icon-white"></i>
-
+<div class="imagewidget {% if not value %}empty{% endif %}">
+  <div class="btn fileinput-button">
+    <i class="icon-plus icon-white"></i>
+    
+    <span class="replace-image">{% trans "Replace image" %}</span>
+    <span class="select-image">{% trans "Select image" %}</span>
+    
+    <input type="file"
+           class="field"
+           name="{{ name }}_upload"
+           {% if show_progress %}
+           data-progress="#progress_{{ name }}"
+           {% endif %}
+           data-attachmenttype="{{ attachment_type }}"
+           data-valuefield="#id_{{ name }}"
+           data-target="#uploads_{{ name }}" />
+    
+    <input id="id_{{ name }}" name="{{ name }}" type="hidden" 
+           value="{{ value.pk }}" />
+  </div>
   {% if value %}
-  <span>{% trans "Replace image..." %}</span>
-  {% else %}
-  <span>{% trans "Select image..." %}</span>
+  <a href="#" class="delete-image" target="#id_{{ name }}">
+    {% trans "Remove image" %}
+  </a>
+  {% endif %}
+  
+  {% if show_progress %}
+  <div id="progress_{{ name }}" 
+       class="progress progress-info">
+    <div class="bar"></div>
+  </div>
   {% endif %}
 
-  <input type="file"
-         class="field"
-         name="{{ name }}_upload"
-         {% if show_progress %}
-         data-progress="#progress_{{ name }}"
-         {% endif %}
-         data-attachmenttype="{{ attachment_type }}"
-         data-valuefield="#id_{{ name }}"
-         data-target="#uploads_{{ name }}" />
-
-  <input id="id_{{ name }}" name="{{ name }}" type="hidden" 
-         value="{{ widget.form_instance.instance.pk }}" />
+  <div id="uploads_{{ name }}">
+    <img height="50px;" src="{{ value.get_thumbnail_url }}" />
+  </div>
 
 </div>
 
-{% if show_progress %}
-<div id="progress_{{ name }}" 
-     class="progress progress-info">
-  <div class="bar"></div>
-</div>
-{% endif %}
-
-<div id="uploads_{{ name }}">
-  <img height="50px;" src="{{ value.url }}" />
-</div>
