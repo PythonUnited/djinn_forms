@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-14 14:33+0200\n"
+"POT-Creation-Date: 2013-11-29 13:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,52 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: templates/djinn_forms/snippets/documentattachmentwidget.html:11
+msgid "Select files..."
+msgstr ""
+
+#: templates/djinn_forms/snippets/documentattachmentwidget.html:14
+msgid "Replace file..."
+msgstr ""
+
+#: templates/djinn_forms/snippets/documentattachmentwidget.html:16
+msgid "Select file..."
+msgstr ""
+
+#: templates/djinn_forms/snippets/imageattachmentwidget.html:11
+msgid "Select images..."
+msgstr ""
+
+#: templates/djinn_forms/snippets/imageattachmentwidget.html:14
+msgid "Replace image..."
+msgstr ""
+
+#: templates/djinn_forms/snippets/imageattachmentwidget.html:16
+msgid "Select image..."
+msgstr ""
+
+#: templates/djinn_forms/snippets/imagewidget.html:6
+msgid "Replace image"
+msgstr ""
+
+#: templates/djinn_forms/snippets/imagewidget.html:7
+msgid "Select image"
+msgstr ""
+
+#: templates/djinn_forms/snippets/imagewidget.html:24
+msgid "Remove image"
+msgstr ""
+
 #: templates/djinn_forms/snippets/link_widget.html:9
-#: Link widget: label
 msgid "Select link"
+msgstr ""
+
+#: templates/djinn_forms/snippets/relatewidget.html:21
+#: templates/djinn_forms/snippets/relatewidget.html:27
+msgid "Remove"
+msgstr ""
+
+#. Translators: djinn_forms relate add button label
+#: widgets/relate.py:58
+msgid "Add"
 msgstr ""

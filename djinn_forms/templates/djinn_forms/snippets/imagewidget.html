@@ -31,15 +31,14 @@
   </div>
   {% endif %}
 
-  <div class="uploads" id="uploads_{{ name }}">
-    {% if default_image %}
-    <img class="default-image" src="{{ default_image }}" />
-    {% endif %}
+  {% if default_image %}
+  <img class="default-image" src="{{ default_image }}" />
+  {% endif %}
 
+  <div class="uploads" id="uploads_{{ name }}">
     {% if value %}
     <img src="{{ value.get_thumbnail_url }}" />
     {% endif %}
   </div>
 
 </div>
-
