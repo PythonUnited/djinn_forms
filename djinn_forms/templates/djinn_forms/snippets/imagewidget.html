@@ -36,8 +36,8 @@
   {% endif %}
 
   <div class="uploads" id="uploads_{{ name }}">
-    {% if value %}
-    <img src="{{ value.get_thumbnail_url }}" />
+    {% if image_url %}
+    <img src="{{ image_url }}" />
     {% endif %}
   </div>
 

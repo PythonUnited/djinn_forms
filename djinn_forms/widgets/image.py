@@ -26,6 +26,13 @@ class ImageWidget(forms.widgets.Widget):
 
         context.update(self.attrs)
 
+        if value:
+            accessor = "get_%s_url" % self.attrs.get('size', 'thumbnail')
+            try:
+                context['image_url'] = getattr(value, accessor)()
+            except:
+                pass
+
         if attrs:
             context.update(attrs)
 
