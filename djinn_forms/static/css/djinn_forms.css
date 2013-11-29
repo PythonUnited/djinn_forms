@@ -31,6 +31,14 @@
     display: inline;
 }
 
+.imagewidget .default-image {
+    display: none;
+}
+
+.imagewidget.empty .default-image {
+    display: block;
+}
+
 .imagewidget.empty .delete-image, .imagewidget.empty .replace-image {
     display: none;
 }

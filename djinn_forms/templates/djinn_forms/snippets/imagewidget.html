@@ -32,7 +32,11 @@
   {% endif %}
 
   <div class="uploads" id="uploads_{{ name }}">
-    <img height="50px;" src="{{ value.get_thumbnail_url }}" />
+    {% if default_image %}
+    <img class="default-image" src="{{ default_image }}" />
+    {% endif %}
+
+    <img src="{{ value.get_thumbnail_url }}" />
   </div>
 
 </div>
