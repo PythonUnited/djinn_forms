@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: djinn_forms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-29 13:44+0100\n"
-"PO-Revision-Date: 2013-05-14 14:34+0100\n"
+"POT-Creation-Date: 2013-11-29 16:51+0100\n"
+"PO-Revision-Date: 2013-11-29 16:52+0100\n"
 "Last-Translator: Duco Dokter <dokter@w20e.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -47,16 +47,15 @@ msgstr "Selecteer link"
 
 #: templates/djinn_forms/snippets/imagewidget.html:6
 msgid "Replace image"
-msgstr ""
+msgstr "Vervang afbeelding"
 
 #: templates/djinn_forms/snippets/imagewidget.html:7
-#, fuzzy
 msgid "Select image"
-msgstr "Selecteer link"
+msgstr "Selecteer afbeelding"
 
 #: templates/djinn_forms/snippets/imagewidget.html:24
 msgid "Remove image"
-msgstr ""
+msgstr "Verwijder afbeelding"
 
 #: templates/djinn_forms/snippets/link_widget.html:9
 msgid "Select link"
@@ -71,3 +70,4 @@ msgstr ""
 #: widgets/relate.py:58
 msgid "Add"
 msgstr ""
+
