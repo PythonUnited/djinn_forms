@@ -36,7 +36,9 @@
     <img class="default-image" src="{{ default_image }}" />
     {% endif %}
 
+    {% if value %}
     <img src="{{ value.get_thumbnail_url }}" />
+    {% endif %}
   </div>
 
 </div>
