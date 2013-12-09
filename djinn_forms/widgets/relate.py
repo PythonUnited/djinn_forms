@@ -6,17 +6,20 @@ from django.utils.translation import ugettext_lazy as _
 from djinn_contenttypes.utils import urn_to_object
 
 
-TPL = 'djinn_forms/snippets/relatewidget.html'
-
-
 class RelateWidget(Widget):
 
     """ Widget for handling relations to other content.
     The following extra attributes are supported:
-     * content_types Allowed content types for this relation
+     * content_types Allowed content types for this relation as list
      * relation_type Relation type to use for creating the actual relation
-     * src_obj Source object for relation
+     * searchfield Look for this field in the searchengine
+
+     TODO: add unique settings
+     TODO: add single select setting
+     TODO: select on 'select'
     """
+
+    template_name = 'djinn_forms/snippets/relatewidget.html'
 
     def value_from_datadict(self, data, files, name):
 
@@ -61,6 +64,13 @@ class RelateWidget(Widget):
                    'search_url': url
                    }
 
-        html = render_to_string(TPL, context)
+        html = render_to_string(self.template_name, context)
 
         return mark_safe(u"".join(html))
+
+
+class SingleRelateWidget(RelateWidget):
+
+    """ Relate widget where only one relation is allowed """
+
+    template_name = 'djinn_forms/snippets/singlerelatewidget.html'

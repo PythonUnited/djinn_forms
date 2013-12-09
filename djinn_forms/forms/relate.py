@@ -16,6 +16,8 @@ class RelateMixin(object):
 
     def init_relation_fields(self):
 
+        """ Call this in init, but AFTER calling super init """
+
         for f_name, field in self.fields.items():
             if isinstance(field, RelateField):
                 self.fields[f_name].instance = self.instance
