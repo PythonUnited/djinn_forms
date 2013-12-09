@@ -72,6 +72,8 @@ class LocalRoleField(RelateField):
                            for lrole in roles
                            if lrole.user or lrole.usergroup]
 
+        users_or_groups = [u.profile for u in user_or_groups]
+
         try:
             users_or_groups = filter(lambda x: x not in data['rm'],
                                      users_or_groups)
@@ -79,12 +81,12 @@ class LocalRoleField(RelateField):
             pass
 
         try:
-            users_or_groups += data['add']
+            users_or_groups += [data['add']
         except:
             pass
 
-        return [{'label': unicode(rel.profile),
-                 'value': object_to_urn(rel.profile)} for rel in
+        return [{'label': unicode(profile),
+                 'value': object_to_urn(profile)} for profile in
                 users_or_groups]
 
 
