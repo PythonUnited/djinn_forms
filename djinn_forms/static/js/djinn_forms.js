@@ -53,11 +53,11 @@ djinn.forms.addValue = function(input, value, unique, separator) {
     } else {
       var new_values = [];
       var old_values = input.val();
-      
+
       old_values = old_values.split(sep);
-      
+
       for (var i = 0; i < old_values.length; i++) {
-        
+
         if (old_values[i] != value) {
           new_values.push(old_values[i]);
         }
@@ -94,12 +94,12 @@ djinn.forms.init_fileuploader = function(options) {
     url: '/fileupload',
     dataType: 'json',
     done: function (e, data) {
-      
+
       var valuetgt = $($(e.target).data("valuefield"));
       var tgt = $(e.target);
 
       if (tgt.attr("multiple")) {
-        $(tgt.data("target")).append(data.result.html);        
+        $(tgt.data("target")).append(data.result.html);
         valuetgt.val(valuetgt.val() + "," + data.result.attachment_ids.join(","));
       } else {
         $(tgt.data("target")).html(data.result.html);
@@ -108,7 +108,7 @@ djinn.forms.init_fileuploader = function(options) {
       $(tgt.data("progress") + " .bar").css("width", "100%");
 
       if (tgt.data("callback")) {
-        
+
         var callback = eval(tgt.data("callback"));
         callback.apply(null, tgt);
       }
@@ -119,7 +119,7 @@ djinn.forms.init_fileuploader = function(options) {
     },
     send: function(e, data) {
       $(document).triggerHandler("djinn_forms_fileupload_send", [e.target]);
-      
+
       var tgt = $(e.target);
 
       tgt.parents(".imagewidget").addClass("loading");
@@ -129,13 +129,13 @@ djinn.forms.init_fileuploader = function(options) {
       $($(e.target).data("progress") + " .bar").css("width", progress + "%");
     }
   };
-  
+
   if (options) {
     $.extend(defaults, options);
   }
-  
+
   $("input[type='file']").each(function() {
-      
+
       if ($(this).data("uploadurl")) {
         defaults['url'] = $(this).data("uploadurl");
       }
@@ -146,7 +146,7 @@ djinn.forms.init_fileuploader = function(options) {
         "attachment_type": $(this).data("attachmenttype"),
         "edit_type": $(this).hasClass("field") ? "field": "attachment"
       }
-      
+
       $(this).fileupload(defaults);
     });
 };
@@ -169,12 +169,12 @@ djinn.forms.remove_attachment = function(elt, attachment_id) {
 djinn.forms.initRelateWidget = function(widget) {
 
   widget.find(".autocomplete").each(function() {
-      
+
       var input = $(this);
       widget.find(".add-list").val("");
       widget.find(".rm-list").val("");
       input.val("");
-      
+
       input.autocomplete({
           source: input.data("search_url"),
             minLength: input.data("search_minlength"),
@@ -195,18 +195,29 @@ djinn.forms.handleRelateSelect = function(e, ui) {
     var input = $(e.target).parents(".relate").find(".autocomplete");
     var widget = $(e.target).parents(".relate");
     var tpl = widget.find("ul .tpl").eq(0).clone();
-  
-    djinn.forms.addValue(widget.find(".add-list").eq(0), value);
-    
+
+    if (widget.hasClass("multiple")) {
+      djinn.forms.addValue(widget.find(".add-list").eq(0), value);
+    } else {
+      widget.find(".add-list").eq(0).val(value);
+    }
+
     tpl.attr("class", "");
     tpl.attr("style", "");
     tpl.find("a").eq(0).html(label);
     tpl.find("a.delete").attr("data-urn", value);
-    
-    widget.find("ul").append(tpl);
-    
+
+    if (widget.hasClass("multiple")) {
+      widget.find("ul").append(tpl);
+    } else {
+      widget.find("ul li").last().replaceWith(tpl);
+    }
+
+    widget.removeClass("empty");
+
     input.val("");
-    
+    input.focus();
+
     $(document).trigger("djinn_forms_relate", [widget]);
 
     e.preventDefault();
@@ -214,25 +225,47 @@ djinn.forms.handleRelateSelect = function(e, ui) {
 
 
 $(document).ready(function() {
-        
+
     $(".relate").each(function() {
         djinn.forms.initRelateWidget($(this));
       });
 
-    $(document).on("click", ".relate .delete", function(e) {
+    $(document).on("focusout", ".relate.single .autocomplete", function(e) {
+
+        var widget = $(e.target).parents(".relate");
+
+        widget.removeClass("empty");
+      });
+
+    $(document).on("click", ".relate.multiple .delete", function(e) {
 
         e.preventDefault();
-        
+
         var widget = $(e.currentTarget).parents(".relate");
         var record = $(e.currentTarget).parents("li");
         var link = $(e.currentTarget);
 
-        djinn.forms.removeValue(widget.find(".add-list").eq(0), 
+        djinn.forms.removeValue(widget.find(".add-list").eq(0),
                                 link.data("urn"));
+
         djinn.forms.addValue(widget.find(".rm-list").eq(0),
                              link.data("urn"));
 
+        if (!record.siblings(":not('.tpl')").size()) {
+          widget.addClass("empty");
+        }
+
         record.remove();
+      });
+
+    $(document).on("click", ".relate.single .delete", function(e) {
+
+        e.preventDefault();
+
+        var widget = $(e.currentTarget).parents(".relate");
+
+        widget.addClass("empty");
+        widget.find(".autocomplete").focus();
       });
 
     $(document).on("click", ".imagewidget .delete-image", function(e) {

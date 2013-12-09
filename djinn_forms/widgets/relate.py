@@ -14,9 +14,12 @@ class RelateWidget(Widget):
      * relation_type Relation type to use for creating the actual relation
      * searchfield Look for this field in the searchengine
 
-     TODO: add unique settings
-     TODO: add single select setting
-     TODO: select on 'select'
+    To actually save the data that this widget produces, you need to
+    make your form extend the djinn_forms.forms.RelateMixin and call
+    the methods in that form.
+
+    TODO: add unique settings
+    TODO: add single select setting
     """
 
     template_name = 'djinn_forms/snippets/relatewidget.html'
@@ -46,31 +49,54 @@ class RelateWidget(Widget):
 
         return result
 
-    def render(self, name, value, attrs=None):
+    def build_attrs(self, extra_attrs=None, **kwargs):
+
+        final_attrs = super(RelateWidget, self).build_attrs(
+            extra_attrs=extra_attrs, **kwargs)
 
         url = self.attrs.get("search_url", reverse("djinn_forms_relatesearch"))
         url = "%s?content_types=%s&searchfield=%s" % (
             url,
             ",".join(self.attrs['content_types']),
-            self.attrs.get("searchfield", "title")
+            self.attrs.get("searchfield", "title_auto")
             )
+        
+        final_attrs.update(
+            {'search_minlength': self.attrs.get("search_minlength", 2),
+             'search_url': url,
+             'multiple': True
+             })
+        
+        return final_attrs
+    
+    def render(self, name, value, attrs=None):
 
-        context = {'name': name,
-                   'hint': self.attrs.get("hint", ""),
-                   # Translators: djinn_forms relate add button label
-                   'add_label': self.attrs.get("add_label", _("Add")),
-                   'value': value,
-                   'search_minlength': self.attrs.get("search_minlength", 2),
-                   'search_url': url
-                   }
+        final_attrs = self.build_attrs(attrs, name=name, value=value)
 
-        html = render_to_string(self.template_name, context)
+        html = render_to_string(self.template_name, final_attrs)
 
         return mark_safe(u"".join(html))
 
 
-class SingleRelateWidget(RelateWidget):
+class RelateSingleWidget(RelateWidget):
 
     """ Relate widget where only one relation is allowed """
 
-    template_name = 'djinn_forms/snippets/singlerelatewidget.html'
+    template_name = 'djinn_forms/snippets/relatesinglewidget.html'
+
+    def value_from_datadict(self, data, files, name):
+
+        """ The data may contain a list of objects to remove, and
+        objects to add. Both are prefixed by the field name. The
+        returned value is a dict with 'rm' and 'add' lists, that list
+        the """
+
+        result = super(RelateSingleWidget, self).value_from_datadict(
+            data, files, name)
+
+        result = result.get('add', [])
+
+        if len(result):
+            return result[0]
+        else:
+            return None
