@@ -1,14 +1,14 @@
 from django.forms.fields import Field
-from djinn_forms.widgets.relate import RelateWidget
+from djinn_forms.widgets.relate import RelateWidget, RelateSingleWidget
 from djinn_contenttypes.utils import object_to_urn
 
 
 class UpdateRelations(object):
 
-    def __init__(self, instance, rms, adds, relation_type):
+    def __init__(self, instance, data, relation_type):
         self.instance = instance
-        self.rms = rms
-        self.adds = adds
+        self.rms = data.get('rm', [])
+        self.adds = data.get('add', [])
         self.relation_type = relation_type
 
     def update(self):
@@ -34,6 +34,22 @@ class UpdateRelations(object):
             self.instance.add_relation(rtype, tgt)
 
 
+class UpdateRelation(object):
+
+    """ Updater for single relation. Existing relations are deleted """
+
+    def __init__(self, instance, tgt, relation_type):
+        self.instance = instance
+        self.tgt = tgt
+        self.relation_type = relation_type
+        
+    def update(self):
+        if self.tgt:
+            self.instance.get_relations(
+                relation_type_list=[self.relation_type]).delete()
+            self.instance.add_relation(rtype, tgt)
+
+
 class RelateField(Field):
 
     """ Field for relations, based on """
@@ -53,14 +69,11 @@ class RelateField(Field):
 
         """ Save relations given in the data, by keys 'rm' and 'add' """
 
-        relation_updater = self.updater(
-            obj, data.get('rm', []), data.get('add', []), self.relation_type)
+        relation_updater = self.updater(obj, data, self.relation_type)
 
         if commit:
             relation_updater.update()
-
         else:
-
             # append the updater instance to the object. Note that it's a list
             # since there can be more than one relation field per instance
             if not hasattr(obj, '_relation_updater'):
@@ -85,11 +98,6 @@ class RelateField(Field):
         If data['add'] has values, add those to the result
         """
 
-        if callable(self.relation_type):
-            rtype = self.relation_type(tgt)
-        else:
-            rtype = self.relation_type
-
         relations = self.instance.get_related(self.relation_type)
 
         try:
@@ -104,3 +112,20 @@ class RelateField(Field):
 
         return [{'label': rel.title, 'value': object_to_urn(rel)} for rel in
                 relations]
+
+
+class RelateSingleField(RelateField):
+
+    widget = RelateSingleWidget
+    updater = UpdateRelation
+
+    def prepare_value(self, data):
+
+        """ Get existing role, if it's there """
+
+        value = super(RelateSingleField, self).prepare_value(data)
+
+        if value:
+            return value[0]
+        else:
+            return None

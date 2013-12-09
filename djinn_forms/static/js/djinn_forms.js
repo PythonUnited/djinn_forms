@@ -196,15 +196,26 @@ djinn.forms.handleRelateSelect = function(e, ui) {
     var widget = $(e.target).parents(".relate");
     var tpl = widget.find("ul .tpl").eq(0).clone();
   
-    djinn.forms.addValue(widget.find(".add-list").eq(0), value);
+    if (widget.hasClass("multiple")) {
+      djinn.forms.addValue(widget.find(".add-list").eq(0), value);
+    } else {
+      widget.find(".add-list").eq(0).val(value);
+    }
     
     tpl.attr("class", "");
     tpl.attr("style", "");
     tpl.find("a").eq(0).html(label);
     tpl.find("a.delete").attr("data-urn", value);
     
-    widget.find("ul").append(tpl);
-    
+    if (widget.hasClass("multiple")) {
+      widget.find("ul").append(tpl);
+    } else {
+      widget.find("ul li").last().replaceWith(tpl);
+    }
+
+    widget.removeClass("empty");
+    widget.removeClass("focus");    
+
     input.val("");
     
     $(document).trigger("djinn_forms_relate", [widget]);
@@ -219,7 +230,14 @@ $(document).ready(function() {
         djinn.forms.initRelateWidget($(this));
       });
 
-    $(document).on("click", ".relate .delete", function(e) {
+    $(document).on("focusout", ".relate.single .autocomplete", function(e) {
+
+        var widget = $(e.target).parents(".relate");
+
+        widget.removeClass("focus");
+      });
+
+    $(document).on("click", ".relate.multiple .delete", function(e) {
 
         e.preventDefault();
         
@@ -229,10 +247,25 @@ $(document).ready(function() {
 
         djinn.forms.removeValue(widget.find(".add-list").eq(0), 
                                 link.data("urn"));
+
         djinn.forms.addValue(widget.find(".rm-list").eq(0),
                              link.data("urn"));
 
+        if (!record.siblings(":not('.tpl')").size()) {
+          widget.addClass("empty");
+        }
+
         record.remove();
+      });
+
+    $(document).on("click", ".relate.single .delete", function(e) {
+
+        e.preventDefault();
+
+        var widget = $(e.currentTarget).parents(".relate");
+
+        widget.addClass("focus");
+        widget.find(".autocomplete").focus();
       });
 
     $(document).on("click", ".imagewidget .delete-image", function(e) {

@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="relate multiple {% if not value %}empty{% endif %}">
+<div class="relate single {% if not value %}empty{% endif %}">
   <div class="multiple-search">
     <input type="search" id="id-{{ name }}" name="{{ name }}" 
            class="autocomplete"
@@ -8,29 +8,30 @@
            data-search_minlength="{{ search_minlength }}"
            data-search_url="{{ search_url }}"
            placeholder="{{ hint }}">
-    <input type="hidden" name="{{ name }}_rm" value="" class="rm-list" />
+
     <input type="hidden" name="{{ name }}_add" value="" class="add-list" />
 
     <div class="searchresults ui-front"></div>
 
   </div>
-  <ul>
+
+  <ul class="related">
     <li class="tpl" style="display: none">
       <a href="#">label</a> 
-      <a href="#" data-urn="value"
+      <a href="#" data-urn="value" 
          class="delete">
-        {% trans "Remove" %}
+        {% trans "Change" %}
       </a>
     </li>
-    {% for related in value %}
+    {% if value %}
     <li>
-      <a href="#">{{ related.label }}</a> 
-      <a href="#" data-urn="{{ related.value }}" 
+      <a href="#">{{ value.label }}</a> 
+      <a href="#" data-urn="{{ value.value }}" 
          class="delete">
-        {% comment %}Translators: relate widget remove relation{% endcomment %}
-        {% trans "Remove" %}
+        {% comment %}Translators: relate widget change relation{% endcomment %}
+        {% trans "Change" %}
       </a>
     </li>
-    {% endfor %}
+    {% endif %}
   </ul>
 </div>

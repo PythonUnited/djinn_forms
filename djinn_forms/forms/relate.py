@@ -1,12 +1,14 @@
-from django import forms
 from djinn_forms.fields.relate import RelateField
 
 
 class RelateMixin(object):
 
-    """ When using relate fields, handle these in the save """
+    """ When using relate fields, handle these in the save of your
+    form. """
 
     def save_relations(self, commit=True):
+
+        """ Call this method anywhere in your save override """
 
         for f_name, field in self.fields.items():
             if isinstance(field, RelateField):

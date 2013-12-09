@@ -54,3 +54,16 @@
 .fileinput-button:hover {
     color: none !important;
 }
+
+/* related widget */
+.single .multiple-search {
+    display: none;
+}
+
+.single.empty .multiple-search, .single.focus .multiple-search {
+    display: block;
+}
+
+.single.focus .related {
+    display: none;
+}
