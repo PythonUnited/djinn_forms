@@ -3,11 +3,43 @@ from djinn_forms.widgets.relate import RelateWidget
 from djinn_contenttypes.utils import object_to_urn
 
 
+class UpdateRelations(object):
+
+    def __init__(self, instance, rms, adds, relation_type):
+        self.instance = instance
+        self.rms = rms
+        self.adds = adds
+        self.relation_type = relation_type
+
+    def update(self):
+
+        # Unrelate
+        for tgt in self.rms:
+
+            #if callable(self.relation_type):
+            #    rtype = self.relation_type(tgt)
+            #else:
+            rtype = self.relation_type
+
+            self.instance.rm_relation(rtype, tgt)
+
+        # Relate
+        for tgt in self.adds:
+
+            #if callable(self.relation_type):
+            #    rtype = self.relation_type(tgt)
+            #else:
+            rtype = self.relation_type
+
+            self.instance.add_relation(rtype, tgt)
+
+
 class RelateField(Field):
 
     """ Field for relations, based on """
 
     widget = RelateWidget
+    updater = UpdateRelations
 
     def __init__(self, relation_type, content_types, *args, **kwargs):
 
@@ -21,23 +53,7 @@ class RelateField(Field):
 
         """ Save relations given in the data, by keys 'rm' and 'add' """
 
-        class UpdateRelations(object):
-
-            def __init__(self, instance, rms, adds, relation_type):
-                self.instance = instance
-                self.rms = rms
-                self.adds = adds
-                self.relation_type = relation_type
-
-            def update(self):
-                # Unrelate
-                for tgt in self.rms:
-                    self.instance.rm_relation(self.relation_type, tgt)
-                # Relate
-                for tgt in self.adds:
-                    self.instance.add_relation(self.relation_type, tgt)
-
-        relation_updater = UpdateRelations(
+        relation_updater = self.updater(
             obj, data.get('rm', []), data.get('add', []), self.relation_type)
 
         if commit:
@@ -68,6 +84,11 @@ class RelateField(Field):
         If data['rm'] has values, filter those out of the result.
         If data['add'] has values, add those to the result
         """
+
+        if callable(self.relation_type):
+            rtype = self.relation_type(tgt)
+        else:
+            rtype = self.relation_type
 
         relations = self.instance.get_related(self.relation_type)
 

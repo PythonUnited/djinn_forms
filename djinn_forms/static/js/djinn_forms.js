@@ -178,12 +178,8 @@ djinn.forms.initRelateWidget = function(widget) {
       input.autocomplete({
           source: input.data("search_url"),
             minLength: input.data("search_minlength"),
-            select: function(e, ui) {
-            input.val(ui.item.label);
-            input.data("urn", ui.item.value);
-            e.preventDefault();
-          },
-          focus: function(e, ui) {
+            select: djinn.forms.handleRelateSelect,
+            focus: function(e, ui) {
             e.preventDefault();
           }
         });
@@ -191,39 +187,36 @@ djinn.forms.initRelateWidget = function(widget) {
 };
 
 
+djinn.forms.handleRelateSelect = function(e, ui) {
+
+    var label = ui.item.label;
+    var value =  ui.item.value;
+
+    var input = $(e.target).parents(".relate").find(".autocomplete");
+    var widget = $(e.target).parents(".relate");
+    var tpl = widget.find("ul .tpl").eq(0).clone();
+  
+    djinn.forms.addValue(widget.find(".add-list").eq(0), value);
+    
+    tpl.attr("class", "");
+    tpl.attr("style", "");
+    tpl.find("a").eq(0).html(label);
+    tpl.find("a.delete").attr("data-urn", value);
+    
+    widget.find("ul").append(tpl);
+    
+    input.val("");
+    
+    $(document).trigger("djinn_forms_relate", [widget]);
+
+    e.preventDefault();
+};
+
+
 $(document).ready(function() {
         
     $(".relate").each(function() {
         djinn.forms.initRelateWidget($(this));
-      });
-
-    $(document).on("click", ".relate .submit", function(e) {
-
-        var input = $(e.currentTarget).parents(".relate").find(".autocomplete");
-        var widget = $(e.currentTarget).parents(".relate");
-        var tpl = widget.find("ul .tpl").eq(0).clone();
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (!(input.val() && input.data("urn"))) {
-          return;
-        }
-
-        djinn.forms.addValue(widget.find(".add-list").eq(0),
-                             input.data("urn"));
-
-        tpl.attr("class", "");
-        tpl.attr("style", "");
-        tpl.find("a").eq(0).html(input.val());
-        tpl.find("a").eq(1).data("urn", input.data("urn"));
-
-        widget.find("ul").append(tpl);
-
-        input.val("");
-        input.data("urn", "");
-
-        $(document).trigger("djinn_forms_relate", [widget]);
       });
 
     $(document).on("click", ".relate .delete", function(e) {
