@@ -216,6 +216,12 @@ djinn.forms.handleRelateSelect = function(e, ui) {
     widget.removeClass("empty");
 
     input.val("");
+
+    // blur first, then focus for ie...
+    if ($.browser.msie) {
+      input.blur();
+    }
+
     input.focus();
 
     $(document).trigger("djinn_forms_relate", [widget]);
