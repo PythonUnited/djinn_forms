@@ -60,10 +60,10 @@
     display: none;
 }
 
-.single.empty .multiple-search, .single.focus .multiple-search {
+.single.empty .multiple-search {
     display: block;
 }
 
-.single.focus .related {
+.single.empty .related {
     display: none;
 }
