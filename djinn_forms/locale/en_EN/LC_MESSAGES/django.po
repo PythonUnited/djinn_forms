@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-09 16:30+0100\n"
+"POT-Creation-Date: 2013-12-09 16:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,12 +57,19 @@ msgstr ""
 msgid "Select link"
 msgstr ""
 
-#: templates/djinn_forms/snippets/relatewidget.html:22
-#: templates/djinn_forms/snippets/relatewidget.html:28
+#. Translators: relate widget change relation
+#: templates/djinn_forms/snippets/relatesinglewidget.html:23
+#: templates/djinn_forms/snippets/relatesinglewidget.html:32
+msgid "Change"
+msgstr ""
+
+#. Translators: relate widget remove relation
+#: templates/djinn_forms/snippets/relatewidget.html:23
+#: templates/djinn_forms/snippets/relatewidget.html:32
 msgid "Remove"
 msgstr ""
 
 #. Translators: djinn_forms relate add button label
-#: widgets/relate.py:61 widgets/share.py:58
+#: widgets/share.py:58
 msgid "Add"
 msgstr ""
