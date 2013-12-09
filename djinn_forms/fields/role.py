@@ -81,7 +81,7 @@ class LocalRoleField(RelateField):
             pass
 
         try:
-            users_or_groups += [data['add']
+            users_or_groups += data['add']
         except:
             pass
 
