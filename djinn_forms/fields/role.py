@@ -72,7 +72,7 @@ class LocalRoleField(RelateField):
                            for lrole in roles
                            if lrole.user or lrole.usergroup]
 
-        users_or_groups = [u.profile for u in user_or_groups]
+        users_or_groups = [u.profile for u in users_or_groups]
 
         try:
             users_or_groups = filter(lambda x: x not in data['rm'],
