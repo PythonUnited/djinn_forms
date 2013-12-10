@@ -236,6 +236,9 @@ $(document).ready(function() {
         djinn.forms.initRelateWidget($(this));
       });
 
+    $('.date').datepicker();    
+    $('.time').datetimepicker({timeOnly: true});
+
     $(document).on("focusout", ".relate.single .autocomplete", function(e) {
 
         var widget = $(e.target).parents(".relate");

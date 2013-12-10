@@ -67,3 +67,16 @@
 .single.empty .related {
     display: none;
 }
+
+/* datetime widget */
+.datetime .date, .datetime .time {
+    float: left;
+}
+
+.datetime .time {
+    width: 50px;
+}
+
+.datetime .date {
+    width: 100px;
+}

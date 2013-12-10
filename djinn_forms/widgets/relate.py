@@ -1,11 +1,11 @@
-from django.forms.widgets import Widget
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from djinn_contenttypes.utils import urn_to_object
+from base import BaseWidget
 
 
-class RelateWidget(Widget):
+class RelateWidget(BaseWidget):
 
     """
     Widget for handling relations to other content. The following
@@ -73,14 +73,6 @@ class RelateWidget(Widget):
              })
 
         return final_attrs
-
-    def render(self, name, value, attrs=None):
-
-        final_attrs = self.build_attrs(attrs, name=name, value=value)
-
-        html = render_to_string(self.template_name, final_attrs)
-
-        return mark_safe(u"".join(html))
 
 
 class RelateSingleWidget(RelateWidget):
