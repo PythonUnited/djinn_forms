@@ -2,24 +2,29 @@ from django.forms.widgets import Widget
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext_lazy as _
 from djinn_contenttypes.utils import urn_to_object
 
 
 class RelateWidget(Widget):
 
-    """ Widget for handling relations to other content.
-    The following extra attributes are supported:
+    """
+    Widget for handling relations to other content. The following
+    extra attributes are supported:
+
      * content_types Allowed content types for this relation as list
      * relation_type Relation type to use for creating the actual relation
      * searchfield Look for this field in the searchengine
+     * ct_searchfield Use this field to check on the contenttype. Defaults
+       to meta_ct.
+     * search_minlength Start autosearch when length is this or more
+     * search_url Use this URL as search base. Defaults to reverse of
+       'djinn_forms_relatesearch'
 
     To actually save the data that this widget produces, you need to
     make your form extend the djinn_forms.forms.RelateMixin and call
-    the methods in that form.
+    the methods in that form as documented there.
 
-    TODO: add unique settings
-    TODO: add single select setting
+    TODO: add unique setting to make sure the related object is not already in
     """
 
     template_name = 'djinn_forms/snippets/relatewidget.html'
@@ -55,20 +60,20 @@ class RelateWidget(Widget):
             extra_attrs=extra_attrs, **kwargs)
 
         url = self.attrs.get("search_url", reverse("djinn_forms_relatesearch"))
-        url = "%s?content_types=%s&searchfield=%s" % (
+        url = "%s?content_types=%s&searchfield=%s&ct_searchfield=%s" % (
             url,
             ",".join(self.attrs['content_types']),
-            self.attrs.get("searchfield", "title_auto")
+            self.attrs.get("searchfield", "title_auto"),
+            self.attrs.get("ct_searchfield", "meta_ct"),
             )
-        
+
         final_attrs.update(
             {'search_minlength': self.attrs.get("search_minlength", 2),
-             'search_url': url,
-             'multiple': True
+             'search_url': url
              })
-        
+
         return final_attrs
-    
+
     def render(self, name, value, attrs=None):
 
         final_attrs = self.build_attrs(attrs, name=name, value=value)

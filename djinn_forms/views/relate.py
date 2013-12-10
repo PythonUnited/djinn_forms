@@ -22,12 +22,17 @@ class RelateSearch(View):
         search_field = "%s__contains" % request.GET.get("searchfield",
                                                         "title")
 
+        ct_search_field = "%s__in" % request.GET.get("ct_searchfield",
+                                                     "meta_ct")
+
+        content_types = request.GET.get('content_types', '').split(",")
+
         _filter = {search_field: Raw("*%s*" % term)}
 
-        sqs = SearchQuerySet().filter(**_filter)
+        if content_types:
+            _filter[ct_search_field] = content_types
 
-        sqs = sqs.filter(
-            meta_ct__in=request.GET.get('content_types', '').split(","))
+        sqs = SearchQuerySet().filter(**_filter)
 
         results = []
 
