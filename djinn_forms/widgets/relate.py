@@ -1,11 +1,9 @@
-from django.utils.safestring import mark_safe
-from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from djinn_contenttypes.utils import urn_to_object
-from base import BaseWidget
+from base import InOutWidget
 
 
-class RelateWidget(BaseWidget):
+class RelateWidget(InOutWidget):
 
     """
     Widget for handling relations to other content. The following
@@ -29,30 +27,9 @@ class RelateWidget(BaseWidget):
 
     template_name = 'djinn_forms/snippets/relatewidget.html'
 
-    def value_from_datadict(self, data, files, name):
+    def convert_item(self, item):
 
-        """ The data may contain a list of objects to remove, and
-        objects to add. Both are prefixed by the field name. The
-        returned value is a dict with 'rm' and 'add' lists, that list
-        the """
-
-        result = {'rm': [], 'add': []}
-
-        for item in data.get("%s_rm" % name, "").split(";;"):
-
-            obj = urn_to_object(item)
-
-            if obj:
-                result['rm'].append(obj)
-
-        for item in data.get("%s_add" % name, "").split(";;"):
-
-            obj = urn_to_object(item)
-
-            if obj:
-                result['add'].append(obj)
-
-        return result
+        return urn_to_object(item)
 
     def build_attrs(self, extra_attrs=None, **kwargs):
 

@@ -1,6 +1,7 @@
 from django.forms.fields import Field
 from djinn_forms.widgets.relate import RelateWidget, RelateSingleWidget
 from djinn_contenttypes.utils import object_to_urn
+from base import AdditionalHandlingMixin
 
 
 class UpdateRelations(object):
@@ -50,7 +51,7 @@ class UpdateRelation(object):
             self.instance.add_relation(rtype, tgt)
 
 
-class RelateField(Field):
+class RelateField(Field, AdditionalHandlingMixin):
 
     """ Field for relations, based on """
 

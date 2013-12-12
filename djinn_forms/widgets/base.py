@@ -35,3 +35,43 @@ class BaseWidget(Widget):
         html = render_to_string(self.template_name, final_attrs)
 
         return mark_safe(u"".join(html))
+
+
+class InOutWidget(BaseWidget):
+
+    """ Widget that handles data with add and remove lists. The
+    incoming data should have <name>_add and <name>_rm values,
+    sepratated by 'separator'. """
+
+    separator = ";;"
+
+    def convert_item(self, item):
+
+        """ Convert a single incomgin value value to the actual value """
+
+        return item
+
+    def value_from_datadict(self, data, files, name):
+
+        """ The data may contain a list of objects to remove, and
+        objects to add. Both are prefixed by the field name. The
+        returned value is a dict with 'rm' and 'add' lists, that list
+        the """
+
+        result = {'rm': [], 'add': []}
+
+        for item in data.get("%s_rm" % name, "").split(self.separator):
+
+            obj = self.convert_item(item)
+
+            if obj:
+                result['rm'].append(obj)
+
+        for item in data.get("%s_add" % name, "").split(self.separator):
+
+            obj = self.convert_item(item)
+
+            if obj:
+                result['add'].append(obj)
+
+        return result
