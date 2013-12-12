@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-09 16:44+0100\n"
+"POT-Creation-Date: 2013-12-12 10:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,38 +18,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: templates/djinn_forms/snippets/documentattachmentwidget.html:11
-msgid "Select files..."
+msgid "Select files"
 msgstr ""
 
 #: templates/djinn_forms/snippets/documentattachmentwidget.html:14
-msgid "Replace file..."
+msgid "Replace file"
 msgstr ""
 
 #: templates/djinn_forms/snippets/documentattachmentwidget.html:16
-msgid "Select file..."
+msgid "Select file"
 msgstr ""
 
 #: templates/djinn_forms/snippets/imageattachmentwidget.html:11
-msgid "Select images..."
+msgid "Select images"
 msgstr ""
 
+#. Translators: image replace label
 #: templates/djinn_forms/snippets/imageattachmentwidget.html:14
-msgid "Replace image..."
-msgstr ""
-
-#: templates/djinn_forms/snippets/imageattachmentwidget.html:16
-msgid "Select image..."
-msgstr ""
-
-#: templates/djinn_forms/snippets/imagewidget.html:6
+#: templates/djinn_forms/snippets/imagewidget.html:7
 msgid "Replace image"
 msgstr ""
 
-#: templates/djinn_forms/snippets/imagewidget.html:7
+#. Translators: image replace label
+#: templates/djinn_forms/snippets/imageattachmentwidget.html:16
+#: templates/djinn_forms/snippets/imagewidget.html:9
 msgid "Select image"
 msgstr ""
 
-#: templates/djinn_forms/snippets/imagewidget.html:24
+#. Translators: image remove label
+#: templates/djinn_forms/snippets/imagewidget.html:27
 msgid "Remove image"
 msgstr ""
 

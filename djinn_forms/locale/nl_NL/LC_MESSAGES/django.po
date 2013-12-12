@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: djinn_forms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-09 16:44+0100\n"
-"PO-Revision-Date: 2013-11-29 16:52+0100\n"
+"POT-Creation-Date: 2013-12-12 10:14+0100\n"
+"PO-Revision-Date: 2013-12-12 10:14+0100\n"
 "Last-Translator: Duco Dokter <dokter@w20e.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,41 +19,35 @@ msgstr ""
 "X-Poedit-Country: NETHERLANDS\n"
 
 #: templates/djinn_forms/snippets/documentattachmentwidget.html:11
-#, fuzzy
-msgid "Select files..."
+msgid "Select files"
 msgstr "Selecteer link"
 
 #: templates/djinn_forms/snippets/documentattachmentwidget.html:14
-msgid "Replace file..."
-msgstr ""
+msgid "Replace file"
+msgstr "Vervang afbeelding"
 
 #: templates/djinn_forms/snippets/documentattachmentwidget.html:16
-#, fuzzy
-msgid "Select file..."
+msgid "Select file"
 msgstr "Selecteer link"
 
 #: templates/djinn_forms/snippets/imageattachmentwidget.html:11
-msgid "Select images..."
-msgstr ""
+msgid "Select images"
+msgstr "Selecteer afbeelding"
 
+#. Translators: image replace label
 #: templates/djinn_forms/snippets/imageattachmentwidget.html:14
-msgid "Replace image..."
-msgstr ""
-
-#: templates/djinn_forms/snippets/imageattachmentwidget.html:16
-#, fuzzy
-msgid "Select image..."
-msgstr "Selecteer link"
-
-#: templates/djinn_forms/snippets/imagewidget.html:6
+#: templates/djinn_forms/snippets/imagewidget.html:7
 msgid "Replace image"
 msgstr "Vervang afbeelding"
 
-#: templates/djinn_forms/snippets/imagewidget.html:7
+#. Translators: image replace label
+#: templates/djinn_forms/snippets/imageattachmentwidget.html:16
+#: templates/djinn_forms/snippets/imagewidget.html:9
 msgid "Select image"
 msgstr "Selecteer afbeelding"
 
-#: templates/djinn_forms/snippets/imagewidget.html:24
+#. Translators: image remove label
+#: templates/djinn_forms/snippets/imagewidget.html:27
 msgid "Remove image"
 msgstr "Verwijder afbeelding"
 
@@ -65,15 +59,19 @@ msgstr "Selecteer link"
 #: templates/djinn_forms/snippets/relatesinglewidget.html:23
 #: templates/djinn_forms/snippets/relatesinglewidget.html:32
 msgid "Change"
-msgstr ""
+msgstr "Wijzig"
 
 #. Translators: relate widget remove relation
 #: templates/djinn_forms/snippets/relatewidget.html:23
 #: templates/djinn_forms/snippets/relatewidget.html:32
 msgid "Remove"
-msgstr ""
+msgstr "Verwijder"
 
 #. Translators: djinn_forms relate add button label
 #: widgets/share.py:58
 msgid "Add"
-msgstr ""
+msgstr "Voeg toe"
+
+#, fuzzy
+#~ msgid "Select image..."
+#~ msgstr "Selecteer link"

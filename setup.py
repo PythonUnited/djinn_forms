@@ -39,5 +39,9 @@ setup(name='djinn_forms',
       js=djinn_forms:get_js
       css=djinn_forms:get_css
       urls=djinn_forms:get_urls
-      """
+      """,
+      message_extractors = { '.': [
+          ('**.html',   'lingua_xml', None),
+          ('**.py', 'lingua_python', None)
+          ]},
       )
