@@ -48,7 +48,7 @@ class UpdateRelation(object):
         if self.tgt:
             self.instance.get_relations(
                 relation_type_list=[self.relation_type]).delete()
-            self.instance.add_relation(rtype, tgt)
+            self.instance.add_relation(self.relation_type, self.tgt)
 
 
 class RelateField(Field, AdditionalHandlingMixin):
