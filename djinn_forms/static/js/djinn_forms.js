@@ -187,19 +187,14 @@ djinn.forms.initRelateWidget = function(widget) {
 };
 
 
-djinn.forms.handleRelateSelect = function(e, ui) {
+djinn.forms.handleElement = function($widget, label, value) {
 
-    var label = ui.item.label;
-    var value =  ui.item.value;
+    var tpl = $widget.find("ul .tpl").eq(0).clone();
 
-    var input = $(e.target).parents(".relate").find(".autocomplete");
-    var widget = $(e.target).parents(".relate");
-    var tpl = widget.find("ul .tpl").eq(0).clone();
-
-    if (widget.hasClass("multiple")) {
-      djinn.forms.addValue(widget.find(".add-list").eq(0), value);
+    if ($widget.hasClass("multiple")) {
+      djinn.forms.addValue($widget.find(".add-list").eq(0), value);
     } else {
-      widget.find(".add-list").eq(0).val(value);
+      $widget.find(".add-list").eq(0).val(value);
     }
 
     tpl.attr("class", "");
@@ -207,13 +202,27 @@ djinn.forms.handleRelateSelect = function(e, ui) {
     tpl.find("a").eq(0).html(label);
     tpl.find("a.delete a.change").attr("data-urn", value);
 
-    if (widget.hasClass("multiple")) {
-      widget.find("ul").append(tpl);
+    if ($widget.hasClass("multiple")) {
+      $widget.find("ul").append(tpl);
     } else {
-      widget.find("ul li").last().replaceWith(tpl);
+      $widget.find("ul li").last().replaceWith(tpl);
     }
 
-    widget.removeClass("empty");
+    $widget.removeClass("empty");
+
+    $(document).trigger("djinn_forms_relate", [$widget, value]);
+};
+
+
+djinn.forms.handleRelateSelect = function(e, ui) {
+
+    var label = ui.item.label;
+    var value =  ui.item.value;
+    var $widget = $(e.target).parents(".relate");
+
+    djinn.forms.handleElement($widget, label, value)
+
+    var input = $(e.target).parents(".relate").find(".autocomplete");
 
     input.val("");
 
@@ -223,8 +232,6 @@ djinn.forms.handleRelateSelect = function(e, ui) {
     }
 
     input.focus();
-
-    $(document).trigger("djinn_forms_relate", [widget, value]);
 
     e.preventDefault();
 };
@@ -236,7 +243,7 @@ $(document).ready(function() {
         djinn.forms.initRelateWidget($(this));
       });
 
-    $('.date').datepicker();    
+    $('.date').datepicker();
     $('.time').datetimepicker({timeOnly: true});
 
     $(document).on("focusout", ".relate.single .autocomplete", function(e) {

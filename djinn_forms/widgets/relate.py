@@ -10,13 +10,14 @@ class RelateWidget(InOutWidget):
     extra attributes are supported:
 
      * content_types Allowed content types for this relation as list
-     * relation_type Relation type to use for creating the actual relation
      * searchfield Look for this field in the searchengine
      * ct_searchfield Use this field to check on the contenttype. Defaults
        to meta_ct.
      * search_minlength Start autosearch when length is this or more
      * search_url Use this URL as search base. Defaults to reverse of
        'djinn_forms_relatesearch'
+    *  template_name path to teh rendering template. Defaults to
+       djinn_forms/snippets/relatewidget.html
 
     To actually save the data that this widget produces, you need to
     make your form extend the djinn_forms.forms.RelateMixin and call
@@ -25,7 +26,10 @@ class RelateWidget(InOutWidget):
     TODO: add unique setting to make sure the related object is not already in
     """
 
-    template_name = 'djinn_forms/snippets/relatewidget.html'
+    @property
+    def template_name(self):
+        return self.attrs.get('template_name',
+                              'djinn_forms/snippets/relatewidget.html')
 
     def convert_item(self, item):
 
@@ -36,9 +40,12 @@ class RelateWidget(InOutWidget):
         final_attrs = super(RelateWidget, self).build_attrs(
             extra_attrs=extra_attrs, **kwargs)
 
+        ct_searchfield = self.attrs.get("ct_searchfield", "meta_ct")
+
         url = self.attrs.get("search_url", reverse("djinn_forms_relatesearch"))
-        url = "%s?content_types=%s&searchfield=%s&ct_searchfield=%s" % (
+        url = "%s?%s=%s&searchfield=%s&ct_searchfield=%s" % (
             url,
+            ct_searchfield,
             ",".join(self.attrs['content_types']),
             self.attrs.get("searchfield", "title_auto"),
             self.attrs.get("ct_searchfield", "meta_ct"),
