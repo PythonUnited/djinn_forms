@@ -205,7 +205,7 @@ djinn.forms.handleRelateSelect = function(e, ui) {
     tpl.attr("class", "");
     tpl.attr("style", "");
     tpl.find("a").eq(0).html(label);
-    tpl.find("a.delete").attr("data-urn", value);
+    tpl.find("a.delete a.change").attr("data-urn", value);
 
     if (widget.hasClass("multiple")) {
       widget.find("ul").append(tpl);
@@ -246,7 +246,7 @@ $(document).ready(function() {
         widget.removeClass("empty");
       });
 
-    $(document).on("click", ".relate.multiple .delete", function(e) {
+    $(document).on("click", ".relate.multiple .delete ", function(e) {
 
         e.preventDefault();
 
@@ -269,7 +269,7 @@ $(document).ready(function() {
         $(document).trigger("djinn_forms_unrelate", [widget, link.data("urn")]);
       });
 
-    $(document).on("click", ".relate.single .delete", function(e) {
+    $(document).on("click", ".relate.single .change", function(e) {
 
         e.preventDefault();
 
