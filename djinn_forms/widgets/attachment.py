@@ -42,6 +42,8 @@ class AttachmentWidget(forms.widgets.Widget):
             'button_label': self.attrs.get("button_label", ""),
             'widget': self,
             'show_progress': True,
+            'attachment_type': "%s.%s" % (self.model._meta.app_label,
+                                          self.model.__name__),
             'multiple': False,
             'upload_url': reverse("djinn_forms_fileupload")
             }

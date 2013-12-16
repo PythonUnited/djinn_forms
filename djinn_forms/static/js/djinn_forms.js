@@ -224,7 +224,7 @@ djinn.forms.handleRelateSelect = function(e, ui) {
 
     input.focus();
 
-    $(document).trigger("djinn_forms_relate", [widget]);
+    $(document).trigger("djinn_forms_relate", [widget, value]);
 
     e.preventDefault();
 };
@@ -265,6 +265,8 @@ $(document).ready(function() {
         }
 
         record.remove();
+
+        $(document).trigger("djinn_forms_unrelate", [widget, link.data("urn")]);
       });
 
     $(document).on("click", ".relate.single .delete", function(e) {

@@ -3,13 +3,14 @@ import magic
 import os
 from tempfile import mkstemp
 import uuid
+import logging as log
+import mimetypes
 from shutil import copyfile
+from django.db.models import get_model
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import View
 from django.http import HttpResponse
-import logging as log
-import mimetypes
 from django.conf import settings
 from pgcontent.models.attachment import DocumentAttachment, ImageAttachment
 from django.core.files import File
@@ -38,7 +39,12 @@ class UploadView(View):
         file_name = None
 
         attachments = []
-        attachment_type = request.REQUEST.get("attachment_type", "document")    
+        attachment_type = request.REQUEST.get(
+            "attachment_type",
+            "djinn_contenttypes.DocumentAttachment")
+
+        parts = attachment_type.split('.')
+        model = get_model(parts[0], parts[-1])
 
         try:
             attachment_id = int(request.REQUEST.get("attachment_id", None))
@@ -91,7 +97,7 @@ class UploadView(View):
 
                 attachment.image.save(path, File(open(temp_file)))
                 attachment.save()
-            else:
+            elif attachment_type == "document":
                 store_path = os.path.join("documents", relative_file_name)
             
                 self.store(temp_file, store_path)
@@ -109,8 +115,20 @@ class UploadView(View):
                         )
             
                 attachment.save()
+            else:
+
+                attachment = model()
+
+                path = "images/%s" % relative_file_name
+                attachment.image.save(path, File(open(temp_file)))
+                attachment.save()
 
             attachments.append(attachment)
+
+        # TODO: always return JSON and let the widget handle the rendering
+        #
+        if attachment_type not in ["document", "image", "avatar"]:
+            attachment_type = "image"
 
         # Send back results to the client. Client should 'handle'
         # file_id etc.
