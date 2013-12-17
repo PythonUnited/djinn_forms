@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n djinn_core %}
 
 <div class="fileupload">
   <div class="btn fileinput-button">
@@ -44,7 +44,37 @@
   {% endif %}
 
   <ul class="unstyled uploaded-files" id="uploads_{{ name }}">
-    {% include "pgcontent/snippets/imageattachments.html" %}
+    
+    {% for att in attachments %}
+    <li class="editable">
+
+      <img src="{{ att.get_thumbnail_url }}" />
+      {{ att.title }}
+      
+      <span class="controls pull-right">
+        <a class="edit-inline"
+           {% if att|implements:"ImageAttachment" %}
+           href="{% url 'pgcontent_edit_imageattachment' att.id %}"
+           {% else %}
+           href="{% url 'djinn_contenttypes_edit_imgattachment' att.id %}"
+           {% endif %}
+           >
+          Aanpassen
+        </a>
+        <a class="rm-inline"
+           data-pu_callback="djinn.forms.remove_attachment:{{ att.id }}"
+           {% if att|implements:"ImageAttachment" %}
+           href="{% url 'pgcontent_delete_imageattachment' att.id %}"
+           {% else %}
+           href="{% url 'djinn_contenttypes_delete_imgattachment' att.id %}"
+           {% endif %}
+           >
+          Verwijderen
+        </a>
+      </span>
+      
+    </li>
+    {% endfor %}
   </ul>
 
 </div>
