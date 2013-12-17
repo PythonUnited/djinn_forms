@@ -9,7 +9,8 @@
            data-search_url="{{ search_url }}"
            placeholder="{{ hint }}">
     <input type="hidden" name="{{ name }}_rm" value="" class="rm-list" />
-    <input type="hidden" name="{{ name }}_add" value="" class="add-list" />
+    <input type="hidden" name="{{ name }}_add" value="{{ initialvalue }}"
+           class="add-list" />
 
     <div class="searchresults ui-front"></div>
 

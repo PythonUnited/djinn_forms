@@ -47,7 +47,7 @@ class InOutWidget(BaseWidget):
 
     def convert_item(self, item):
 
-        """ Convert a single incomgin value value to the actual value """
+        """ Convert a single incoming value value to the actual value """
 
         return item
 
@@ -62,16 +62,18 @@ class InOutWidget(BaseWidget):
 
         for item in data.get("%s_rm" % name, "").split(self.separator):
 
-            obj = self.convert_item(item)
-
-            if obj:
+            try:
+                obj = self.convert_item(item)
                 result['rm'].append(obj)
+            except:
+                pass
 
         for item in data.get("%s_add" % name, "").split(self.separator):
 
-            obj = self.convert_item(item)
-
-            if obj:
+            try:
+                obj = self.convert_item(item)
                 result['add'].append(obj)
+            except:
+                pass
 
         return result

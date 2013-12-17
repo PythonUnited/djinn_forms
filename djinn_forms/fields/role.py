@@ -40,9 +40,11 @@ class UpdateRole(UpdateRelation):
 
     def update(self):
 
+        role = Role.objects.get(name=self.role)
+
         if self.tgt:
-            self.instance.rm_local_role(self.role)
-            self.instance.add_local_role(self.role,
+            self.instance.rm_local_role(role)
+            self.instance.add_local_role(role,
                                          _profile_to_user_or_group(self.tgt))
 
 
@@ -65,7 +67,14 @@ class LocalRoleField(RelateField):
         data['add'] has values, add those to the result
         """
 
-        roles = self.instance.get_local_roles(role_filter=[self.role.name])
+        # We have an initial value set...
+        #
+        if data and not "add" in data.keys():
+            return data
+            
+        role = Role.objects.get(name=self.role)
+
+        roles = self.instance.get_local_roles(role_filter=[role.name])
 
         users_or_groups = [(lrole.user or lrole.usergroup)
                            for lrole in roles
@@ -96,6 +105,11 @@ class LocalRoleSingleField(LocalRoleField):
     def prepare_value(self, data):
 
         """ Get existing role, if it's there """
+
+        # We have an initial value set...
+        #
+        if data:
+            return {'label': str(data), 'value': object_to_urn(data)}
 
         value = super(LocalRoleSingleField, self).prepare_value(data)
 

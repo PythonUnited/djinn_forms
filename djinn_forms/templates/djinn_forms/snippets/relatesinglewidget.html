@@ -9,7 +9,9 @@
            data-search_url="{{ search_url }}"
            placeholder="{{ hint }}">
 
-    <input type="hidden" name="{{ name }}_add" value="" class="add-list" />
+    <input type="hidden" name="{{ name }}_add" 
+           value="{% if initial %}{{ value.value }}{% endif %}"
+           class="add-list {% if initial %}initial{% endif %}" />
 
     <div class="searchresults ui-front"></div>
 

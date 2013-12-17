@@ -26,6 +26,8 @@ class RelateWidget(InOutWidget):
     TODO: add unique setting to make sure the related object is not already in
     """
 
+    initial = False
+
     @property
     def template_name(self):
         return self.attrs.get('template_name',
@@ -56,6 +58,8 @@ class RelateWidget(InOutWidget):
              'search_url': url
              })
 
+        final_attrs['initial'] = self.initial
+
         return final_attrs
 
 
@@ -71,7 +75,7 @@ class RelateSingleWidget(RelateWidget):
         objects to add. Both are prefixed by the field name. The
         returned value is a dict with 'rm' and 'add' lists, that list
         the """
-
+        
         result = super(RelateSingleWidget, self).value_from_datadict(
             data, files, name)
 
