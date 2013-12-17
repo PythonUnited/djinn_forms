@@ -1,6 +1,6 @@
 from django.forms.fields import Field
 from djinn_forms.widgets.relate import RelateWidget, RelateSingleWidget
-from djinn_contenttypes.utils import object_to_urn
+from djinn_core.utils import object_to_urn
 from base import AdditionalHandlingMixin
 
 

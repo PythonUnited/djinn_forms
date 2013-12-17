@@ -1,6 +1,6 @@
 from django.forms.fields import Field
 from djinn_forms.widgets.share import ShareWidget
-from djinn_contenttypes.utils import object_to_urn
+from djinn_core.utils import object_to_urn
 
 
 class ShareField(Field):

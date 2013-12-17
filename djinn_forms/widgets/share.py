@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-from djinn_contenttypes.utils import urn_to_object
+from djinn_core.utils import urn_to_object
 
 
 TPL = 'djinn_forms/snippets/sharewidget.html'

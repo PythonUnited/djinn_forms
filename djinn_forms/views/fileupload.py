@@ -12,7 +12,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import View
 from django.http import HttpResponse
 from django.conf import settings
-from pgcontent.models.attachment import DocumentAttachment, ImageAttachment
 from django.core.files import File
 
 
@@ -43,8 +42,13 @@ class UploadView(View):
             "attachment_type",
             "djinn_contenttypes.DocumentAttachment")
 
-        parts = attachment_type.split('.')
-        model = get_model(parts[0], parts[-1])
+        if attachment_type in ["image", "avatar"]:
+            model = get_model("pgcontent", "ImageAttachment")
+        elif attachment_type == "document":
+            model = get_model("pgcontent", "DocumentAttachment")
+        else:
+            parts = attachment_type.split('.')
+            model = get_model(parts[0], parts[-1])
 
         try:
             attachment_id = int(request.REQUEST.get("attachment_id", None))
@@ -81,10 +85,10 @@ class UploadView(View):
                     return response
 
                 if attachment_id:
-                    attachment = ImageAttachment.objects.get(pk=attachment_id)
+                    attachment = model.objects.get(pk=attachment_id)
                     attachment.original_filename = file_name
                 else:
-                    attachment = ImageAttachment(
+                    attachment = model(
                         mime_type=mime_type,
                         title=file_name,
                         original_filename=file_name
@@ -99,21 +103,22 @@ class UploadView(View):
                 attachment.save()
             elif attachment_type == "document":
                 store_path = os.path.join("documents", relative_file_name)
-            
+
                 self.store(temp_file, store_path)
 
                 if attachment_id:
-                    attachment = DocumentAttachment.objects.get(pk=attachment_id)
+                    attachment = model.objects.get(
+                        pk=attachment_id)
                     attachment.file = store_path
-                    attachment.original_filename=file_name
+                    attachment.original_filename = file_name
                 else:
-                    attachment = DocumentAttachment.objects.create(
+                    attachment = model.objects.create(
                         file=store_path,
                         mime_type=mime_type,
                         title=file_name,
                         original_filename=file_name
                         )
-            
+
                 attachment.save()
             else:
 
@@ -135,7 +140,7 @@ class UploadView(View):
         #
         context = {}
 
-        context["attachment_ids"] = [att.id for att in attachments]            
+        context["attachment_ids"] = [att.id for att in attachments]
 
         if self.request.REQUEST.get("edit_type", "") == "field":
             if attachment_type == "image":
@@ -167,16 +172,16 @@ class UploadView(View):
                                     attachment_type):
 
         """ Check on file type, and generate path accordingly """
-        
+
         fn, file_extension = os.path.splitext(file_name)
-        
+
         # Create a random filename, with the proper extension.
         #
         file_id = str(uuid.uuid4())
         file_name = os.path.join(
             file_id[:2],
             "%s%s" % (file_id, file_extension))
-        
+
         return file_name
 
     def create_temp_file(self, data):
@@ -194,7 +199,7 @@ class UploadView(View):
     def store(self, temp_file, file_name):
 
         file_name = os.path.join(settings.MEDIA_ROOT, file_name)
-        
+
         if not os.path.exists(os.path.dirname(file_name)):
             os.makedirs(os.path.dirname(file_name))
 

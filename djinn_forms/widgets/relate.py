@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from djinn_contenttypes.utils import urn_to_object
+from djinn_core.utils import urn_to_object
 from base import InOutWidget
 
 

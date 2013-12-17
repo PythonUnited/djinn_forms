@@ -1,7 +1,7 @@
 from django.forms.widgets import Widget
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
-from djinn_contenttypes.utils import get_object_by_ctype_id, object_to_urn, \
+from djinn_core.utils import get_object_by_ctype_id, object_to_urn, \
     urn_to_object
 
 
@@ -39,7 +39,7 @@ class LinkWidget(Widget):
                    'value': value or "",
                    }
 
-        html = render_to_string('djinn_forms/snippets/link_widget.html', 
+        html = render_to_string('djinn_forms/snippets/link_widget.html',
                                 context)
-        
+
         return mark_safe(u"".join(html))

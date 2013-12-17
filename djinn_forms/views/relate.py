@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import View
 from haystack.query import SearchQuerySet
 from haystack.inputs import Raw
-from djinn_contenttypes.utils import object_to_urn
+from djinn_core.utils import object_to_urn
 
 
 class RelateSearch(View):

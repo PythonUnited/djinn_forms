@@ -1,8 +1,6 @@
 from pgauth.models import Role
-from djinn_forms.widgets.relate import RelateWidget
-from djinn_contenttypes.utils import object_to_urn
-from relate import RelateField, RelateSingleField, UpdateRelations, \
-    UpdateRelation
+from djinn_core.utils import object_to_urn
+from relate import RelateField, UpdateRelations, UpdateRelation
 
 
 def _profile_to_user_or_group(profile):
@@ -20,14 +18,16 @@ class UpdateRoles(UpdateRelations):
 
     def update(self):
 
+        role = Role.objects.get(name=self.role)
+
         # Unrelate
         for profile in self.rms:
-            self.instance.rm_local_role(self.role, 
+            self.instance.rm_local_role(role,
                                         _profile_to_user_or_group(profile))
 
         # Relate
         for profile in self.adds:
-            self.instance.add_local_role(self.role,
+            self.instance.add_local_role(role,
                                          _profile_to_user_or_group(profile))
 
 
@@ -54,8 +54,7 @@ class LocalRoleField(RelateField):
 
     def __init__(self, role_id, content_types, *args, **kwargs):
 
-        self.role = Role.objects.get(name=role_id)
-
+        self.role = role_id
         super(LocalRoleField, self).__init__(self.role, content_types, *args,
                                         **kwargs)
 
