@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="relate multiple {% if not value %}empty{% endif %}">
+<div class="relate multiple{% if not value %} empty{% endif %}">
   <div class="multiple-search">
     <input type="search" id="id-{{ name }}" name="{{ name }}" 
            class="autocomplete"
