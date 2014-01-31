@@ -53,7 +53,7 @@
       
       <span class="controls pull-right">
         <a class="edit-inline"
-           {% if att|implements:"ImageAttachment" %}
+           {% if att|implements:"pgcontent.models.attachment.ImageAttachment" %}
            href="{% url 'pgcontent_edit_imageattachment' att.id %}"
            {% else %}
            href="{% url 'djinn_contenttypes_edit_imgattachment' att.id %}"
@@ -63,7 +63,7 @@
         </a>
         <a class="rm-inline"
            data-pu_callback="djinn.forms.remove_attachment:{{ att.id }}"
-           {% if att|implements:"ImageAttachment" %}
+           {% if att|implements:"pgcontent.ImageAttachment" %}
            href="{% url 'pgcontent_delete_imageattachment' att.id %}"
            {% else %}
            href="{% url 'djinn_contenttypes_delete_imgattachment' att.id %}"
