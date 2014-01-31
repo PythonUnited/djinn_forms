@@ -19,7 +19,7 @@
 
   <ul class="related">
     <li class="tpl" style="display: none">
-      <a href="#">label</a> 
+      <span href="#">label</span> 
       <a href="#" data-urn="value" 
          class="change related-option">
         {% trans "Change" %}
@@ -27,7 +27,7 @@
     </li>
     {% if value %}
     <li>
-      <a href="#">{{ value.label }}</a> 
+      <span href="#">{{ value.label }}</span> 
       <a href="#" data-urn="{{ value.value }}" 
          class="change related-option">
         {% comment %}Translators: relate widget change relation{% endcomment %}

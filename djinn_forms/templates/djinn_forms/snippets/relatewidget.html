@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="relate multiple {% if not value %}empty{% endif %}">
+<div class="relate multiple{% if not value %} empty{% endif %}">
   <div class="multiple-search">
     <input type="search" id="id-{{ name }}" name="{{ name }}" 
            class="autocomplete"
@@ -18,7 +18,7 @@
 
   <ul class="related">
     <li class="tpl" style="display: none">
-      <a href="#">label</a> 
+      <span href="#">label</span> 
       <a href="#" data-urn="value"
          class="delete related-option">
         {% trans "Remove" %}
@@ -26,7 +26,7 @@
     </li>
     {% for related in value %}
     <li>
-      <a href="#">{{ related.label }}</a> 
+      <span href="#">{{ related.label }}</span> 
       <a href="#" data-urn="{{ related.value }}" 
          class="delete related-option">
         {% comment %}Translators: relate widget remove relation{% endcomment %}

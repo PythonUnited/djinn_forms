@@ -199,7 +199,7 @@ djinn.forms.handleElement = function($widget, label, value) {
 
     tpl.attr("class", "");
     tpl.attr("style", "");
-    tpl.find("a").eq(0).html(label);
+    tpl.find("span").eq(0).html(label);
     tpl.find("a.delete a.change").attr("data-urn", value);
 
     if ($widget.hasClass("multiple")) {
