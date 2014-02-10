@@ -8,13 +8,6 @@ class ShareMixin(object):
 
     def save_shares(self, commit=True):
 
-        # for ctype, cid, mode in self.cleaned_data['shares']['rm']:
-        #     obj.rm_share(ctype, cid, mode)
-        #
-        # for ctype, cid, mode in self.cleaned_data['shares']['add']:
-        #     obj.add_share(ctype, cid, mode)
-
-
         for f_name, field in self.fields.items():
             if isinstance(field, ShareField):
 

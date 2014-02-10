@@ -209,7 +209,7 @@ djinn.forms.handleElement = function($widget, label, value) {
     }
 
     $widget.removeClass("empty");
-
+    
     $(document).trigger("djinn_forms_relate", [$widget, value]);
 };
 
@@ -220,7 +220,7 @@ djinn.forms.handleRelateSelect = function(e, ui) {
     var value =  ui.item.value;
     var $widget = $(e.target).parents(".relate");
 
-    djinn.forms.handleElement($widget, label, value)
+    djinn.forms.handleElement($widget, label, value);
 
     var input = $(e.target).parents(".relate").find(".autocomplete");
 
