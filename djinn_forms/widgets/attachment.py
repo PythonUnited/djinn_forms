@@ -1,3 +1,4 @@
+import re
 from django import forms
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
@@ -17,18 +18,27 @@ class AttachmentWidget(forms.widgets.Widget):
 
     def value_from_datadict(self, data, files, name):
 
+        """ Conservatively try to get the submitted data """
+
+        _val = None
+
         if self.attrs.get("multiple", False):
-            return [int(val) for val in data.get(name, "").split(",") if val]
+            _val = [int(val) for val in data.get(name, "").split(",") if val]
         else:
-            return data.get(name, None)
+            try:
+                _val = int(re.search(r'([0-9]+)', data.get(name)).group(1))
+            except:
+                pass
+
+        return _val
 
     def _normalize_value(self, value):
 
         if self.attrs.get("multiple", False):
             if not hasattr(value, "__iter__"):
                 value = [value]
-            
-            return filter(lambda x: self.model.objects.filter(pk=x).exists(), 
+
+            return filter(lambda x: self.model.objects.filter(pk=x).exists(),
                           value)
         else:
             return value
@@ -38,7 +48,7 @@ class AttachmentWidget(forms.widgets.Widget):
         value = self._normalize_value(value)
 
         context = {
-            'name': name, 
+            'name': name,
             'button_label': self.attrs.get("button_label", ""),
             'widget': self,
             'show_progress': True,
@@ -61,16 +71,16 @@ class AttachmentWidget(forms.widgets.Widget):
                     try:
                         attachments.append(self.model.objects.get(pk=val))
                     except:
-                        pass # too bad
+                        pass  # too bad
             else:
                 try:
                     attachments.append(self.model.objects.get(pk=value))
                 except:
-                    pass # too bad
+                    pass  # too bad
 
         context['attachments'] = attachments
         context.update(self.attrs)
-        
+
         if attrs:
             context.update(attrs)
 

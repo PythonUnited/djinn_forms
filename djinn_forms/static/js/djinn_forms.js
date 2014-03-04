@@ -98,12 +98,12 @@ djinn.forms.init_fileuploader = function(options) {
       var valuetgt = $($(e.target).data("valuefield"));
       var tgt = $(e.target);
 
-      if (tgt.attr("multiple")) {
+      if (tgt.attr("multiple") == "true") {
         $(tgt.data("target")).append(data.result.html);
         valuetgt.val(valuetgt.val() + "," + data.result.attachment_ids.join(","));
       } else {
         $(tgt.data("target")).html(data.result.html);
-        valuetgt.val(data.result.attachment_ids.join(","));
+        valuetgt.val(data.result.attachment_ids[0]);
       }
       $(tgt.data("progress") + " .bar").css("width", "100%");
 
