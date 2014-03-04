@@ -93,6 +93,7 @@ djinn.forms.init_fileuploader = function(options) {
   var defaults = {
     url: '/fileupload',
     dataType: 'json',
+    progressInterval: 10,
     done: function (e, data) {
 
       var valuetgt = $($(e.target).data("valuefield"));
@@ -105,6 +106,7 @@ djinn.forms.init_fileuploader = function(options) {
         $(tgt.data("target")).html(data.result.html);
         valuetgt.val(data.result.attachment_ids[0]);
       }
+
       $(tgt.data("progress") + " .bar").css("width", "100%");
 
       if (tgt.data("callback")) {
@@ -123,9 +125,13 @@ djinn.forms.init_fileuploader = function(options) {
       var tgt = $(e.target);
 
       tgt.parents(".imagewidget").addClass("loading");
+
+      $($(e.target).data("progress") + " .bar").css("width", "5%");
     },
-    progress: function (e, data) {
+    progressall: function (e, data) {
+
       var progress = parseInt(data.loaded / data.total * 100, 10);
+
       $($(e.target).data("progress") + " .bar").css("width", progress + "%");
     }
   };
