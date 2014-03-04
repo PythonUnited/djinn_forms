@@ -99,7 +99,7 @@ djinn.forms.init_fileuploader = function(options) {
       var valuetgt = $($(e.target).data("valuefield"));
       var tgt = $(e.target);
 
-      if (tgt.attr("multiple") == "true") {
+      if (tgt.attr("multiple") != "false") {
         $(tgt.data("target")).append(data.result.html);
         valuetgt.val(valuetgt.val() + "," + data.result.attachment_ids.join(","));
       } else {
