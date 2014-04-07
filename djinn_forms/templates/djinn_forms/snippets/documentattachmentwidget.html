@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="fileupload">
+<div class="attach fileupload">
   <div class="btn fileinput-button">
     <i class="icon-plus icon-white"></i>
     
@@ -31,7 +31,7 @@
            data-uploadurl="{{ upload_url }}"
            data-target="#uploads_{{ name }}" />
     
-    <input id="id_{{ name }}" name="{{ name }}" type="hidden" 
+    <input class="value-list" id="id_{{ name }}" name="{{ name }}" type="hidden" 
            value="{{ value }}" />
     
   </div>
@@ -44,7 +44,25 @@
   {% endif %}
 
   <ul class="unstyled uploaded-files" id="uploads_{{ name }}">
-    {% include "pgcontent/snippets/documentattachments.html" %}
+    {% for att in attachments %}
+    <li class="editable">
+      
+      <img src="{{ object.thumbnail_url }}" />
+      {{ att.title }}
+      
+      <span class="controls pull-right">
+        <a class="edit-inline"
+           href="{% url 'pgcontent_edit_documentattachment' att.id %}">
+          {% trans "Edit" %}
+        </a>
+        <a href="#" data-value="{{ att.id }}" 
+           class="delete">
+          {% trans "Remove" %}
+        </a>
+      </span>
+
+    </li>
+    {% endfor %}
   </ul>
 
 </div>

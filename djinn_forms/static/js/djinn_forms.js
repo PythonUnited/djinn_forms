@@ -282,6 +282,22 @@ $(document).ready(function() {
         $(document).trigger("djinn_forms_unrelate", [widget, link.data("urn")]);
       });
 
+    $(document).on("click", ".attach .delete ", function(e) {
+
+        e.preventDefault();
+
+        var widget = $(e.currentTarget).parents(".attach");
+        var record = $(e.currentTarget).parents("li");
+        var link = $(e.currentTarget);
+
+        djinn.forms.removeValue(widget.find(".value-list").eq(0),
+                                link.data("value"));
+
+        record.remove();
+
+        $(document).trigger("djinn_forms_detach", [widget, link.data("value")]);
+      });
+
     $(document).on("click", ".relate.single .change", function(e) {
 
         e.preventDefault();
