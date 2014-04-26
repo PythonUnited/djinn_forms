@@ -4,10 +4,12 @@
 
 if (djinn == undefined) {
     var djinn = {};
-}
+};
 
 
-djinn.forms = {};
+if (djinn.forms == undefined) {
+  djinn.forms = {};
+};
 
 
 /**
