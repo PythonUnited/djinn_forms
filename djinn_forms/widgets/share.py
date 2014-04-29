@@ -14,8 +14,9 @@ class ShareWidget(Widget):
     """ Widget for handling relations to other content.
     The following extra attributes are supported:
      * content_types Allowed content types for this relation
-     * relation_type Relation type to use for creating the actual relation
-     * src_obj Source object for relation
+     * searchfield Search field to use. Default: 'title'
+     * search_minlength Start searching when N chars have been typed.
+       Default: 2
     """
 
     def value_from_datadict(self, data, files, name):
@@ -29,14 +30,20 @@ class ShareWidget(Widget):
 
         for item in data.get("%s_rm" % name, "").split(";;"):
 
-            obj = urn_to_object(item)
+            try:
+                obj = urn_to_object(item)
+            except:
+                obj = None
 
             if obj:
                 result['rm'].append(obj)
 
         for item in data.get("%s_add" % name, "").split(";;"):
 
-            obj = urn_to_object(item)
+            try:
+                obj = urn_to_object(item)
+            except:
+                obj = None
 
             if obj:
                 result['add'].append(obj)

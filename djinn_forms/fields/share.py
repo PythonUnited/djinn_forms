@@ -85,8 +85,10 @@ class ShareField(Field):
         for rel in shares:
             if rel.user_id:
                 uprofile = rel.user.profile
-                prepared.append({'label': str(uprofile), 'value': object_to_urn(uprofile)})
+                prepared.append({'label': str(uprofile),
+                                 'value': object_to_urn(uprofile)})
             if rel.usergroup_id:
                 gprofile = rel.usergroup.profile
-                prepared.append({'label': str(gprofile), 'value': object_to_urn(gprofile)})
+                prepared.append({'label': str(gprofile),
+                                 'value': object_to_urn(gprofile)})
         return prepared

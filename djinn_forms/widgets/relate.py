@@ -42,12 +42,9 @@ class RelateWidget(InOutWidget):
         final_attrs = super(RelateWidget, self).build_attrs(
             extra_attrs=extra_attrs, **kwargs)
 
-        ct_searchfield = self.attrs.get("ct_searchfield", "meta_ct")
-
         url = self.attrs.get("search_url", reverse("djinn_forms_relatesearch"))
-        url = "%s?%s=%s&searchfield=%s&ct_searchfield=%s" % (
+        url = "%s?content_types=%s&searchfield=%s&ct_searchfield=%s" % (
             url,
-            ct_searchfield,
             ",".join(self.attrs['content_types']),
             self.attrs.get("searchfield", "title_auto"),
             self.attrs.get("ct_searchfield", "meta_ct"),

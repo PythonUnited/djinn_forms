@@ -2,14 +2,14 @@
  * Djinn forms JS lib. Mainly helper functions for form widget handling.
  */
 
-if (djinn == undefined) {
+if (djinn === undefined) {
     var djinn = {};
-};
+}
 
 
-if (djinn.forms == undefined) {
+if (djinn.forms === undefined) {
   djinn.forms = {};
-};
+}
 
 
 /**
@@ -78,10 +78,10 @@ djinn.forms.addValue = function(input, value, unique, separator) {
 djinn.forms.set_link = function(url, content_type, obj_id, title, extra_args) {
 
   var val = url + "::" + content_type + "::" + obj_id;
-  val += "::" + (extra_args['target'] || "");
+  val += "::" + (extra_args.target || "");
 
-  $("#id_" + extra_args['tgt']).val(val);
-  $("#" + extra_args['tgt'] + "_link").html(title || url);
+  $("#id_" + extra_args.tgt).val(val);
+  $("#" + extra_args.tgt + "_link").html(title || url);
 
   $("#MyModal").modal("hide");
 };
@@ -145,15 +145,15 @@ djinn.forms.init_fileuploader = function(options) {
   $("input[type='file']").each(function() {
 
       if ($(this).data("uploadurl")) {
-        defaults['url'] = $(this).data("uploadurl");
+        defaults.url = $(this).data("uploadurl");
       }
-      defaults['dropZone'] = $(this).attr("id");
+      defaults.dropZone = $(this).attr("id");
 
-      defaults['formData'] = {
+      defaults.formData = {
         "attachment_id": $(this).hasClass("field") ? $($(this).data("valuefield")).val() : "",
         "attachment_type": $(this).data("attachmenttype"),
         "edit_type": $(this).hasClass("field") ? "field": "attachment"
-      }
+      };
 
       $(this).fileupload(defaults);
     });

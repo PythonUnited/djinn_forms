@@ -1,4 +1,3 @@
-from django import forms
 from djinn_forms.fields.share import ShareField
 
 

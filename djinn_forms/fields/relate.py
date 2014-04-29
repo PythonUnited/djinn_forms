@@ -43,7 +43,7 @@ class UpdateRelation(object):
         self.instance = instance
         self.tgt = tgt
         self.relation_type = relation_type
-        
+
     def update(self):
         if self.tgt:
             self.instance.get_relations(

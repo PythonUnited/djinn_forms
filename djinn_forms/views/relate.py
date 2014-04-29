@@ -1,9 +1,24 @@
 import json
+from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View
 from haystack.query import SearchQuerySet
 from haystack.inputs import Raw
 from djinn_core.utils import object_to_urn
+from djinn_contenttypes.registry import CTRegistry
+
+
+def map_swappable_ct(ct_name):
+
+    """ Is the model swappable? If so, what is the underlying model """
+
+    try:
+        swapped_ct_name = CTRegistry.get(ct_name)['class']._meta.swappable
+
+        if swapped_ct_name:
+            return getattr(settings, swapped_ct_name, ct_name).lower()
+    except:
+        return ct_name
 
 
 class RelateSearch(View):
@@ -26,7 +41,9 @@ class RelateSearch(View):
 
         ct_search_field = "%s__in" % ct_parameter
 
-        content_types = request.GET.get(ct_parameter, '').split(",")
+        content_types = request.GET.get('content_types', '').split(",")
+
+        content_types = map(map_swappable_ct, content_types)
 
         _filter = {search_field: Raw("*%s*" % term)}
 
