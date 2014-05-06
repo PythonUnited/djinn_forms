@@ -2,18 +2,18 @@
  * Djinn form richtext config
  */
 
-if (djinn == undefined) {
+if (djinn === undefined) {
   var djinn = {};
 }
 
-if (djinn.forms == undefined) {
+if (djinn.forms === undefined) {
   djinn.forms = {};
 }
 
 djinn.forms.richtext = {
   BUTTONS: "bold,italic,underline,strikethrough,|,sub,sup,|,justifyleft,justifycenter,justifyright,justifyfull,|,indent,outdent,|,bullist,numlist,|,cleanup,code,|,table,|,link,unlink,anchor",
   TINYMCE_PLUGINS: "lists,pagebreak,table,paste,directionality,visualchars,nonbreaking",
-}
+};
 
 /**
  * Add button to tiny for links.
