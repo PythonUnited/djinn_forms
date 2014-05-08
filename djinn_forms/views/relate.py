@@ -12,13 +12,17 @@ def map_swappable_ct(ct_name):
 
     """ Is the model swappable? If so, what is the underlying model """
 
+    result = ct_name
+
     try:
         swapped_ct_name = CTRegistry.get(ct_name)['class']._meta.swappable
 
         if swapped_ct_name:
-            return getattr(settings, swapped_ct_name, ct_name).lower()
+            result = getattr(settings, swapped_ct_name, ct_name).lower()
     except:
-        return ct_name
+        pass
+
+    return result
 
 
 class RelateSearch(View):

@@ -72,7 +72,7 @@ class RelateSingleWidget(RelateWidget):
         objects to add. Both are prefixed by the field name. The
         returned value is a dict with 'rm' and 'add' lists, that list
         the """
-        
+
         result = super(RelateSingleWidget, self).value_from_datadict(
             data, files, name)
 

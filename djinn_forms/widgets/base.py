@@ -45,6 +45,16 @@ class InOutWidget(BaseWidget):
 
     separator = ";;"
 
+    def build_attrs(self, **kwargs):
+
+        if 'value' in kwargs.keys() and len(kwargs['value']) == 3 and \
+           hasattr(kwargs['value'], "__iter__"):
+            kwargs['add_value'] = self.separator.join(kwargs['value'][1])
+            kwargs['rm_value'] = self.separator.join(kwargs['value'][2])
+            kwargs['value'] = kwargs['value'][0]
+
+        return super(InOutWidget, self).build_attrs(**kwargs)
+
     def convert_item(self, item):
 
         """ Convert a single incoming value value to the actual value """

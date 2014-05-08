@@ -2,6 +2,7 @@
 
 <div class="relate multiple{% if not value %} empty{% endif %}">
   <div class="multiple-search">
+
     <input type="search" id="id-{{ name }}" name="{{ name }}" 
            class="autocomplete"
            value=""
@@ -9,8 +10,9 @@
            data-search_url="{{ search_url }}"
            placeholder="{{ hint }}">
 
-    <input type="hidden" name="{{ name }}_rm" value="" class="rm-list" />
-    <input type="hidden" name="{{ name }}_add" value="{{ initialvalue }}"
+    <input type="hidden" name="{{ name }}_rm" value="{{ rm_value }}"
+           class="rm-list" />
+    <input type="hidden" name="{{ name }}_add" value="{{ add_value }}"
            class="add-list" />
 
     <div class="searchresults ui-front"></div>

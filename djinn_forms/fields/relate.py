@@ -7,6 +7,7 @@ from base import AdditionalHandlingMixin
 class UpdateRelations(object):
 
     def __init__(self, instance, data, relation_type):
+
         self.instance = instance
         self.rms = data.get('rm', [])
         self.adds = data.get('add', [])
@@ -93,26 +94,27 @@ class RelateField(Field, AdditionalHandlingMixin):
 
     def prepare_value(self, data):
 
-        """ Return relations for this field. If data is empty,
-        we simply get the related objects for the given type.
-        If data['rm'] has values, filter those out of the result.
-        If data['add'] has values, add those to the result
+        """Return relations for this field. If data is empty, we simply get
+        the related objects for the given type.  If data['rm'] has
+        values, filter those out of the result.  If data['add'] has
+        values, add those to the result. We also need the original
+        add/rm lists.
         """
+
+        if data is None:
+            data = {}
 
         relations = self.instance.get_related(self.relation_type)
 
-        try:
-            relations = filter(lambda x: x not in data['rm'], relations)
-        except:
-            pass
+        relations = filter(lambda x: x not in data.get('rm', []), relations)
 
-        try:
-            relations += data['add']
-        except:
-            pass
+        relations += data.get('add', [])
 
-        return [{'label': rel.title, 'value': object_to_urn(rel)} for rel in
-                relations]
+        add_value = [object_to_urn(obj) for obj in data.get('add', [])]
+        rm_value = [object_to_urn(obj) for obj in data.get('rm', [])]
+
+        return ([{'label': rel.title, 'value': object_to_urn(rel)} for rel in
+                 relations], add_value, rm_value)
 
 
 class RelateSingleField(RelateField):

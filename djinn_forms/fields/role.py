@@ -58,7 +58,7 @@ class LocalRoleField(RelateField):
 
         self.role = role_id
         super(LocalRoleField, self).__init__(self.role, content_types, *args,
-                                        **kwargs)
+                                             **kwargs)
 
     def prepare_value(self, data):
 
