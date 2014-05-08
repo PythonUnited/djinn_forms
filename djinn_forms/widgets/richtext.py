@@ -15,7 +15,8 @@ class RichTextWidget(Widget):
 
     instance = None
 
-    def __init__(self, img_type=None, attrs=None):
+    def __init__(self, img_type="djinn_contenttypes.ImgAttachment",
+                 attrs=None):
 
         super(RichTextWidget, self).__init__(attrs=attrs)
 
@@ -26,7 +27,7 @@ class RichTextWidget(Widget):
         """ Add JS for TinyMCE """
 
         return Media(
-            js=('/jquery.tinymce/jscripts/tiny_mce/jquery.tinymce.js',
+            js=('jquery.tinymce/jscripts/tiny_mce/jquery.tinymce.js',
                 'js/djinn_forms_richtext.js')
         )
 

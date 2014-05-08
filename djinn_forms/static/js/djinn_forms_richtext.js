@@ -43,11 +43,13 @@ djinn.forms.richtext.setup_link_plugin = function(ed) {
         }
       }
 
-      var remote_url = '/zoeken/zoekajaxlink/?callbackOnSelect=djinn.forms.richtext.insert_in_wysiwyg&currlink=' + encodeURIComponent(currlink);
+      var remote_url = '/contentlinks/?callbackOnSelect=djinn.forms.richtext.insert_in_wysiwyg&currlink=' + encodeURIComponent(currlink);
 
-      var modal = $("#" + ed.editorId).parents(".richtext").find(".modal");
-
-      modal.modal({'show': true, 'remote': remote_url});
+      $.get(remote_url,
+            function(data) {
+              djinn.contenttypes.show_modal(data);
+            }
+           );
     }
   });
 };
@@ -59,6 +61,8 @@ djinn.forms.richtext.setup_link_plugin = function(ed) {
  */
 djinn.forms.richtext.setup_img_plugin = function(ed, ctype, cid, img_type) {
 
+  var widget = $("#" + ed.editorId).parents(".richtext").find("textarea");
+
   ed.addButton('image', {
     title : 'Afbeeldingen',
     image : '/static/img/img.png',
@@ -67,12 +71,12 @@ djinn.forms.richtext.setup_img_plugin = function(ed, ctype, cid, img_type) {
 
       var image_ids = $(":hidden[name=images]").first().val() || "";
 
-      var remote_url = '/content/gerelateerdeplaatjes/' + ctype + '/' + cid + "?image_ids=" + image_ids + "&img_type=" + img_type;
-
-      var modal = $("#" + ed.editorId).parents(".richtext").find(".modal");
-
-      modal.modal({'show': true, 'remote': remote_url, 'backdrop': false});
-
+      $.get("/contentimages/" + ctype + "/" + cid,
+            {"image_ids": image_ids, "img_type": img_type},
+            function(data) {
+              djinn.contenttypes.show_modal(data, [widget]);
+            }
+           );
     }});
 };
 
@@ -97,32 +101,30 @@ djinn.forms.richtext.TINYMCE_CONFIG = {
   relative_urls : false,
   cleanup_on_startup : true,
   cleanup : true,
-  setup : function(ed) {
-    djinn.forms.richtext.setup_link_plugin(ed);
-  }
 };
 
 
 djinn.forms.richtext.TINYMCE_MAXCHARS_CONFIG = {
 
   theme_advanced_path : false,
-  theme_advanced_statusbar_location : "bottom",
-  setup : function(ed) {
-    djinn.forms.richtext.setup_link_plugin(ed);
+  theme_advanced_statusbar_location : "bottom"
+};
 
-    ed.onKeyUp.add(function(ed, e) {
 
-      var chars = tinyMCE.activeEditor.getBody().textContent.length;
+djinn.forms.richtext.setup_maxchars = function(ed) {
 
-      // textcontent skips newlines, so let's find them
-      var nls = tinyMCE.activeEditor.getBody().innerHTML.split("<br>").length - 1;
+  ed.onKeyUp.add(function(ed, e) {
 
-      chars = chars + nls;
-
-      var text = chars + " tekens";
-      tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
-    });
-  }
+    var chars = tinyMCE.activeEditor.getBody().textContent.length;
+    
+    // textcontent skips newlines, so let's find them
+    var nls = tinyMCE.activeEditor.getBody().innerHTML.split("<br>").length - 1;
+    
+    chars = chars + nls;
+    
+    var text = chars + " tekens";
+    tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
+  });
 };
 
 /**
@@ -149,19 +151,13 @@ djinn.forms.richtext.insert_in_wysiwyg = function(url, content_type,
 
   html = '<a href="' + url + '" class="' + content_type + '"';
 
-  if (extra_args['target']) {
-    html += ' target="' + extra_args['target'] + '">' + selectedtext + '</a>';
+  if (extra_args && extra_args.target) {
+    html += ' target="' + extra_args.target + '">' + selectedtext + '</a>';
   } else {
     html += '>' + selectedtext + '</a>';
   }
 
   ed.execCommand("mceInsertContent", false, html);
-
-  ed.focus();
-
-  var modal = $('.modal').eq(0);
-
-  modal.hide();
 };
 
 
@@ -182,10 +178,6 @@ djinn.forms.richtext.insert_image_wysiwyg = function(position, img_url, url) {
   }
 
   ed.execCommand("mceInsertContent", false, html);
-
-  var modal = $('.modal').eq(0);
-
-  modal.hide();
 };
 
 
@@ -213,6 +205,7 @@ djinn.forms.richtext.insert_image_wysiwyg = function(position, img_url, url) {
 
     if (settings.maxchars > -1) {
       settings.plugins += ",maxlength";
+
       $.extend(settings.config, djinn.forms.richtext.TINYMCE_MAXCHARS_CONFIG);
       $.extend(settings.config, {maxlength_id_summary: settings.maxchars});
     }
@@ -222,12 +215,22 @@ djinn.forms.richtext.insert_image_wysiwyg = function(position, img_url, url) {
     }
 
     if (ctype && cid) {
-      settings.config.setup = function(ed) {
-        djinn.forms.richtext.setup_link_plugin(ed);
-        djinn.forms.richtext.setup_img_plugin(ed, ctype, cid, img_type);
-      };
       settings.config.theme_advanced_buttons1 += ",image";
     }
+
+    // Determine setup functions
+    settings.config.setup = function(ed) {
+
+      djinn.forms.richtext.setup_link_plugin(ed);
+
+      if (settings.maxchars > -1) {
+        djinn.forms.richtext.setup_maxchars(ed);
+      }
+
+      if (ctype && cid) {
+        djinn.forms.richtext.setup_img_plugin(ed, ctype, cid, img_type);
+      }      
+    };
 
     return this.tinymce(settings.config);
   };
@@ -239,12 +242,38 @@ $(document).ready(function() {
   $(".richtext").each(function() {
     var input = $(this).find("textarea");
 
+    var options = {};
+
+    if (input.data("maxchars")) {
+      options.maxchars = input.data("maxchars");
+    }
+
     input.richtext(input.data("ctype"), input.data("cid"),
-                   input.data("img_type"));
+                   input.data("img_type"), options);
   });
 
   $(document).on("hide", ".modal", function(e) {
 
     $(e.currentTarget).removeData('modal');
+  });
+
+  $(document).on("modal_action_show", "#contentimages", function(e, widget) {
+
+    var modal = $(e.target);
+
+    modal.find(".controls a").click(function(e) {
+
+      e.preventDefault();
+      
+      var link = $(e.currentTarget);
+      
+      djinn.forms.richtext.insert_image_wysiwyg(link.data("pos"),
+                                                link.attr("href"),
+                                                link.data("img"));
+
+      modal.modal('hide');
+
+      document.cur_wysiwyg.focus();
+    });
   });
 });
