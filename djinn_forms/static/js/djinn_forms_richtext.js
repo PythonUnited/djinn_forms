@@ -195,12 +195,14 @@ djinn.forms.richtext.insert_image_wysiwyg = function(position, img_url, url) {
    */
   $.fn.richtext = function(ctype, cid, img_type, options) {
 
+    var config = $.extend({}, djinn.forms.richtext.TINYMCE_CONFIG);
+
     var settings = $.extend({
       // These are the defaults.
       maxchars: -1,
       hresize: false,
       plugins: djinn.forms.richtext.TINYMCE_PLUGINS,
-      config: djinn.forms.richtext.TINYMCE_CONFIG
+      config: config
     }, options);
 
     if (settings.maxchars > -1) {
