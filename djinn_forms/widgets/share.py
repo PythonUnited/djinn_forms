@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-from djinn_core.utils import urn_to_object
+from djinn_core.utils import urn_to_object, object_to_urn
 
 
 TPL = 'djinn_forms/snippets/sharewidget.html'
@@ -59,11 +59,20 @@ class ShareWidget(Widget):
             self.attrs.get("searchfield", "title")
             )
 
+        if value:
+            related = [(object_to_urn(obj), unicode(obj)) for obj in
+                       value.get('add', [])]
+
+        if value:
+            add_value = ";;".join([rel[0] for rel in related])
+            value = [{"value": rel[0], "label": rel[1]} for rel in related]
+
         context = {'name': name,
                    'hint': self.attrs.get("hint", ""),
                    # Translators: djinn_forms relate add button label
                    'add_label': self.attrs.get("add_label", _("Add")),
                    'value': value,
+                   'add_value': add_value,
                    'search_minlength': self.attrs.get("search_minlength", 2),
                    'search_url': url
                    }
