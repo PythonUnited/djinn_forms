@@ -67,9 +67,10 @@ class UploadView(View):
             #
             log.debug("Uploaded file mime type: %s" % mime_type)
 
-            relative_file_name = self.generate_relative_file_path(file_name,
-                                                              mime_type,
-                                                              attachment_type)
+            relative_file_name = self.generate_relative_file_path(
+                file_name,
+                mime_type,
+                attachment_type)
 
             if attachment_type in ["image", "avatar"]:
 
@@ -122,7 +123,7 @@ class UploadView(View):
                 attachment.save()
             else:
 
-                attachment = model()
+                attachment = model(title=file_name)
 
                 path = "images/%s" % relative_file_name
                 attachment.image.save(path, File(open(temp_file)))

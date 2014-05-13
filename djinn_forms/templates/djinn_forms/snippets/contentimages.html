@@ -17,7 +17,8 @@
   {% for item in view.list_images %}
   <div class="clearfix">
 
-    <img class="pull-left" src="{{ item.get_thumbnail_url }}" border="0"/>
+    <img class="pull-left" src="{{ item.get_product_media_thumb_url }}"
+         border="0"/>
 
     <ul class="controls pull-left unstyled">
       <li>

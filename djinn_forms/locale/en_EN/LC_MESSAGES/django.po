@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-12 10:14+0100\n"
+"POT-Creation-Date: 2014-05-13 11:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,46 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: templates/djinn_forms/snippets/contentimages.html:7
+msgid "Add image"
+msgstr ""
+
+#: templates/djinn_forms/snippets/contentimages.html:14
+msgid "No images found"
+msgstr ""
+
+#: templates/djinn_forms/snippets/contentimages.html:29
+msgid "left"
+msgstr ""
+
+#: templates/djinn_forms/snippets/contentimages.html:37
+msgid "center"
+msgstr ""
+
+#: templates/djinn_forms/snippets/contentimages.html:45
+msgid "right"
+msgstr ""
+
+#: templates/djinn_forms/snippets/contentimages.html:56
+msgid "Cancel"
+msgstr ""
+
+#: templates/djinn_forms/snippets/contentlinks.html:10
+msgid "Add link"
+msgstr ""
+
+#: templates/djinn_forms/snippets/contentlinks.html:29
+msgid "Link toevoegen"
+msgstr ""
+
+#: templates/djinn_forms/snippets/contentlinks.html:30
+msgid "Annuleren"
+msgstr ""
+
+#: templates/djinn_forms/snippets/contentlinks.html:35
+msgid "Of maak een link naar een bestaande pagina"
+msgstr ""
 
 #: templates/djinn_forms/snippets/documentattachmentwidget.html:11
 msgid "Select files"
@@ -27,6 +67,17 @@ msgstr ""
 
 #: templates/djinn_forms/snippets/documentattachmentwidget.html:16
 msgid "Select file"
+msgstr ""
+
+#: templates/djinn_forms/snippets/documentattachmentwidget.html:56
+msgid "Edit"
+msgstr ""
+
+#. Translators: relate widget remove relation
+#: templates/djinn_forms/snippets/documentattachmentwidget.html:60
+#: templates/djinn_forms/snippets/relatewidget.html:27
+#: templates/djinn_forms/snippets/relatewidget.html:36
+msgid "Remove"
 msgstr ""
 
 #: templates/djinn_forms/snippets/imageattachmentwidget.html:11
@@ -55,18 +106,12 @@ msgid "Select link"
 msgstr ""
 
 #. Translators: relate widget change relation
-#: templates/djinn_forms/snippets/relatesinglewidget.html:23
-#: templates/djinn_forms/snippets/relatesinglewidget.html:32
+#: templates/djinn_forms/snippets/relatesinglewidget.html:25
+#: templates/djinn_forms/snippets/relatesinglewidget.html:34
 msgid "Change"
 msgstr ""
 
-#. Translators: relate widget remove relation
-#: templates/djinn_forms/snippets/relatewidget.html:23
-#: templates/djinn_forms/snippets/relatewidget.html:32
-msgid "Remove"
-msgstr ""
-
 #. Translators: djinn_forms relate add button label
-#: widgets/share.py:58
+#: widgets/share.py:73
 msgid "Add"
 msgstr ""
