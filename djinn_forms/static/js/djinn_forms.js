@@ -321,7 +321,7 @@ $(document).ready(function() {
         tgt.parents(".imagewidget").addClass("empty");
         tgt.parents(".imagewidget").find(".uploads").html("");
 
-        e.preventDefault()
+        e.preventDefault();
       });
 
     $(document).on("djinn_forms_fileupload_done", function(e, target, result) {

@@ -45,7 +45,7 @@ class RelateSearch(View):
 
         ct_search_field = "%s__in" % ct_parameter
 
-        content_types = request.GET.get('content_types', '').split(",")
+        content_types = request.GET.get('content_type', '').split(",")
 
         content_types = map(map_swappable_ct, content_types)
 
