@@ -11,16 +11,25 @@ TPL = 'djinn_forms/snippets/richtextwidget.html'
 
 class RichTextWidget(Widget):
 
-    """ Widget that provides wysiwyg capabilities for fields """
+    """ Widget that provides wysiwyg capabilities for fields. The following
+    attributes are supported:
+     * enable_images Defaults to True
+     * enable_links Defaults to True
+     * maxchars Set counter to widget
+    """
 
     instance = None
 
     def __init__(self, img_type="djinn_contenttypes.ImgAttachment",
+                 enable_images=True, enable_links=True, maxchars=-1,
                  attrs=None):
 
         super(RichTextWidget, self).__init__(attrs=attrs)
 
         self.img_type = img_type
+        self.maxchars = maxchars
+        self.enable_links = enable_links
+        self.enable_images = enable_images
 
     def _media(self):
 
@@ -46,7 +55,10 @@ class RichTextWidget(Widget):
             'attributes': flatatt(final_attrs),
             'name': name,
             'hint': self.attrs.get("hint", ""),
-            'value': force_text(value)
+            'value': force_text(value),
+            'enable_images': self.enable_images,
+            'enable_links': self.enable_links,
+            'maxchars': self.maxchars
         }
 
         if self.instance:

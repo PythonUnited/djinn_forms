@@ -200,6 +200,8 @@ djinn.forms.richtext.insert_image_wysiwyg = function(position, img_url, url) {
     var settings = $.extend({
       // These are the defaults.
       maxchars: -1,
+      images: true,
+      links: true,
       hresize: false,
       plugins: djinn.forms.richtext.TINYMCE_PLUGINS,
       config: config
@@ -216,20 +218,22 @@ djinn.forms.richtext.insert_image_wysiwyg = function(position, img_url, url) {
       $.extend(settings.config, {theme_advanced_resize_horizontal: 'true'});
     }
 
-    if (ctype && cid) {
+    if (ctype && cid && settings.images) {
       settings.config.theme_advanced_buttons1 += ",image";
     }
 
     // Determine setup functions
     settings.config.setup = function(ed) {
 
-      djinn.forms.richtext.setup_link_plugin(ed);
+      if (settings.links) {
+        djinn.forms.richtext.setup_link_plugin(ed);
+      }
 
       if (settings.maxchars > -1) {
         djinn.forms.richtext.setup_maxchars(ed);
       }
 
-      if (ctype && cid) {
+      if (ctype && cid && settings.images) {
         djinn.forms.richtext.setup_img_plugin(ed, ctype, cid, img_type);
       }      
     };
@@ -248,6 +252,14 @@ $(document).ready(function() {
 
     if (input.data("maxchars")) {
       options.maxchars = input.data("maxchars");
+    }
+
+    if (input.data("images") === false) {
+      options.images = false;
+    }
+
+    if (input.data("links") === false) {
+      options.links = false;
     }
 
     input.richtext(input.data("ctype"), input.data("cid"),
