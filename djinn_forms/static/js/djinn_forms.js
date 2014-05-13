@@ -184,8 +184,7 @@ djinn.forms.initRelateWidget = function(widget) {
   widget.find(".autocomplete").each(function() {
 
       var input = $(this);
-      widget.find(".add-list:not(.initial)").val("");
-      widget.find(".rm-list").val("");
+
       input.val("");
 
       input.autocomplete({
