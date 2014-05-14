@@ -57,7 +57,7 @@ class ShareField(Field):
 
         attrs = super(ShareField, self).widget_attrs(widget)
 
-        attrs.update({'content_types': self.content_types})
+        attrs.update({'content_type': self.content_types})
 
         return attrs
 
