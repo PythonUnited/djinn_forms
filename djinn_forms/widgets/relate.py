@@ -9,7 +9,7 @@ class RelateWidget(InOutWidget):
     Widget for handling relations to other content. The following
     extra attributes are supported:
 
-     * content_types Allowed content types for this relation as list
+     * content_type Allowed content types for this relation as list
      * searchfield Look for this field in the searchengine
      * ct_searchfield Use this field to check on the contenttype. Defaults
        to meta_ct.
@@ -45,7 +45,7 @@ class RelateWidget(InOutWidget):
         url = self.attrs.get("search_url", reverse("djinn_forms_relatesearch"))
         url = "%s?content_type=%s&searchfield=%s&ct_searchfield=%s" % (
             url,
-            ",".join(self.attrs['content_types']),
+            ",".join(self.attrs['content_type']),
             self.attrs.get("searchfield", "title_auto"),
             self.attrs.get("ct_searchfield", "meta_ct"),
             )
