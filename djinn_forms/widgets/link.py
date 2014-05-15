@@ -1,3 +1,4 @@
+from django.forms import Media
 from django.forms.widgets import Widget
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
@@ -7,6 +8,16 @@ from djinn_core.utils import urn_to_object
 class LinkWidget(Widget):
 
     """ Link widget for internal and external links """
+
+    def _media(self):
+
+        """ Add JS for TinyMCE """
+
+        return Media(
+            js=('js/djinn_forms_link.js', )
+        )
+
+    media = property(_media)
 
     def render(self, name, value, attrs=None):
 

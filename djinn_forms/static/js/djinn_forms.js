@@ -1,5 +1,6 @@
 /**
  * Djinn forms JS lib. Mainly helper functions for form widget handling.
+ * TODO: put relate widget JS into separate file, and add to widget media
  */
 
 if (djinn === undefined) {
