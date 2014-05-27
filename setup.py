@@ -8,22 +8,24 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
     'django',
-    'djinn_core'
+    'djinn_core',
+    'djinn_contenttypes'
     ]
 
 setup(name='djinn_forms',
-      version="1.1.1",
+      version="1.2.0",
       description='Djinn Intranet Forms',
-      long_description=README + '\n\n' +  CHANGES,
+      long_description=README + '\n\n' + CHANGES,
       classifiers=[
-        "Development Status :: 5 - Production/Stable",
-        "Framework :: Django",
-        "Intended Audience :: Developers",
-        "License :: Freely Distributable",
-        "Programming Language :: Python",
-        "Topic :: Internet :: WWW/HTTP :: Site Management",
-        "Topic :: Software Development :: Libraries :: Application Frameworks"
-        ],
+          "Development Status :: 5 - Production/Stable",
+          "Framework :: Django",
+          "Intended Audience :: Developers",
+          "License :: Freely Distributable",
+          "Programming Language :: Python",
+          "Topic :: Internet :: WWW/HTTP :: Site Management",
+          "Topic :: Software Development :: Libraries :: "
+          "Application Frameworks"
+      ],
       author='PythonUnited',
       author_email='info@pythonunited.com',
       license='beer-ware',
@@ -32,17 +34,16 @@ setup(name='djinn_forms',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      install_requires = requires,
-      tests_require= requires,
+      install_requires=requires,
+      tests_require=requires,
       test_suite="djinn-forms",
-      entry_points = """\
+      entry_points="""\
       [djinn.app]
       js=djinn_forms:get_js
       css=djinn_forms:get_css
       urls=djinn_forms:get_urls
       """,
-      message_extractors = { '.': [
+      message_extractors={'.': [
           ('**.html',   'lingua_xml', None),
           ('**.py', 'lingua_python', None)
-          ]},
-      )
+      ]})
