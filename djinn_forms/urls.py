@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import url, patterns
-from pgsearch.views import PGSearchView
+from pgsearch.views import ModalSearchView
 from pgsearch.forms import PGSearchForm
 from djinn_forms.views.fileupload import UploadView
 from djinn_forms.views.relate import RelateSearch
@@ -26,13 +26,19 @@ urlpatterns = patterns(
         name='djinn_forms_contentimages'
         ),
 
-    # TODO: Move to this module
+    # TODO: Move views/form to this module
     url(r'^contentlinks/',
-        PGSearchView(
+        ModalSearchView(
             load_all=False,
             form_class=PGSearchForm,
             template='djinn_forms/snippets/contentlinks.html'
         ),
-        name='haystack_link_popup')
+        name='haystack_link_popup'),
 
+    url(r'^contentlinks_search/',
+        ModalSearchView(
+            load_all=False,
+            form_class=PGSearchForm,
+        ),
+        name='haystack_link_search')
 )

@@ -74,26 +74,6 @@ djinn.forms.addValue = function(input, value, unique, separator) {
 
 
 /**
- * Set link data to widget input.
- * @param url_or_urn Either a urn for an internal ref, or a URL
- * @param title Title to show for widget
- * @param extra_args dict of extra arguments to callback
- *
- * TODO: refactor this into a self contained widget in terms of modal
- * and callbacks; remove from pgcontent.js
- */
-djinn.forms.set_link = function(url_or_urn, title, extra_args) {
-
-  var val = url_or_urn + "::" + (extra_args.target || "");
-
-  $("#id_" + extra_args.tgt).val(val);
-  $("#" + extra_args.tgt + "_link").html(title || url_or_urn);
-
-  $("#MyModal").modal("hide");
-};
-
-
-/**
  * Initialize file uploader widget.
  */
 djinn.forms.init_fileuploader = function(options) {

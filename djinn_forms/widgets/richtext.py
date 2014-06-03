@@ -37,7 +37,8 @@ class RichTextWidget(Widget):
 
         return Media(
             js=('jquery.tinymce/jscripts/tiny_mce/jquery.tinymce.js',
-                'js/djinn_forms_richtext.js')
+                'js/djinn_forms_richtext.js',
+                'js/djinn_forms_link.js')
         )
 
     media = property(_media)

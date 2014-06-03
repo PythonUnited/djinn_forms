@@ -43,16 +43,41 @@ djinn.forms.richtext.setup_link_plugin = function(ed) {
         }
       }
 
-      var remote_url = '/contentlinks/?callbackOnSelect=djinn.forms.richtext.insert_in_wysiwyg&currlink=' + encodeURIComponent(currlink);
+      var remote_url = '/contentlinks/?currlink=' + encodeURIComponent(currlink);
 
       $.get(remote_url,
             function(data) {
-              djinn.contenttypes.show_modal(data);
-            }
-           );
+
+              var modal = djinn.contenttypes.show_modal(data);
+
+              modal.on("submit", "#link_popup_form", function(e) {
+
+                e.preventDefault();
+    
+                var form = e.currentTarget;
+    
+                var url = form.url.value;
+                
+                if (url) {
+                  
+                  if (!url.startsWith("mailto:") && !url.startsWith("/") &&
+                      !url.startsWith("urn:")) {
+                    url = pg.normalizeURL(url, "http");
+                  }
+
+                  djinn.forms.richtext.insert_in_wysiwyg(url, 
+                                                         form.ctype.value,
+                                                         form.cid.value,
+                                                         form.title.value);
+              
+                  modal.modal("hide");
+                }
+              });
+            });
     }
   });
 };
+
 
 /**
  * Add button to tiny for images. This method must also pass any
@@ -127,10 +152,10 @@ djinn.forms.richtext.setup_maxchars = function(ed) {
   });
 };
 
+
 /**
- *  Callback function (see above) specifically intended for tinymce editors.
- *  The selected item will be inserted as a link in the
- *  tinymce wysiwyg with title as the clickable text
+ * The selected item will be inserted as a link in the
+ * tinymce wysiwyg with title as the clickable text
  *
  * @param url
  * @param content_type
