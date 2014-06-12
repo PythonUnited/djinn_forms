@@ -47,7 +47,7 @@ class InOutWidget(BaseWidget):
 
     def build_attrs(self, **kwargs):
 
-        if 'value' in kwargs.keys() and len(kwargs['value']) == 3 and \
+        if 'value' in kwargs.keys() and len(kwargs['value'] or []) == 3 and \
            hasattr(kwargs['value'], "__iter__"):
             kwargs['add_value'] = self.separator.join(kwargs['value'][1])
             kwargs['rm_value'] = self.separator.join(kwargs['value'][2])

@@ -83,9 +83,11 @@ $(document).ready(function() {
 
   $(".relate .autocomplete").each(function() {
 
-    $(this).val("");
+    var input = $(this);
+
+    input.val("");
     
-    $(this).autocomplete({
+    input.autocomplete({
       source: input.data("search_url"),
       minLength: input.data("search_minlength"),
       select: djinn.forms.relate.select,
