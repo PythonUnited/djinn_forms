@@ -128,7 +128,7 @@ class RelateSingleField(RelateField):
 
         value = super(RelateSingleField, self).prepare_value(data)
 
-        if value:
+        try:
             return value[0][0]
-        else:
+        except:
             return None

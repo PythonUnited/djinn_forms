@@ -1,3 +1,4 @@
+from django.forms import Media
 from django.core.urlresolvers import reverse
 from djinn_core.utils import urn_to_object
 from base import InOutWidget
@@ -16,8 +17,10 @@ class RelateWidget(InOutWidget):
      * search_minlength Start autosearch when length is this or more
      * search_url Use this URL as search base. Defaults to reverse of
        'djinn_forms_relatesearch'
-    *  template_name path to teh rendering template. Defaults to
-       djinn_forms/snippets/relatewidget.html
+    *  template_name path to the rendering template. Defaults to
+       djinn_forms/snippets/relatewidget.html. Another valid option is
+       to use a popup for searcing content. Use
+       djinn_forms/snippets/relatesearchwidget.html to do that.
 
     To actually save the data that this widget produces, you need to
     make your form extend the djinn_forms.forms.RelateMixin and call
@@ -27,6 +30,16 @@ class RelateWidget(InOutWidget):
     """
 
     initial = False
+
+    def _media(self):
+
+        """ Add JS for TinyMCE """
+
+        return Media(
+            js=('js/djinn_forms_relate.js', )
+        )
+
+    media = property(_media)
 
     @property
     def template_name(self):
