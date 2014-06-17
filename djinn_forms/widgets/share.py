@@ -1,4 +1,5 @@
 from django.forms.widgets import Widget
+from django.forms import Media
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
@@ -18,6 +19,16 @@ class ShareWidget(Widget):
      * search_minlength Start searching when N chars have been typed.
        Default: 2
     """
+
+    def _media(self):
+
+        """ Add JS for TinyMCE """
+
+        return Media(
+            js=('js/djinn_forms_relate.js', )
+        )
+
+    media = property(_media)
 
     def value_from_datadict(self, data, files, name):
 

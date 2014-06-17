@@ -13,7 +13,7 @@ requires = [
     ]
 
 setup(name='djinn_forms',
-      version="1.2.1",
+      version="1.2.2",
       description='Djinn Intranet Forms',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
@@ -30,7 +30,7 @@ setup(name='djinn_forms',
       author_email='info@pythonunited.com',
       license='beer-ware',
       url='https://github.com/PythonUnited/djinn-forms',
-      keywords='Djinn Core',
+      keywords='Djinn forms',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
@@ -44,6 +44,6 @@ setup(name='djinn_forms',
       urls=djinn_forms:get_urls
       """,
       message_extractors={'.': [
-          ('**.html',   'lingua_xml', None),
+          ('**.html', 'lingua_xml', None),
           ('**.py', 'lingua_python', None)
       ]})

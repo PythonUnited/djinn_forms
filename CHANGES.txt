@@ -1,3 +1,9 @@
+1.2.2
+=====
+* More conservative checks on widget values
+* Moved relate widget JS into separate file
+* Added media setting to relate widget
+
 1.2.1
 =====
 * Moved link widget JS into djinn_forms_link.js

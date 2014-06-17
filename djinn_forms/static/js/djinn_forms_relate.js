@@ -16,15 +16,6 @@ djinn.forms.relate = {};
 
 
 /**
- * Initialize the relate widget.
- * @param widget Element to initialize.
- */
-djinn.forms.relate.init = function(widget) {
-
-};
-
-
-/**
  * Handle select on the autosearch results.
  * @param e Event
  * @param ui UI object holding the selected item
@@ -79,9 +70,9 @@ djinn.forms.relate.handleElement = function(widget, label, value) {
 };
 
 
-$(document).ready(function() {
+djinn.forms.relate.init = function(widget) {
 
-  $(".relate .autocomplete").each(function() {
+  widget.find(".autocomplete").each(function() {
 
     var input = $(this);
 
@@ -95,6 +86,14 @@ $(document).ready(function() {
         e.preventDefault();
       }
     });
+  }); 
+};
+
+
+$(document).ready(function() {
+
+  $(".relate").each(function() {  
+    djinn.forms.relate.init($(this));
   });
 
   $(document).on("click", ".relate a.show-popup", function(e) {
@@ -120,7 +119,7 @@ $(document).ready(function() {
         
         djinn.forms.relate.handleElement(widget, label, value);
 
-        modal.modal('close');
+        modal.modal('hide');
       });
     });
   });
