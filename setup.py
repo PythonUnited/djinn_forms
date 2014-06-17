@@ -13,7 +13,7 @@ requires = [
     ]
 
 setup(name='djinn_forms',
-      version="1.2.2",
+      version="1.2.3",
       description='Djinn Intranet Forms',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[

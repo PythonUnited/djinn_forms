@@ -1,3 +1,7 @@
+1.2.3
+=====
+* JS fixes for relate widget
+
 1.2.2
 =====
 * More conservative checks on widget values
