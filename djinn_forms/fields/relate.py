@@ -114,7 +114,7 @@ class RelateField(Field, AdditionalHandlingMixin):
         rm_value = [object_to_urn(obj) for obj in data.get('rm', [])]
 
         return ([{'label': rel.title, 'value': object_to_urn(rel)} for rel in
-                 relations], add_value, rm_value)
+                 relations if rel], add_value, rm_value)
 
 
 class RelateSingleField(RelateField):
