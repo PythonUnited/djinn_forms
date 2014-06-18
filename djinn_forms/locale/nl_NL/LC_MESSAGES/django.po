@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: djinn_forms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-13 11:51+0200\n"
-"PO-Revision-Date: 2014-05-13 12:21+0200\n"
+"POT-Creation-Date: 2014-06-18 11:51+0200\n"
+"PO-Revision-Date: 2014-06-18 11:51+0200\n"
 "Last-Translator:   <j.barkhof@provinciegroningen.nl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -44,18 +44,15 @@ msgid "Cancel"
 msgstr ""
 
 #: templates/djinn_forms/snippets/contentlinks.html:10
+#: templates/djinn_forms/snippets/contentlinks.html:27
 msgid "Add link"
-msgstr ""
+msgstr "Link toevoegen"
 
-#: templates/djinn_forms/snippets/contentlinks.html:29
-msgid "Link toevoegen"
-msgstr ""
-
-#: templates/djinn_forms/snippets/contentlinks.html:30
+#: templates/djinn_forms/snippets/contentlinks.html:28
 msgid "Annuleren"
 msgstr ""
 
-#: templates/djinn_forms/snippets/contentlinks.html:35
+#: templates/djinn_forms/snippets/contentlinks.html:33
 msgid "Of maak een link naar een bestaande pagina"
 msgstr ""
 
@@ -76,11 +73,18 @@ msgid "Edit"
 msgstr ""
 
 #. Translators: relate widget remove relation
+#. Translators: relate widget remove relation
 #: templates/djinn_forms/snippets/documentattachmentwidget.html:60
+#: templates/djinn_forms/snippets/relatesearchwidget.html:24
+#: templates/djinn_forms/snippets/relatesearchwidget.html:33
 #: templates/djinn_forms/snippets/relatewidget.html:27
 #: templates/djinn_forms/snippets/relatewidget.html:36
 msgid "Remove"
 msgstr "Verwijder"
+
+#: templates/djinn_forms/snippets/documentsearch.html:7
+msgid "Add document"
+msgstr "Document toevoegen"
 
 #: templates/djinn_forms/snippets/imageattachmentwidget.html:11
 msgid "Select images"
@@ -103,9 +107,13 @@ msgstr "Selecteer afbeelding"
 msgid "Remove image"
 msgstr "Verwijder afbeelding"
 
-#: templates/djinn_forms/snippets/link_widget.html:9
+#: templates/djinn_forms/snippets/link_widget.html:5
 msgid "Select link"
 msgstr "Maak link"
+
+#: templates/djinn_forms/snippets/relatesearchwidget.html:10
+msgid "Klik om een koppeling te maken"
+msgstr ""
 
 #. Translators: relate widget change relation
 #: templates/djinn_forms/snippets/relatesinglewidget.html:25
@@ -114,7 +122,7 @@ msgid "Change"
 msgstr "Vervangen"
 
 #. Translators: djinn_forms relate add button label
-#: widgets/share.py:73
+#: widgets/share.py:84
 msgid "Add"
 msgstr "Voeg toe"
 

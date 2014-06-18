@@ -95,8 +95,8 @@ class RelateField(Field, AdditionalHandlingMixin):
     def prepare_value(self, data):
 
         """Return relations for this field. If data is empty, we simply get
-        the related objects for the given type.  If data['rm'] has
-        values, filter those out of the result.  If data['add'] has
+        the related objects for the given type. If data['rm'] has
+        values, filter those out of the result. If data['add'] has
         values, add those to the result. We also need the original
         add/rm lists.
         """
