@@ -42,6 +42,7 @@ djinn.forms.removeValue = function(input, value, separator) {
  * Add value to ';;' separated values list.
  * @param input Input element (jQuery object)
  * @param value Value to add
+ * @param unique If set, double values are removed
  * @param separator Value separator, defaults to ';;'
  */
 djinn.forms.addValue = function(input, value, unique, separator) {

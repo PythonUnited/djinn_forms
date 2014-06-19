@@ -3,6 +3,7 @@ from pgsearch.views import ModalSearchView
 from pgsearch.forms import PGSearchForm, DocumentFilterSearchForm
 from djinn_forms.views.fileupload import UploadView
 from djinn_forms.views.relate import RelateSearch
+from djinn_forms.views.keywords import Keywords
 from djinn_forms.views.contentimages import ContentImages
 from django.views.decorators.csrf import csrf_exempt
 
@@ -49,5 +50,9 @@ urlpatterns = patterns(
             load_all=False,
             form_class=PGSearchForm,
         ),
-        name='haystack_link_search')
+        name='haystack_link_search'),
+
+    url(r'^keywords/?$',
+        Keywords.as_view(),
+        name="djinn_forms_keywords")
 )
