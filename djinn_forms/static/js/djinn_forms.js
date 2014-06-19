@@ -34,6 +34,7 @@ djinn.forms.removeValue = function(input, value, separator) {
       new_values.push(old_values[i]);
     }
   }
+
   input.val(new_values.join(sep));
 };
 

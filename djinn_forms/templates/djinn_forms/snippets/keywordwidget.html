@@ -7,7 +7,9 @@
 
   <ul>
     {% for kw in keywords %}
-    <li>{{ kw }}<a href="#" class="delete">&times;</a></li>
+    <li data-value="{{ kw }}">{{ kw }}
+      <a href="#" class="delete">&times;</a>
+    </li>
     {% endfor %}
   </ul>
 

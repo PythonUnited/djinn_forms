@@ -19,7 +19,7 @@ djinn.forms.keyword.appendKw = function(widget, val) {
 
   var input = widget.find("input[type=hidden]");
 
-  widget.find("ul").append('<li>' + val + '<a href="#" class="delete">&times;</a></li>');
+  widget.find("ul").append('<li data-value="' + val + '">' + val + '<a href="#" class="delete">&times;</a></li>');
   djinn.forms.addValue(input, val, true, " "); 
 };
 
@@ -82,7 +82,7 @@ $(document).ready(function() {
 
     var elt = $(e.currentTarget).parents("li");
 
-    djinn.forms.removeValue(input, elt.text(), " ");
+    djinn.forms.removeValue(input, elt.data('value'), " ");
 
     elt.remove();
   });
