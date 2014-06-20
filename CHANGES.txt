@@ -1,6 +1,7 @@
 1.2.3
 =====
 * JS fixes for relate widget
+* Added keyword field and widget
 
 1.2.2
 =====
