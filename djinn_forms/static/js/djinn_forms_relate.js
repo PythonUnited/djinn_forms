@@ -96,7 +96,10 @@ $(document).ready(function() {
     djinn.forms.relate.init($(this));
   });
 
-  $(document).on("click", ".relate a.show-popup", function(e) {
+  // prevent double binds
+  $(document).off('click.djinn_forms_relate');
+  $(document).on("click.djinn_forms_relate",
+                 ".relate a.show-popup", function(e) {
 
     e.preventDefault();
 

@@ -45,6 +45,14 @@ urlpatterns = patterns(
         ),
         name='djinn_forms_relate_popup'),
 
+    url(r'^content_search/',
+        ModalSearchView(
+            load_all=False,
+            form_class=PGSearchForm,
+            template='djinn_forms/snippets/contentsearch.html'
+        ),
+        name='djinn_forms_relate_popup'),
+
     url(r'^contentlinks_search/',
         ModalSearchView(
             load_all=False,

@@ -22,7 +22,7 @@ class ShareWidget(Widget):
 
     def _media(self):
 
-        """ Add JS for TinyMCE """
+        """ Add relate JS """
 
         return Media(
             js=('js/djinn_forms_relate.js', )
