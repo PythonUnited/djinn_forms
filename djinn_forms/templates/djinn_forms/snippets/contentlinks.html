@@ -19,18 +19,18 @@
     <input type="hidden" name="cid" value="" />
     
     <fieldset id="filter-new-addlink">
-      <label for="">Voeg een webadres toe</label>
+      <label for="">{% trans "Add web address" %}</label>
       <input type="text" name="url" placeholder="http://" value="{{ request.REQUEST.currlink }}">
     </fieldset>
     
     <div class="form-actions">
       <button class="btn btn-primary protected submit submit-attention" value="save" name="action">{%trans "Add link" %}</button>
-      <button class="btn protected cancel" type="submit" value="cancel" name="action">{% trans "Annuleren" %}</button>
+      <button class="btn protected cancel" type="submit" value="cancel" name="action">{% trans "Cancel" %}</button>
     </div>
     
   </form>
   
-  <span id="toggle-link-search">{% trans "Of maak een link naar een bestaande pagina" %}</span>
+  <span id="toggle-link-search">{% trans "Create link to content" %}</span>
   
   {% block container %}
   <div class="linksearch-content-toggler">

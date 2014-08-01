@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: djinn_forms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-18 11:51+0200\n"
-"PO-Revision-Date: 2014-06-18 11:51+0200\n"
+"POT-Creation-Date: 2014-07-29 10:12+0200\n"
+"PO-Revision-Date: 2014-07-29 10:13+0200\n"
 "Last-Translator:   <j.barkhof@provinciegroningen.nl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -40,6 +40,7 @@ msgid "right"
 msgstr "Rechts"
 
 #: templates/djinn_forms/snippets/contentimages.html:56
+#: templates/djinn_forms/snippets/contentlinks.html:28
 msgid "Cancel"
 msgstr ""
 
@@ -48,13 +49,17 @@ msgstr ""
 msgid "Add link"
 msgstr "Link toevoegen"
 
-#: templates/djinn_forms/snippets/contentlinks.html:28
-msgid "Annuleren"
-msgstr ""
+#: templates/djinn_forms/snippets/contentlinks.html:22
+msgid "Add web address"
+msgstr "Voeg een webadres toe"
 
 #: templates/djinn_forms/snippets/contentlinks.html:33
-msgid "Of maak een link naar een bestaande pagina"
-msgstr ""
+msgid "Create link to content"
+msgstr "Of maak een link naar een bestaande pagina"
+
+#: templates/djinn_forms/snippets/contentsearch.html:7
+msgid "Search content"
+msgstr "Zoek bestaande content"
 
 #: templates/djinn_forms/snippets/documentattachmentwidget.html:11
 msgid "Select files"
@@ -83,8 +88,8 @@ msgid "Remove"
 msgstr "Verwijder"
 
 #: templates/djinn_forms/snippets/documentsearch.html:7
-msgid "Add document"
-msgstr "Document toevoegen"
+msgid "Search document"
+msgstr "Zoek document"
 
 #: templates/djinn_forms/snippets/imageattachmentwidget.html:11
 msgid "Select images"
@@ -112,8 +117,8 @@ msgid "Select link"
 msgstr "Maak link"
 
 #: templates/djinn_forms/snippets/relatesearchwidget.html:10
-msgid "Klik om een koppeling te maken"
-msgstr ""
+msgid "Connect content"
+msgstr "Klik om een koppeling te maken"
 
 #. Translators: relate widget change relation
 #: templates/djinn_forms/snippets/relatesinglewidget.html:25
@@ -126,5 +131,9 @@ msgstr "Vervangen"
 msgid "Add"
 msgstr "Voeg toe"
 
+#, fuzzy
+#~ msgid "Add content"
+#~ msgstr ""
+
 #~ msgid "Select image..."
-#~ msgstr "Selecteer link"
+#~ msgstr ""

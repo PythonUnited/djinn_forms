@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-18 11:51+0200\n"
+"POT-Creation-Date: 2014-07-29 10:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,6 +38,7 @@ msgid "right"
 msgstr ""
 
 #: templates/djinn_forms/snippets/contentimages.html:56
+#: templates/djinn_forms/snippets/contentlinks.html:28
 msgid "Cancel"
 msgstr ""
 
@@ -46,12 +47,16 @@ msgstr ""
 msgid "Add link"
 msgstr ""
 
-#: templates/djinn_forms/snippets/contentlinks.html:28
-msgid "Annuleren"
+#: templates/djinn_forms/snippets/contentlinks.html:22
+msgid "Add web address"
 msgstr ""
 
 #: templates/djinn_forms/snippets/contentlinks.html:33
-msgid "Of maak een link naar een bestaande pagina"
+msgid "Create link to content"
+msgstr ""
+
+#: templates/djinn_forms/snippets/contentsearch.html:7
+msgid "Search content"
 msgstr ""
 
 #: templates/djinn_forms/snippets/documentattachmentwidget.html:11
@@ -81,7 +86,7 @@ msgid "Remove"
 msgstr ""
 
 #: templates/djinn_forms/snippets/documentsearch.html:7
-msgid "Add document"
+msgid "Search document"
 msgstr ""
 
 #: templates/djinn_forms/snippets/imageattachmentwidget.html:11
@@ -110,7 +115,7 @@ msgid "Select link"
 msgstr ""
 
 #: templates/djinn_forms/snippets/relatesearchwidget.html:10
-msgid "Klik om een koppeling te maken"
+msgid "Connect content"
 msgstr ""
 
 #. Translators: relate widget change relation
