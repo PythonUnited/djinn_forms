@@ -1,7 +1,11 @@
+1.2.4
+=====
+* Added keyword field and widget
+* moved relate widget views and template into this module
+
 1.2.3
 =====
 * JS fixes for relate widget
-* Added keyword field and widget
 
 1.2.2
 =====
