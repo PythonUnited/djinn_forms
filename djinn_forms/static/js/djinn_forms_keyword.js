@@ -19,8 +19,16 @@ djinn.forms.keyword.appendKw = function(widget, val) {
 
   var input = widget.find("input[type=hidden]");
 
+  if (djinn.forms.hasValue(input, val, " ")) {
+    return false;
+  }
+
   widget.find("ul").append('<li data-value="' + val + '">' + val + '<a href="#" class="delete">&times;</a></li>');
-  djinn.forms.addValue(input, val, true, " "); 
+  djinn.forms.addValue(input, val, true, " ");
+
+  if (widget.find("li").length >= parseInt(widget.data("maxkeywords"))) {
+    widget.find(".new_kw").hide();
+  }
 };
 
 
@@ -41,6 +49,7 @@ $(document).ready(function() {
   $(".new_kw").each(function() {
 
     var input = $(this);
+    var hidden = input.parents(".keyword").find("input[type=hidden]");
 
     input.autocomplete({
       source: input.data("search_url"),
@@ -48,6 +57,18 @@ $(document).ready(function() {
       select: djinn.forms.keyword.select,
       focus: function(e, ui) {
         e.preventDefault();
+      },
+      response: function(e, ui) {
+        
+        var content = ui.content.slice(0);
+        content.reverse();
+
+        $.each(content, function(idx, obj) {
+
+          if (djinn.forms.hasValue(hidden, obj.value, " ")) {
+            ui.content.splice(idx, 1);
+          } 
+        });
       }
     });
   });
@@ -85,5 +106,10 @@ $(document).ready(function() {
     djinn.forms.removeValue(input, elt.data('value'), " ");
 
     elt.remove();
+
+    if (widget.find("li").length < parseInt(widget.data("maxkeywords"))) {
+      widget.find(".new_kw").show();
+    }
+
   });
 });

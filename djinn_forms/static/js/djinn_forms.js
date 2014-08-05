@@ -75,6 +75,30 @@ djinn.forms.addValue = function(input, value, unique, separator) {
 };
 
 
+djinn.forms.hasValue = function(input, value, separator) {
+
+  var sep = (separator || ";;");
+
+  if (!input.val()) {
+    return false;
+  } else {
+
+    var old_values = input.val();
+
+    old_values = old_values.split(sep);
+
+    for (var i = 0; i < old_values.length; i++) {
+      
+      if (old_values[i] == value) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+};
+
+
 /**
  * Initialize file uploader widget.
  */

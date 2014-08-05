@@ -34,6 +34,7 @@ class KeywordWidget(Widget):
                    # Translators: djinn_forms relate add button label
                    'value': " ".join(value),
                    'keywords': value,
+                   'maxkeywords': self.attrs.get("maxkeywords", 10),
                    'search_minlength': self.attrs.get("search_minlength", 2),
                    'search_url': url
                    }
