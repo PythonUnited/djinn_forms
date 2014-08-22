@@ -51,6 +51,11 @@ $(document).ready(function() {
     var input = $(this);
     var hidden = input.parents(".keyword").find("input[type=hidden]");
 
+
+    if (input.parent().find("li").length >= parseInt(input.parent().data("maxkeywords"))) {
+      input.parent().find(".new_kw").hide();
+    }
+
     input.autocomplete({
       source: input.data("search_url"),
       minLength: input.data("search_minlength"),
