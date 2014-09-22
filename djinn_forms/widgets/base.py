@@ -5,6 +5,9 @@ from django.template.loader import render_to_string
 
 class BaseWidget(Widget):
 
+    """ Base widget that renders a template. Fields that use this widget
+    should always provide a value as a list! """
+
     defaults = {}
 
     def __init__(self, attrs=None):
@@ -21,16 +24,11 @@ class BaseWidget(Widget):
 
         raise NotImplementedError
 
-    def build_attrs(self, extra_attrs=None, **kwargs):
-
-        return super(BaseWidget, self).build_attrs(
-            extra_attrs=extra_attrs, **kwargs)
-
-    """ Base widget that renders a template """
-
     def render(self, name, value, attrs=None):
 
-        final_attrs = self.build_attrs(attrs, name=name, value=value)
+        final_attrs = self.build_attrs(attrs, name=name)
+
+        final_attrs['value'] = value or []
 
         html = render_to_string(self.template_name, final_attrs)
 
@@ -39,36 +37,39 @@ class BaseWidget(Widget):
 
 class InOutWidget(BaseWidget):
 
-    """ Widget that handles data with add and remove lists. The
-    incoming data should have <name>_add and <name>_rm values,
-    sepratated by 'separator'. """
+    """Widget that handles data with add and remove lists. The incoming
+    data should have <name>_add and <name>_rm values, separzated by
+    'InOutwidget.separator'. The widget sets the 'add_value' and
+    'rm_value' in InOutWidget.value_from_datadict, to keep track of
+    data that has not been handled yet, i.e. in case of form
+    validation errors.
+
+    """
 
     separator = ";;"
 
-    def build_attrs(self, **kwargs):
-
-        if 'value' in kwargs.keys() and len(kwargs['value'] or []) == 3 and \
-           hasattr(kwargs['value'], "__iter__"):
-            kwargs['add_value'] = self.separator.join(kwargs['value'][1])
-            kwargs['rm_value'] = self.separator.join(kwargs['value'][2])
-            kwargs['value'] = kwargs['value'][0]
-
-        return super(InOutWidget, self).build_attrs(**kwargs)
-
     def convert_item(self, item):
 
-        """ Convert a single incoming value value to the actual value """
+        """Convert a single incoming value value to the actual value you need
+        """
 
         return item
 
     def value_from_datadict(self, data, files, name):
 
-        """ The data may contain a list of objects to remove, and
-        objects to add. Both are prefixed by the field name. The
-        returned value is a dict with 'rm' and 'add' lists, that list
-        the """
+        """The data may contain a list of objects to remove, and objects to
+        add. Both are prefixed by the field name. The returned value
+        is a dict with 'rm' and 'add' lists, that list the items to be
+        removed and/or added. Since this is the one place we actually
+        have te submitted data, we also set the add_value and rm_value
+        attributes on the widget here.
+
+        """
 
         result = {'rm': [], 'add': []}
+
+        self.attrs['rm_value'] = data.get('%s_rm' % name, '')
+        self.attrs['add_value'] = data.get('%s_add' % name, '')
 
         for item in data.get("%s_rm" % name, "").split(self.separator):
 

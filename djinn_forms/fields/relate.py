@@ -97,8 +97,7 @@ class RelateField(Field, AdditionalHandlingMixin):
         """Return relations for this field. If data is empty, we simply get
         the related objects for the given type. If data['rm'] has
         values, filter those out of the result. If data['add'] has
-        values, add those to the result. We also need the original
-        add/rm lists.
+        values, add those to the result.
         """
 
         if data is None:
@@ -110,11 +109,8 @@ class RelateField(Field, AdditionalHandlingMixin):
 
         relations += data.get('add', [])
 
-        add_value = [object_to_urn(obj) for obj in data.get('add', [])]
-        rm_value = [object_to_urn(obj) for obj in data.get('rm', [])]
-
-        return ([{'label': rel.title, 'value': object_to_urn(rel)} for rel in
-                 relations if rel], add_value, rm_value)
+        return [{'label': rel.title, 'value': object_to_urn(rel)} for rel in
+                relations if rel]
 
 
 class RelateSingleField(RelateField):

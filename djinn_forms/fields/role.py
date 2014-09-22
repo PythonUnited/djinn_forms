@@ -50,7 +50,11 @@ class UpdateRole(UpdateRelation):
 
 class LocalRoleField(RelateField):
 
-    """ Field for assigning roles to users or groups on a given object """
+    """ Field for assigning roles to users or groups on a given object
+    TODO: this really shouldn't extend RelateField in this way, since
+    it is not a relation between content types, but a relation between
+    a content type and a group/user.
+    """
 
     updater = UpdateRoles
 
@@ -71,16 +75,15 @@ class LocalRoleField(RelateField):
         #
         if data and not "add" in data.keys():
             return data
-            
-        role = Role.objects.get(name=self.role)
 
-        roles = self.instance.get_local_roles(role_filter=[role.name])
+        if not data:
+            data = {}
 
-        users_or_groups = [(lrole.user or lrole.usergroup)
-                           for lrole in roles
-                           if lrole.user or lrole.usergroup]
+        roles = self.instance.get_local_roles(role_filter=[self.role])
 
-        users_or_groups = [u.profile for u in users_or_groups]
+        users_or_groups = [lrole.assignee for lrole in roles]
+
+        users_or_groups = [u.profile for u in users_or_groups if u.profile]
 
         try:
             users_or_groups = filter(lambda x: x not in data['rm'],
