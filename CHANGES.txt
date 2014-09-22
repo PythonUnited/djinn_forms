@@ -2,6 +2,7 @@
 =====
 * Added keyword field and widget
 * moved relate widget views and template into this module
+* i18n issues fixed
 
 1.2.3
 =====
