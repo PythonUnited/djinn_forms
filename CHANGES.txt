@@ -1,3 +1,7 @@
+1.2.5
+=====
+* Fixed setting of add/rm values for relate widget
+
 1.2.4
 =====
 * Added keyword field and widget
