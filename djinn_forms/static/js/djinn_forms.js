@@ -176,7 +176,7 @@ djinn.forms.remove_attachment = function(elt, attachment_id) {
 
   var input = $(elt.parents(".fileupload").find("input[type='file']").eq(0).data("valuefield"));
 
-  pg.remove_value(input, attachment_id, ",");
+  djinn.removeValue(input, attachment_id, ",");
 
   $(document).triggerHandler("djinn_forms_fileupload_remove", elt);
 };

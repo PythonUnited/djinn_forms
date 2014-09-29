@@ -26,13 +26,19 @@ class BaseWidget(Widget):
 
     def render(self, name, value, attrs=None):
 
-        final_attrs = self.build_attrs(attrs, name=name)
+        final_attrs = self.build_attrs(attrs, name=name, value=value)
 
-        final_attrs['value'] = value or []
+        final_attrs['value'] = self.prepare_value(value) or []
 
         html = render_to_string(self.template_name, final_attrs)
 
         return mark_safe(u"".join(html))
+
+    def prepare_value(self, value):
+
+        """ Allow override of value preparation for the widget """
+
+        return value
 
 
 class InOutWidget(BaseWidget):

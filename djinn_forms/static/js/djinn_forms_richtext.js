@@ -62,7 +62,7 @@ djinn.forms.richtext.setup_link_plugin = function(ed) {
                   
                   if (!url.startsWith("mailto:") && !url.startsWith("/") &&
                       !url.startsWith("urn:")) {
-                    url = pg.normalizeURL(url, "http");
+                    url = djinn.normalizeURL(url, "http");
                   }
 
                   djinn.forms.richtext.insert_in_wysiwyg(url, 

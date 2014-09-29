@@ -77,7 +77,7 @@ $(document).ready(function() {
           
           if (!url.startsWith("mailto:") && !url.startsWith("/") &&
               !url.startsWith("urn:")) {
-            url = pg.normalizeURL(form.url.value, "http");
+            url = djinn.normalizeURL(form.url.value, "http");
           }
 
           url = url + "::";
