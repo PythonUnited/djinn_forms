@@ -36,7 +36,8 @@ class RichTextWidget(Widget):
         """ Add JS for TinyMCE """
 
         return Media(
-            js=('jquery.tinymce/jscripts/tiny_mce/jquery.tinymce.js',
+            js=('tinymce/tinymce.jquery.js',
+                'tinymce/jquery.tinymce.min.js',
                 'js/djinn_forms_richtext.js',
                 'js/djinn_forms_link.js')
         )

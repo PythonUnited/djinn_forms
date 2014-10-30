@@ -108,12 +108,14 @@ djinn.forms.richtext.setup_img_plugin = function(ed, ctype, cid, img_type) {
 
 djinn.forms.richtext.TINYMCE_CONFIG = {
 
-  script_url : '/static/jquery.tinymce/jscripts/tiny_mce/tiny_mce.js',
-  content_css : '/static/css/tinymce_custom.css',
+  //script_url : '/static/jquery.tinymce/jscripts/tiny_mce/tiny_mce.js',
+  //content_css : '/static/css/tinymce_custom.css',
 
   // General options
-  theme : "advanced",
+  theme : "modern",
+
   language: "nl",
+
   plugins : djinn.forms.richtext.TINYMCE_PLUGINS,
 
   // Theme options
