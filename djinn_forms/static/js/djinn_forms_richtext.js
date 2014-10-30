@@ -11,8 +11,8 @@ if (djinn.forms === undefined) {
 }
 
 djinn.forms.richtext = {
-  BUTTONS: "bold,italic,underline,strikethrough,|,sub,sup,|,justifyleft,justifycenter,justifyright,justifyfull,|,indent,outdent,|,bullist,numlist,|,cleanup,code,|,table,|,link,unlink,anchor",
-  TINYMCE_PLUGINS: "lists,pagebreak,table,paste,directionality,visualchars,nonbreaking",
+  TOOLBAR: "undo redo | bold italic | alignleft aligncenter alignright alignjustify | indent outdent | bullist numlist | code | link unlink anchor",
+  PLUGINS: ["lists pagebreak table paste visualchars nonbreaking code"]
 };
 
 /**
@@ -108,20 +108,15 @@ djinn.forms.richtext.setup_img_plugin = function(ed, ctype, cid, img_type) {
 
 djinn.forms.richtext.TINYMCE_CONFIG = {
 
-  //script_url : '/static/jquery.tinymce/jscripts/tiny_mce/tiny_mce.js',
-  //content_css : '/static/css/tinymce_custom.css',
-
   // General options
   theme : "modern",
 
   language: "nl",
 
-  plugins : djinn.forms.richtext.TINYMCE_PLUGINS,
+  plugins : djinn.forms.richtext.PLUGINS,
 
   // Theme options
-  theme_advanced_buttons1 : djinn.forms.richtext.BUTTONS,
-  theme_advanced_buttons2 : "",
-  theme_advanced_buttons3 : "",
+  toolbar : djinn.forms.richtext.TOOLBAR,
   theme_advanced_toolbar_location : "top",
   theme_advanced_toolbar_align : "left",
   theme_advanced_resizing : true,
@@ -140,17 +135,21 @@ djinn.forms.richtext.TINYMCE_MAXCHARS_CONFIG = {
 
 djinn.forms.richtext.setup_maxchars = function(ed) {
 
-  ed.onKeyUp.add(function(ed, e) {
+  ed.on('keyup', function(e) {
 
-    var chars = tinyMCE.activeEditor.getBody().textContent.length;
+    var rawText = ed.getBody().textContent; 
+
+    var chars = rawText.length;
     
     // textcontent skips newlines, so let's find them
-    var nls = tinyMCE.activeEditor.getBody().innerHTML.split("<br>").length - 1;
-    
+    var nls = ed.getBody().innerHTML.split("<br>").length - 1;
+    nls += ed.getBody().innerHTML.split("<p>&nbsp;</p>").length - 1;
+
     chars = chars + nls;
     
     var text = chars + " tekens";
-    tinymce.DOM.setHTML(tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row'), text);
+
+    $(ed.getContainer()).find(".mce-statusbar").html(text);
   });
 };
 
@@ -230,12 +229,12 @@ djinn.forms.richtext.insert_image_wysiwyg = function(position, img_url, url) {
       images: true,
       links: true,
       hresize: false,
-      plugins: djinn.forms.richtext.TINYMCE_PLUGINS,
+      plugins: djinn.forms.richtext.PLUGINS,
       config: config
     }, options);
 
     if (settings.maxchars > -1) {
-      settings.plugins += ",maxlength";
+      settings.plugins += " maxlength";
 
       $.extend(settings.config, djinn.forms.richtext.TINYMCE_MAXCHARS_CONFIG);
       $.extend(settings.config, {maxlength_id_summary: settings.maxchars});
@@ -246,7 +245,7 @@ djinn.forms.richtext.insert_image_wysiwyg = function(position, img_url, url) {
     }
 
     if (ctype && cid && settings.images) {
-      settings.config.theme_advanced_buttons1 += ",image";
+      settings.config.toolbar += " image";
     }
 
     // Determine setup functions
