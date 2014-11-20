@@ -12,7 +12,17 @@ if (djinn.forms === undefined) {
 
 djinn.forms.richtext = {
   TOOLBAR: "undo redo | bold italic | alignleft aligncenter alignright alignjustify | indent outdent | bullist numlist | code | link unlink anchor",
-  PLUGINS: ["lists pagebreak table paste visualchars nonbreaking code"]
+  PLUGINS: ["lists pagebreak table paste visualchars nonbreaking code link anchor"],
+  MENU: {
+        edit   : {title : 'Edit',
+                  items : 'undo redo | cut copy paste pastetext | selectall'},
+        format : {title : 'Format',
+                  items : 'bold italic underline strikethrough superscript subscript | formats | removeformat'},
+        table  : {title : 'Table' ,
+                  items : 'inserttable tableprops deletetable | cell row column'},
+        tools  : {title : 'Tools' ,
+                  items : 'spellchecker code'}
+    }
 };
 
 /**
@@ -53,23 +63,23 @@ djinn.forms.richtext.setup_link_plugin = function(ed) {
               modal.on("submit", "#link_popup_form", function(e) {
 
                 e.preventDefault();
-    
+
                 var form = e.currentTarget;
-    
+
                 var url = form.url.value;
-                
+
                 if (url) {
-                  
+
                   if (!url.startsWith("mailto:") && !url.startsWith("/") &&
                       !url.startsWith("urn:")) {
                     url = djinn.normalizeURL(url, "http");
                   }
 
-                  djinn.forms.richtext.insert_in_wysiwyg(url, 
+                  djinn.forms.richtext.insert_in_wysiwyg(url,
                                                          form.ctype.value,
                                                          form.cid.value,
                                                          form.title.value);
-              
+
                   modal.modal("hide");
                 }
               });
@@ -108,21 +118,17 @@ djinn.forms.richtext.setup_img_plugin = function(ed, ctype, cid, img_type) {
 
 djinn.forms.richtext.TINYMCE_CONFIG = {
 
-  // General options
-  theme : "modern",
-
+  theme: "modern",
   language: "nl",
-
-  plugins : djinn.forms.richtext.PLUGINS,
-
-  // Theme options
-  toolbar : djinn.forms.richtext.TOOLBAR,
-  theme_advanced_toolbar_location : "top",
-  theme_advanced_toolbar_align : "left",
-  theme_advanced_resizing : true,
-  relative_urls : false,
-  cleanup_on_startup : true,
-  cleanup : true,
+  plugins: djinn.forms.richtext.PLUGINS,
+  toolbar: djinn.forms.richtext.TOOLBAR,
+  menu: djinn.forms.richtext.MENU,
+  theme_advanced_toolbar_location: "top",
+  theme_advanced_toolbar_align: "left",
+  theme_advanced_resizing: true,
+  relative_urls: false,
+  cleanup_on_startup: true,
+  cleanup: true,
 };
 
 
@@ -137,16 +143,16 @@ djinn.forms.richtext.setup_maxchars = function(ed) {
 
   ed.on('keyup', function(e) {
 
-    var rawText = ed.getBody().textContent; 
+    var rawText = ed.getBody().textContent;
 
     var chars = rawText.length;
-    
+
     // textcontent skips newlines, so let's find them
     var nls = ed.getBody().innerHTML.split("<br>").length - 1;
     nls += ed.getBody().innerHTML.split("<p>&nbsp;</p>").length - 1;
 
     chars = chars + nls;
-    
+
     var text = chars + " tekens";
 
     $(ed.getContainer()).find(".mce-statusbar").html(text);
@@ -261,7 +267,7 @@ djinn.forms.richtext.insert_image_wysiwyg = function(position, img_url, url) {
 
       if (ctype && cid && settings.images) {
         djinn.forms.richtext.setup_img_plugin(ed, ctype, cid, img_type);
-      }      
+      }
     };
 
     return this.tinymce(settings.config);
@@ -304,9 +310,9 @@ $(document).ready(function() {
     modal.find(".controls a").click(function(e) {
 
       e.preventDefault();
-      
+
       var link = $(e.currentTarget);
-      
+
       djinn.forms.richtext.insert_image_wysiwyg(link.data("pos"),
                                                 link.attr("href"),
                                                 link.data("img"));
