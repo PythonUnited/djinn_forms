@@ -11,8 +11,8 @@ if (djinn.forms === undefined) {
 }
 
 djinn.forms.richtext = {
-  TOOLBAR: "undo redo | bold italic | alignleft aligncenter alignright alignjustify | indent outdent | bullist numlist | code | link unlink anchor",
-  PLUGINS: ["lists pagebreak table paste visualchars nonbreaking code link anchor"],
+  TOOLBAR: "undo redo | bold italic | alignleft aligncenter alignright alignjustify | indent outdent | bullist numlist | code | anchor",
+  PLUGINS: ["lists pagebreak table paste visualchars nonbreaking code anchor link"],
   MENU: {
         edit   : {title : 'Edit',
                   items : 'undo redo | cut copy paste pastetext | selectall'},
@@ -31,9 +31,9 @@ djinn.forms.richtext = {
  */
 djinn.forms.richtext.setup_link_plugin = function(ed) {
 
-  ed.addButton('link', {
-    title : 'Link',
-    image : '/static/img/link.png',
+  ed.addButton('_link', {
+    icon: 'link',
+    shortcut: 'Ctrl+K',
     onclick : function() {
 
       document.cur_wysiwyg = ed;
@@ -254,6 +254,10 @@ djinn.forms.richtext.insert_image_wysiwyg = function(position, img_url, url) {
       settings.config.toolbar += " image";
     }
 
+    if (settings.links) {
+      settings.config.toolbar += " _link unlink";
+    }
+    
     // Determine setup functions
     settings.config.setup = function(ed) {
 
