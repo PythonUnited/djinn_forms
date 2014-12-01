@@ -46,6 +46,6 @@ class DateTimeWidget(BaseWidget):
                 value_str = "%s %s" % (value_str, data['%s_time' % name])
                 format_str = "%s %s" % (format_str, self.attrs['time_format'])
 
-                value = datetime.strptime(value_str, format_str)
+            value = datetime.strptime(value_str, format_str)
 
         return value
