@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import url, patterns
+from django.conf.urls import url, patterns
 from pgsearch.views import ModalSearchView
 from pgsearch.forms import PGSearchForm, DocumentFilterSearchForm
 from djinn_forms.views.fileupload import UploadView
