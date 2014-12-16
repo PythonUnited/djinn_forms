@@ -55,6 +55,8 @@ djinn.forms.richtext.setup_link_plugin = function(ed) {
 
       var remote_url = '/contentlinks/?currlink=' + encodeURIComponent(currlink);
 
+      var currSelection = ed.selection.getBookmark(false);
+
       $.get(remote_url,
             function(data) {
 
@@ -74,6 +76,8 @@ djinn.forms.richtext.setup_link_plugin = function(ed) {
                       !url.startsWith("urn:")) {
                     url = djinn.normalizeURL(url, "http");
                   }
+
+                  ed.selection.moveToBookmark(currSelection);
 
                   djinn.forms.richtext.insert_in_wysiwyg(url,
                                                          form.ctype.value,
