@@ -87,7 +87,7 @@ djinn.forms.richtext.setup_link_plugin = function(ed) {
                   modal.modal("hide");
                 }
               });
-            });
+            }, "text");
     }
   });
 };
@@ -114,7 +114,7 @@ djinn.forms.richtext.setup_img_plugin = function(ed, ctype, cid, img_type) {
             {"image_ids": image_ids, "img_type": img_type},
             function(data) {
               djinn.contenttypes.show_modal(data, [widget]);
-            }
+            }, "text"
            );
     }});
 };
