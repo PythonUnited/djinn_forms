@@ -196,7 +196,7 @@ $(document).ready(function() {
         var link = $(e.currentTarget);
 
         djinn.forms.removeValue(widget.find(".value-list").eq(0),
-                                link.data("value"));
+                                link.data("value"), ",");
 
         record.remove();
 
