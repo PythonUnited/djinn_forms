@@ -19,12 +19,12 @@ djinn.forms.keyword.appendKw = function(widget, val) {
 
   var input = widget.find("input[type=hidden]");
 
-  if (djinn.forms.hasValue(input, val, " ")) {
+  if (djinn.forms.hasValue(input, val, ",")) {
     return false;
   }
 
   widget.find("ul").append('<li data-value="' + val + '">' + val + '<a href="#" class="delete">&times;</a></li>');
-  djinn.forms.addValue(input, val, true, " ");
+  djinn.forms.addValue(input, val, true, ",");
 
   if (widget.find("li").length >= parseInt(widget.data("maxkeywords"))) {
     widget.find(".new_kw").hide();
@@ -70,7 +70,7 @@ $(document).ready(function() {
 
         $.each(content, function(idx, obj) {
 
-          if (djinn.forms.hasValue(hidden, obj.value, " ")) {
+          if (djinn.forms.hasValue(hidden, obj.value, ",")) {
             ui.content.splice(idx, 1);
           } 
         });
@@ -87,14 +87,16 @@ $(document).ready(function() {
 
     var input = $(e.currentTarget);
     var widget = input.parents(".keyword");
+    // 13 = enter, 32 = space, 188 = comma
 
-    if (e.keyCode == 13) {
+    if (e.keyCode == 13 || e.keyCode == 188) {
+      // enter and comma not in keywords
       e.preventDefault();
-    }
 
-    if (e.keyCode == 13 || e.keyCode == 32) {
+      // finish the current keyword and add it as 'button'
       djinn.forms.keyword.appendKw(widget, $(e.currentTarget).val());
 
+      // empty the keyword-input box
       input.val("");
     }
   });
@@ -108,7 +110,7 @@ $(document).ready(function() {
 
     var elt = $(e.currentTarget).parents("li");
 
-    djinn.forms.removeValue(input, elt.data('value'), " ");
+    djinn.forms.removeValue(input, elt.data('value'), ",");
 
     elt.remove();
 
