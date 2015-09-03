@@ -1,5 +1,6 @@
 from base import BaseWidget
 from datetime import datetime
+from django.forms import Media
 
 
 class DateTimeWidget(BaseWidget):
@@ -13,7 +14,25 @@ class DateTimeWidget(BaseWidget):
      * time_format Defaults to hh:mm
     """
 
-    template_name = 'djinn_forms/snippets/datetimewidget.html'
+    def _media(self):
+
+        """ Add JS for TinyMCE """
+
+        return Media(
+            js=('js/djinn_forms_datetimedirect.js', ),
+        )
+
+    def _template_name(self):
+
+        if self.attrs.get("direct"):
+            Templ = 'djinn_forms/snippets/datetimedirectwidget.html'
+        else:
+            Templ = 'djinn_forms/snippets/datetimewidget.html'
+
+        return Templ
+
+    media = property(_media)
+    template_name = property(_template_name)
     defaults = {'date_format': '%d-%m-%Y', 'time_format': '%H:%M'}
 
     def build_attrs(self, extra_attrs=None, **kwargs):
