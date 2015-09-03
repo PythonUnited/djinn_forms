@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<div class="control-group datetime {% if not value %}empty{% endif %}">
+  <div class="controls">
+    <label class="radio">
+      <input name="radiodirect" id="direct" checked="checked"  type="radio" value="Direct">
+        Direct
+    </label>
+    <label class="radio">
+        <input name="radiodirect" id="notdirect" type="radio" value="NotDirect" style="margin-left:-482px">
+        <input id="id_{{ name }}_date"
+               class="date" type="text"
+               placeholder="{{ date_hint }}"
+               value="{{ date_value }}"
+               name="{{ name }}_date" didj  isabled="disabled"
+                style="margin-left:23px;">
+        <input id="id_{{ name }}_time"
+               class="time" type="text"
+               size="5" placeholder="{{ time_hint }}"
+               value="{{ time_value }}"
+               name="{{ name }}_time" disabled="disabled">
+     </label>
+
+  </div>
+</div>
