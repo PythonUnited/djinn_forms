@@ -1,4 +1,3 @@
-import re
 from django.forms.fields import Field
 from djinn_forms.widgets.keyword import KeywordWidget
 
@@ -14,4 +13,4 @@ class KeywordField(Field):
         if not data:
             return []
 
-        return re.split("\W+", data)
+        return data.split(',')
