@@ -3,11 +3,11 @@
 <div class="control-group datetime {% if not value %}empty{% endif %}">
   <div class="controls">
     <label class="radio">
-      <input name="radiodirect" id="direct" checked="checked"  type="radio" value="Direct">
+      <input name="radiodirect" id="direct" type="radio" value="Direct" {{ direct }}>
         Direct
     </label>
     <label class="radio">
-        <input name="radiodirect" id="notdirect" type="radio" value="NotDirect" style="margin-left:-482px">
+        <input name="radiodirect" id="notdirect" type="radio" value="NotDirect" style="margin-left:-482px" {{ notdirect }}>
         <input id="id_{{ name }}_date"
                class="date" type="text"
                placeholder="{{ date_hint }}"
