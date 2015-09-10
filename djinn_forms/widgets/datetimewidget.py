@@ -1,5 +1,6 @@
 from base import BaseWidget
 from datetime import datetime
+from django.forms import Media
 
 
 class DateTimeWidget(BaseWidget):
@@ -13,7 +14,25 @@ class DateTimeWidget(BaseWidget):
      * time_format Defaults to hh:mm
     """
 
-    template_name = 'djinn_forms/snippets/datetimewidget.html'
+    def _media(self):
+
+        """ Add JS for TinyMCE """
+
+        return Media(
+            js=('js/djinn_forms_datetimedirect.js', ),
+        )
+
+    def _template_name(self):
+
+        if self.attrs.get("direct"):
+            Templ = 'djinn_forms/snippets/datetimedirectwidget.html'
+        else:
+            Templ = 'djinn_forms/snippets/datetimewidget.html'
+
+        return Templ
+
+    media = property(_media)
+    template_name = property(_template_name)
     defaults = {'date_format': '%d-%m-%Y', 'time_format': '%H:%M'}
 
     def build_attrs(self, extra_attrs=None, **kwargs):
@@ -22,13 +41,20 @@ class DateTimeWidget(BaseWidget):
             extra_attrs=extra_attrs, **kwargs)
 
         if kwargs.get('value'):
-            final_attrs['date_value'] = \
-                kwargs['value'].strftime(self.attrs['date_format'])
-            final_attrs['time_value'] = \
-                kwargs['value'].strftime(self.attrs['time_format'])
+            if kwargs.get('value') == "errorDirect":
+               final_attrs['direct'] = ""
+               final_attrs['notdirect'] = "checked"
+            else:
+                final_attrs['date_value'] = \
+                    kwargs['value'].strftime(self.attrs['date_format'])
+                final_attrs['time_value'] = \
+                    kwargs['value'].strftime(self.attrs['time_format'])
         else:
             final_attrs['date_value'] = ""
             final_attrs['time_value'] = ""
+            final_attrs['direct'] = "checked"
+            final_attrs['notdirect'] = ""
+
 
         return final_attrs
 
@@ -47,5 +73,8 @@ class DateTimeWidget(BaseWidget):
                 format_str = "%s %s" % (format_str, self.attrs['time_format'])
 
             value = datetime.strptime(value_str, format_str)
+        else:
+            if name=="publish_from" and data.get("radiodirect") == "NotDirect":
+                value="errorDirect"
 
         return value
