@@ -7,13 +7,12 @@
         Direct
     </label>
     <label class="radio">
-        <input name="radiodirect" id="notdirect" type="radio" value="NotDirect" style="margin-left:-482px" {{ notdirect }}>
+        <input name="radiodirect" id="notdirect" type="radio" value="NotDirect" class="radio-plus-input" {{ notdirect }}>
         <input id="id_{{ name }}_date"
                class="date" type="text"
                placeholder="{{ date_hint }}"
                value="{{ date_value }}"
-               name="{{ name }}_date" disabled="disabled"
-                style="margin-left:23px;">
+               name="{{ name }}_date" disabled="disabled">
         <input id="id_{{ name }}_time"
                class="time" type="text"
                size="5" placeholder="{{ time_hint }}"
