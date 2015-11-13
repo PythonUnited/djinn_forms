@@ -31,4 +31,4 @@ class Keywords(View):
 
         return HttpResponse(
             json.dumps(results),
-            mimetype='application/json')
+            content_type='application/json')

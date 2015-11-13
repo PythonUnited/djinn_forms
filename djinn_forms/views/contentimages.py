@@ -10,7 +10,7 @@ class ContentImages(MimeTypeMixin, CTDetailView):
 
     """ Return listing of all images"""
 
-    mimetype = "text/plain"
+    content_type = "text/plain"
     template_name = "djinn_forms/snippets/contentimages.html"
 
     def has_images(self):

@@ -36,7 +36,7 @@ class RelateSearch(View):
         if not term:
             return HttpResponse(
                 json.dumps([]),
-                mimetype='application/json')
+                content_type='application/json')
 
         search_field = "%s__contains" % request.GET.get("searchfield",
                                                         "title")
@@ -63,4 +63,4 @@ class RelateSearch(View):
                             "value": object_to_urn(res.object)
                             })
 
-        return HttpResponse(json.dumps(results), mimetype='application/json')
+        return HttpResponse(json.dumps(results), content_type='application/json')
