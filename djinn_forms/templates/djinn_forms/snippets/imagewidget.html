@@ -4,7 +4,9 @@
   <div class="btn fileinput-button">
 
     {# Translators: image replace label #}
-    <span class="image-action replace-image">{% trans "Replace image" %}</span>
+    <span class="image-action replace-image">
+    {% if not value %}{% trans "Add image" %}{% else %}{% trans "Replace image" %}{% endif %}
+    </span>
     {# Translators: image replace label #}
     <span class="image-action select-image">{% trans "Select image" %}</span>
     
