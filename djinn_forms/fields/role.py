@@ -1,6 +1,6 @@
 from pgauth.models import Role
 from djinn_core.utils import object_to_urn
-from relate import RelateField, UpdateRelations, UpdateRelation
+from .relate import RelateField, UpdateRelations, UpdateRelation
 
 
 def _profile_to_user_or_group(profile):
@@ -85,18 +85,21 @@ class LocalRoleField(RelateField):
 
         users_or_groups = [u.profile for u in users_or_groups if u.profile]
 
-        try:
-            users_or_groups = filter(lambda x: x not in data['rm'],
-                                     users_or_groups)
-        except:
-            pass
+        if 'rm' in data:
+            try:
+                users_or_groups = list(
+                    filter(lambda x: x not in data['rm'],users_or_groups)
+                )
+            except Exception as exc:
+                pass
 
-        try:
-            users_or_groups += data['add']
-        except:
-            pass
+        if 'add' in data:
+            try:
+                users_or_groups += data['add']
+            except Exception as exc:
+                pass
 
-        return [{'label': unicode(profile),
+        return [{'label': str(profile),
                  'value': object_to_urn(profile)} for profile in
                 users_or_groups]
 

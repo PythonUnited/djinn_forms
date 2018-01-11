@@ -6,7 +6,7 @@ import uuid
 import logging as log
 import mimetypes
 from shutil import copyfile
-from django.db.models import get_model
+from django.apps import apps
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import View
@@ -38,20 +38,20 @@ class UploadView(View):
         file_name = None
 
         attachments = []
-        attachment_type = request.REQUEST.get(
+        attachment_type = request.POST.get(
             "attachment_type",
             "djinn_contenttypes.DocumentAttachment")
 
         if attachment_type in ["image", "avatar"]:
-            model = get_model("pgcontent", "ImageAttachment")
+            model = apps.get_model("pgcontent", "ImageAttachment")
         elif attachment_type == "document":
-            model = get_model("pgcontent", "DocumentAttachment")
+            model = apps.get_model("pgcontent", "DocumentAttachment")
         else:
             parts = attachment_type.split('.')
-            model = get_model(parts[0], parts[-1])
+            model = apps.get_model(parts[0], parts[-1])
 
         try:
-            attachment_id = int(request.REQUEST.get("attachment_id", None))
+            attachment_id = int(request.GET.get("attachment_id", None))
         except:
             attachment_id = None
 
@@ -100,7 +100,7 @@ class UploadView(View):
                 else:
                     path = "images/%s" % relative_file_name
 
-                attachment.image.save(path, File(open(temp_file)))
+                attachment.image.save(path, File(open(temp_file, mode='rb')))
                 attachment.save()
             elif attachment_type == "document":
                 store_path = os.path.join("documents", relative_file_name)
@@ -126,7 +126,7 @@ class UploadView(View):
                 attachment = model(title=file_name)
 
                 path = "images/%s" % relative_file_name
-                attachment.image.save(path, File(open(temp_file)))
+                attachment.image.save(path, File(open(temp_file, mode='rb')))
                 attachment.save()
 
             attachments.append(attachment)
@@ -143,7 +143,7 @@ class UploadView(View):
 
         context["attachment_ids"] = [att.id for att in attachments]
 
-        if self.request.REQUEST.get("edit_type", "") == "field":
+        if self.request.GET.get("edit_type", "") == "field":
             if attachment_type == "image":
                 template = "pgcontent/snippets/image.html"
             elif attachment_type == "avatar":

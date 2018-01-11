@@ -1,5 +1,3 @@
-from urls import urlpatterns
-
 
 def get_js():
 
@@ -12,5 +10,7 @@ def get_css():
 
 
 def get_urls():
+
+    from .urls import urlpatterns
 
     return urlpatterns

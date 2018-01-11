@@ -1,4 +1,4 @@
-from base import BaseWidget
+from .base import BaseWidget
 from datetime import datetime
 from django.forms import Media
 
@@ -35,10 +35,10 @@ class DateTimeWidget(BaseWidget):
     template_name = property(_template_name)
     defaults = {'date_format': '%d-%m-%Y', 'time_format': '%H:%M'}
 
-    def build_attrs(self, extra_attrs=None, **kwargs):
+    def build_attrs(self, attrs=None, extra_attrs=None, **kwargs):
 
         final_attrs = super(DateTimeWidget, self).build_attrs(
-            extra_attrs=extra_attrs, **kwargs)
+            attrs, extra_attrs=extra_attrs, **kwargs)
 
         if kwargs.get('value'):
             if kwargs.get('value') == "errorDirect":

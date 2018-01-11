@@ -26,7 +26,13 @@ class BaseWidget(Widget):
 
     def render(self, name, value, attrs=None):
 
-        final_attrs = self.build_attrs(attrs, name=name, value=value)
+        if attrs:
+            self.attrs.update(attrs)
+
+        final_attrs = self.build_attrs(
+            self.attrs, extra_attrs={'name': name, 'value': value})
+        # final_attrs = super(BaseWidget, self).build_attrs(
+        #     self.attrs, extra_attrs={'name': name, 'value': value})
 
         final_attrs['value'] = self.prepare_value(value) or []
 

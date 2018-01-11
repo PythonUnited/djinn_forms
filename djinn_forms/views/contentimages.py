@@ -1,5 +1,5 @@
 import logging
-from django.db.models import get_model
+from django.apps import apps
 from djinn_contenttypes.views.base import MimeTypeMixin, CTDetailView
 
 
@@ -34,7 +34,7 @@ class ContentImages(MimeTypeMixin, CTDetailView):
             img_type = self.request.GET.get("img_type",
                                             "pgcontent.ImageAttachment")
 
-            images_by_id = get_model(*img_type.split(".")).objects.filter(
+            images_by_id = apps.get_model(*img_type.split(".")).objects.filter(
                 pk__in=image_ids)
 
             images = images | images_by_id

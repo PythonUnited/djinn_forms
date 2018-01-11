@@ -1,4 +1,4 @@
-from django.conf.urls import url, patterns
+from django.conf.urls import url
 from pgsearch.views import ModalSearchView
 from pgsearch.forms import PGSearchForm, DocumentFilterSearchForm
 from djinn_forms.views.fileupload import UploadView
@@ -8,9 +8,7 @@ from djinn_forms.views.contentimages import ContentImages
 from django.views.decorators.csrf import csrf_exempt
 
 
-urlpatterns = patterns(
-
-    "",
+urlpatterns = [
 
     url(r'^fileupload$',
         csrf_exempt(UploadView.as_view()),
@@ -63,4 +61,4 @@ urlpatterns = patterns(
     url(r'^keywords/?$',
         Keywords.as_view(),
         name="djinn_forms_keywords")
-)
+]

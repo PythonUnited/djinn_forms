@@ -20,7 +20,7 @@
     
     <fieldset id="filter-new-addlink">
       <label for="">{% trans "Add web address" %}</label>
-      <input type="text" name="url" placeholder="http://" value="{{ request.REQUEST.currlink }}">
+      <input type="text" name="url" placeholder="http://" value="{{ request.GET.currlink }}">
     </fieldset>
     
     <div class="form-actions">

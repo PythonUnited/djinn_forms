@@ -2,7 +2,7 @@ from django.forms.widgets import Widget
 from django.forms import Media
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 TPL = 'djinn_forms/snippets/keywordwidget.html'

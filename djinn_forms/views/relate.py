@@ -47,7 +47,9 @@ class RelateSearch(View):
 
         content_types = request.GET.get('content_type', '').split(",")
 
-        content_types = map(map_swappable_ct, content_types)
+        # MJB map
+        # content_types = map(map_swappable_ct, content_types)
+        content_types = [map_swappable_ct(ctn) for ctn in content_types]
 
         _filter = {search_field: Raw("*%s*" % term)}
 
@@ -59,7 +61,7 @@ class RelateSearch(View):
         results = []
 
         for res in [res for res in sqs if res.object]:
-            results.append({"label": unicode(res.object),
+            results.append({"label": str(res.object),
                             "value": object_to_urn(res.object)
                             })
 

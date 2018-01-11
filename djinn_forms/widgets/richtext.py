@@ -3,7 +3,7 @@ from django.forms.widgets import Widget
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
-from django.forms.util import flatatt
+from django.forms.utils import flatatt
 
 
 TPL = 'djinn_forms/snippets/richtextwidget.html'
@@ -36,7 +36,7 @@ class RichTextWidget(Widget):
         """ Add JS for TinyMCE """
 
         return Media(
-            js=('tinymce/tinymce.jquery.js',
+            js=('tinymce/tinymce.js',
                 'tinymce/jquery.tinymce.min.js',
                 'js/djinn_forms_richtext.js',
                 'js/djinn_forms_link.js')
@@ -51,7 +51,7 @@ class RichTextWidget(Widget):
         if value is None:
             value = ''
 
-        final_attrs = self.build_attrs(attrs, name=name)
+        final_attrs = self.build_attrs(attrs, extra_attrs={'name': name})
 
         context = {
             'attributes': flatatt(final_attrs),

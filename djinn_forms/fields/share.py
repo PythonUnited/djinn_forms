@@ -72,7 +72,7 @@ class ShareField(Field):
         shares = self.instance.shares.all()
 
         try:
-            shares = filter(lambda x: x not in data['rm'], shares)
+            shares = list(filter(lambda x: x not in data['rm'], shares))
         except:
             pass
 

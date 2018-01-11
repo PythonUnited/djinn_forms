@@ -2,7 +2,7 @@ from django.forms.widgets import Widget
 from django.forms import Media
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from djinn_core.utils import urn_to_object, object_to_urn
 
@@ -71,7 +71,7 @@ class ShareWidget(Widget):
             )
 
         if value:
-            related = [(object_to_urn(obj), unicode(obj)) for obj in
+            related = [(object_to_urn(obj), str(obj)) for obj in
                        value.get('add', [])]
 
         if value:

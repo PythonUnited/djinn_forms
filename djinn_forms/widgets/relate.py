@@ -1,7 +1,7 @@
 from django.forms import Media
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from djinn_core.utils import urn_to_object
-from base import InOutWidget
+from .base import InOutWidget
 
 
 class RelateWidget(InOutWidget):
@@ -50,10 +50,10 @@ class RelateWidget(InOutWidget):
 
         return urn_to_object(item)
 
-    def build_attrs(self, extra_attrs=None, **kwargs):
+    def build_attrs(self, attrs=None, extra_attrs=None, **kwargs):
 
         final_attrs = super(RelateWidget, self).build_attrs(
-            extra_attrs=extra_attrs, **kwargs)
+            attrs, extra_attrs=extra_attrs, **kwargs)
 
         url = self.attrs.get("search_url", reverse("djinn_forms_relatesearch"))
         url = "%s?content_type=%s&searchfield=%s&ct_searchfield=%s" % (

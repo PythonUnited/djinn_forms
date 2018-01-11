@@ -22,7 +22,8 @@ class Keywords(View):
             if term.startswith(kw):
                 keywords.append((term, count))
 
-        sorted(keywords, lambda x, y: cmp(x[1], y[1]))
+        # sorted(keywords, lambda x, y: cmp(x[1], y[1]))
+        sorted(keywords, key=lambda x: x[1])
 
         results = []
 

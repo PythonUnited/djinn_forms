@@ -184,7 +184,9 @@ djinn.forms.remove_attachment = function(elt, attachment_id) {
 
 $(document).ready(function() {
 
-    $('.date').datepicker();
+    $('.date').datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
     $('.time').datetimepicker({timeOnly: true});
 
     $(document).on("click", ".attach .delete ", function(e) {

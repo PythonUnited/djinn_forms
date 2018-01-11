@@ -2,7 +2,7 @@ import re
 from django import forms
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 class AttachmentWidget(forms.widgets.Widget):
@@ -38,8 +38,9 @@ class AttachmentWidget(forms.widgets.Widget):
             if not hasattr(value, "__iter__"):
                 value = [value]
 
-            return filter(lambda x: self.model.objects.filter(pk=x).exists(),
-                          value)
+            return list(filter(
+                lambda x: self.model.objects.filter(pk=x).exists(), value)
+            )
         else:
             return value
 

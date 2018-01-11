@@ -1,7 +1,7 @@
 from django.forms.fields import Field
 from djinn_forms.widgets.relate import RelateWidget, RelateSingleWidget
 from djinn_core.utils import object_to_urn
-from base import AdditionalHandlingMixin
+from .base import AdditionalHandlingMixin
 
 
 class UpdateRelations(object):
@@ -105,7 +105,7 @@ class RelateField(Field, AdditionalHandlingMixin):
 
         relations = self.instance.get_related(self.relation_type)
 
-        relations = filter(lambda x: x not in data.get('rm', []), relations)
+        relations = [x for x in relations if x not in data.get('rm', [])]
 
         relations += data.get('add', [])
 
