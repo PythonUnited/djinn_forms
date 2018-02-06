@@ -40,21 +40,22 @@ class DateTimeWidget(BaseWidget):
         final_attrs = super(DateTimeWidget, self).build_attrs(
             attrs, extra_attrs=extra_attrs, **kwargs)
 
-        if kwargs.get('value'):
-            if kwargs.get('value') == "errorDirect":
+        the_datetime = kwargs.get('value') or extra_attrs.get('value')
+
+        if the_datetime:
+            if the_datetime == "errorDirect":
                final_attrs['direct'] = ""
                final_attrs['notdirect'] = "checked"
             else:
                 final_attrs['date_value'] = \
-                    kwargs['value'].strftime(self.attrs['date_format'])
+                    the_datetime.strftime(self.attrs['date_format'])
                 final_attrs['time_value'] = \
-                    kwargs['value'].strftime(self.attrs['time_format'])
+                    the_datetime.strftime(self.attrs['time_format'])
         else:
             final_attrs['date_value'] = ""
             final_attrs['time_value'] = ""
             final_attrs['direct'] = "checked"
             final_attrs['notdirect'] = ""
-
 
         return final_attrs
 
@@ -78,3 +79,13 @@ class DateTimeWidget(BaseWidget):
                 value="errorDirect"
 
         return value
+
+    def value_omitted_from_data(self, data, files, name):
+        # Fields exist as publish_from_date, publish_from_time,
+        # publish_to_date or publish_to_time in the request data
+        # of which *_date is mandatory
+
+        name = "%s_date" % name
+
+        return super(DateTimeWidget, self).value_omitted_from_data(
+            data, files, name)
