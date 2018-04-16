@@ -124,6 +124,39 @@ $(document).ready(function() {
 
         modal.modal('hide');
       });
+
+      modal.on("click", ".djinn_forms_relate_add", function(e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        var added_item = $(e.currentTarget);
+        var the_form = $(added_item).closest('form');
+
+        $.ajax(the_form.attr("action"), {
+          type: the_form.attr("method") || "POST",
+          data: the_form.serialize(),
+          success: function(data, status, xhr) {
+
+            if (xhr.status == 202) {
+              modal.find(".modal-body").replaceWith($(data).find(
+                  ".modal-body"));
+              modal.trigger("modal_action_show");
+            } else {
+
+              var value = $(the_form).find('input[name="urn"]').val();
+              var label = $(the_form).find('input#id_title').val();
+
+              djinn.forms.relate.handleElement(widget, label, value);
+
+              modal.modal('hide');
+              modal.find(".modal-body").empty();
+            }
+          }
+        });
+
+      });
+
     });
   });
 

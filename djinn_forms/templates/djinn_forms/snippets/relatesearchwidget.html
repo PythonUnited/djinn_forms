@@ -14,6 +14,17 @@
            class="rm-list" />
     <input type="hidden" name="{{ name }}_add" value="{{ add_value }}"
            class="add-list" />
+
+    {% if allow_add_relation %}
+        {% trans 'or' %}
+      <a class="show-popup" href="{{ add_relation_url }}?fieldName={{ name }}">
+      {% if add_relation_label %}
+        {{ add_relation_label }}
+      {% else %}
+        {% trans "Add content" %}
+      {% endif %}
+    </a>
+        {% endif %}
   </div>
 
   <ul class="related">

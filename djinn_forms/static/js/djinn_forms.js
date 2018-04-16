@@ -102,7 +102,7 @@ djinn.forms.hasValue = function(input, value, separator) {
 /**
  * Initialize file uploader widget.
  */
-djinn.forms.init_fileuploader = function(options) {
+djinn.forms.init_fileuploader = function(the_formselector, options) {
 
   var defaults = {
     url: '/fileupload',
@@ -154,7 +154,11 @@ djinn.forms.init_fileuploader = function(options) {
     $.extend(defaults, options);
   }
 
-  $("input[type='file']").each(function() {
+  if (! the_formselector) {
+    the_formselector = 'form';
+  }
+  // $("input[type='file']").each(function() {
+  $(document).find(the_formselector).find("input[type='file']").each(function() {
 
       if ($(this).data("uploadurl")) {
         defaults.url = $(this).data("uploadurl");
@@ -221,4 +225,10 @@ $(document).ready(function() {
           $(target).parents(".imagewidget").removeClass("empty");
         }
       });
+
+    $(document).on("click", ".advanced", function(e) {
+        var tgt = $(e.currentTarget);
+        $(tgt).closest('form').find(".advanced-options").toggle();
+    });
+
   });
