@@ -122,9 +122,23 @@ class RelateSingleField(RelateField):
 
         """ Get existing role, if it's there """
 
-        value = super(RelateSingleField, self).prepare_value(data)
+        # value = super(RelateSingleField, self).prepare_value(data)
 
-        try:
-            return value[0]
-        except:
+        # try:
+        #     return value[0]
+        # except:
+        #     return None
+
+        rel = None
+        if not data:
+            relations = self.instance.get_related(self.relation_type)
+            if len(relations)>0:
+                rel = relations[0]
+        else:
+            rel = data
+
+        if not rel:
             return None
+
+        return {'label': rel.title,
+                'value': object_to_urn(rel)}
