@@ -30,6 +30,7 @@ class RelateWidget(InOutWidget):
     """
 
     initial = False
+    filter_attrs = {}
 
     def _media(self):
 
@@ -62,6 +63,14 @@ class RelateWidget(InOutWidget):
             self.attrs.get("searchfield", "title_auto"),
             self.attrs.get("ct_searchfield", "meta_ct"),
             )
+
+        if self.filter_attrs.keys():
+            for filterkey, filtervalue in self.filter_attrs.items():
+                url = "%s&%s=%s" % (
+                    url,
+                    filterkey,
+                    filtervalue
+                )
 
         final_attrs.update(
             {'search_minlength': self.attrs.get("search_minlength", 2),

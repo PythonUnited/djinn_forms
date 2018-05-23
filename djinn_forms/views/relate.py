@@ -56,6 +56,11 @@ class RelateSearch(View):
         if content_types:
             _filter[ct_search_field] = content_types
 
+
+        parentusergroup = request.GET.get("parentusergroup", None)
+        if parentusergroup:
+            _filter['parentusergroup'] = parentusergroup
+
         sqs = SearchQuerySet().filter(**_filter)
 
         results = []
