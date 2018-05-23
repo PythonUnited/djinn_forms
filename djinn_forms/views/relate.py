@@ -69,4 +69,8 @@ class RelateSearch(View):
                             "value": object_to_urn(res.object)
                             })
 
+        if len(results) == 0:
+            results.append({"label": "Geen resultaat gevonden",
+                            "value": ''})
+
         return HttpResponse(json.dumps(results), content_type='application/json')
