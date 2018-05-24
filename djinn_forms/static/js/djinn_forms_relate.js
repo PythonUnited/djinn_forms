@@ -163,8 +163,8 @@ $(document).ready(function() {
   $(document).on("focusout", ".relate.single .autocomplete", function(e) {
     
     var widget = $(e.target).parents(".relate");
-    
-    widget.removeClass("empty");
+    // MJB 20180524 werkte niet goed by single-relate op Editorial Edit 
+    // widget.removeClass("empty");
   });
   
   $(document).on("click", ".relate.multiple .delete ", function(e) {
