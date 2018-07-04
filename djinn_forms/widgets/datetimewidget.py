@@ -87,5 +87,8 @@ class DateTimeWidget(BaseWidget):
 
         name = "%s_date" % name
 
+        if name == 'publish_from_date':
+            return False
+
         return super(DateTimeWidget, self).value_omitted_from_data(
             data, files, name)
