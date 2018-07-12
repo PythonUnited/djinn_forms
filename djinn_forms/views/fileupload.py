@@ -37,8 +37,13 @@ class UploadView(View):
         temp_file = None
         file_name = None
 
+        if self.request.method == 'GET':
+            request_data = self.request.GET
+        else:
+            request_data = self.request.POST
+
         attachments = []
-        attachment_type = request.POST.get(
+        attachment_type = request_data.get(
             "attachment_type",
             "djinn_contenttypes.DocumentAttachment")
 
@@ -51,7 +56,7 @@ class UploadView(View):
             model = apps.get_model(parts[0], parts[-1])
 
         try:
-            attachment_id = int(request.GET.get("attachment_id", None))
+            attachment_id = int(request_data.get("attachment_id", None))
         except:
             attachment_id = None
 
@@ -143,7 +148,7 @@ class UploadView(View):
 
         context["attachment_ids"] = [att.id for att in attachments]
 
-        if self.request.GET.get("edit_type", "") == "field":
+        if request_data.get("edit_type", "") == "field":
             if attachment_type == "image":
                 template = "pgcontent/snippets/image.html"
             elif attachment_type == "avatar":
