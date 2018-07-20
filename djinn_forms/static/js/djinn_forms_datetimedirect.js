@@ -2,7 +2,8 @@
  * DateTimeDirect widget JS
  */
 
-$(document).ready(function() {
+$.fn.datetime_radios_initializer = function(){
+
     $.fn.changeradiofunction = function(ctrls){
         $(ctrls).find("input.date").attr("disabled", false);
         $(ctrls).find("input.time").attr("disabled", false);
@@ -57,4 +58,8 @@ $(document).ready(function() {
 //        $("#id_publish_from_time").attr("disabled", false);
     });
 
+}
+
+$(document).ready(function() {
+    $.fn.datetime_radios_initializer();
 });

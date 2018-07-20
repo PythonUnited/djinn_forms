@@ -44,7 +44,7 @@ djinn.forms.keyword.select = function(e, ui) {
 };
 
 
-$(document).ready(function() {
+$.fn.forms_keywords_initializer = function(){
 
   $(".new_kw").each(function() {
 
@@ -119,4 +119,10 @@ $(document).ready(function() {
     }
 
   });
+}
+
+$(document).ready(function() {
+    $.fn.forms_keywords_initializer();
 });
+
+
