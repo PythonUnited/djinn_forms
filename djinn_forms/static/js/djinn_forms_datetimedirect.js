@@ -35,7 +35,7 @@ $.fn.datetime_radios_initializer = function(){
 //        $.fn.changeradiofunction()
 //    }
 
-    $('.directradio').change( function () {
+    $('.directradio').change( function() {
         var ctrls = $(this).closest('.controls');
 
         $(ctrls).find("input.date").attr("disabled", true);
