@@ -42,6 +42,14 @@ class DateTimeWidget(BaseWidget):
 
         the_datetime = kwargs.get('value') or extra_attrs.get('value')
 
+        if final_attrs.get('modal', False):
+            # adds a prefix to the date and time inputs for modal form
+            # this prevents the datetimepicker from populating the main page's
+            # publish_from an publish_to fields
+            final_attrs['id_prefix'] = "modal_"
+        else:
+            final_attrs['id_prefix'] = ""
+
         if the_datetime:
             if the_datetime == "errorDirect":
                final_attrs['direct'] = ""
