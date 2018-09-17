@@ -16,7 +16,7 @@ $.fn.datetime_radios_initializer = function(){
     $('.control-group.datetime').each(function(){
         var ctrls = $(this);
         if ($(ctrls).find("input.date").val() || $(ctrls).find("input.time").val()) {
-            $(".notdirectradio").attr("checked", "checked");
+            $(ctrls).find(".notdirectradio").attr("checked", "checked");
             $.fn.changeradiofunction(ctrls);
         }
     });
