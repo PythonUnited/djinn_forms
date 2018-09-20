@@ -23,3 +23,4 @@ class RelateMixin(object):
         for f_name, field in self.fields.items():
             if isinstance(field, RelateField):
                 self.fields[f_name].instance = self.instance
+                self.fields[f_name].widget.attrs['instance'] = self.instance

@@ -17,7 +17,7 @@
 
     {% if allow_add_relation %}
         {% trans 'or' %}
-      <a class="show-popup" href="{{ add_relation_url }}?fieldName={{ name }}">
+      <a class="show-popup" href="{{ add_relation_url }}?fieldName={{ name }}{% if instance.parentusergroup_id %}&parentusergroup={{ instance.parentusergroup_id }}{% endif %}">
       {% if add_relation_label %}
         {{ add_relation_label }}
       {% else %}
