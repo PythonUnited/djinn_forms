@@ -76,6 +76,7 @@ $(document).ready(function() {
         if (url) {
           
           if (!url.startsWith("mailto:") && !url.startsWith("/") &&
+              !url.startsWith("https:") && !url.startsWith("file:") &&
               !url.startsWith("urn:")) {
             url = djinn.normalizeURL(form.url.value, "http");
           }

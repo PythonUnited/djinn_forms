@@ -72,8 +72,8 @@ djinn.forms.richtext.setup_link_plugin = function(ed) {
 
                 if (url) {
 
-                  if (!url.startsWith("mailto:") && !url.startsWith("/") &&
-                      !url.startsWith("urn:")) {
+                  if (!url.startsWith("file:") && !url.startsWith("mailto:") &&
+                      !url.startsWith("https:") && !url.startsWith("/") && !url.startsWith("urn:")) {
                     url = djinn.normalizeURL(url, "http");
                   }
 
