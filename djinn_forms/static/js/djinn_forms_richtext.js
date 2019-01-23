@@ -133,7 +133,7 @@ djinn.forms.richtext.TINYMCE_CONFIG = {
   relative_urls: false,
   cleanup_on_startup: true,
   cleanup: true,
-  height: "200px"
+  height: "300px"
 };
 
 
