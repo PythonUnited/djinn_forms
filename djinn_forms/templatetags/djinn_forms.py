@@ -21,6 +21,9 @@ def link_as_a(link):
     else:
         ctx['url'] = ctx['title'] = _link
 
-    ctx['target'] = link.split("::")[1] or ""
+    if "::" in link:
+        ctx['target'] = link.split("::")[1] or ""
+    else:
+        ctx['target'] = ""
 
     return ctx
