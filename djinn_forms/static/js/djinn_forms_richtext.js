@@ -143,6 +143,17 @@ djinn.forms.richtext.TINYMCE_MAXCHARS_CONFIG = {
   theme_advanced_statusbar_location : "bottom"
 };
 
+djinn.forms.richtext.setup_blur = function(ed) {
+
+  ed.on('blur', function(e) {
+    if ($(e).find('.description_feed_src')) {
+      var wysiwyg_text = tinyMCE.activeEditor.getContent({format : 'text'});
+      if ($("#id_description_feed").val().length == 0 && wysiwyg_text.length > 0) {
+        $("#id_description_feed").val(wysiwyg_text);
+      }
+    }
+  });
+};
 
 djinn.forms.richtext.setup_maxchars = function(ed) {
 
@@ -277,6 +288,9 @@ djinn.forms.richtext.insert_image_wysiwyg = function(position, img_url, url) {
       if (ctype && cid && settings.images) {
         djinn.forms.richtext.setup_img_plugin(ed, ctype, cid, img_type);
       }
+
+      djinn.forms.richtext.setup_blur(ed);
+
     };
 
     return this.tinymce(settings.config);
