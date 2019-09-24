@@ -36,12 +36,12 @@
   </div>
   {% endif %}
 
-  {% if default_image %}
+  {% if default_image and not hide_image %}
   <img class="default-image" src="{{ default_image }}" />
   {% endif %}
 
   <div class="uploads" id="uploads_{{ name }}">
-    {% if image_url %}
+    {% if image_url and not hide_image %}
     <img src="{{ image_url }}" />
     {% endif %}
   </div>

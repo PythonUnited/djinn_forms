@@ -21,7 +21,8 @@ class ImageWidget(forms.widgets.Widget):
             'widget': self,
             'show_progress': True,
             'multiple': False,
-            'value': value
+            'value': value,
+            'hide_image': False
             }
 
         context.update(self.attrs)
