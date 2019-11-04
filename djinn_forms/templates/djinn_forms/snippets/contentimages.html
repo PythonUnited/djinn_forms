@@ -36,6 +36,12 @@
            >
           {% trans "center" %}
         </a>
+        (<a href="{{ item.get_display_url }}"
+           data-img="{{ item.absolute_url }}"
+           data-pos="center"
+           >
+          {% trans "original centered" %}
+        </a>)
       </li>
       <li>
         <a href="{{ item.get_display_url }}"         
