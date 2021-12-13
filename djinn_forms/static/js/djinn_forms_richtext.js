@@ -79,10 +79,11 @@ djinn.forms.richtext.setup_link_plugin = function(ed) {
 
                   ed.selection.moveToBookmark(currSelection);
 
-                  djinn.forms.richtext.insert_in_wysiwyg(url,
-                                                         form.ctype.value,
-                                                         form.cid.value,
-                                                         form.title.value);
+                  djinn.forms.richtext.insert_in_wysiwyg(
+                      url,
+                      form.ctype.value,
+                      form.cid.value,
+                      form.title.value);
 
                   modal.modal("hide");
                 }
@@ -133,7 +134,9 @@ djinn.forms.richtext.TINYMCE_CONFIG = {
   relative_urls: false,
   cleanup_on_startup: true,
   cleanup: true,
-  height: "300px"
+  height: "300px",
+  extended_valid_elements : 'a[href|class]'
+  // let ook op SANITIZER_ALLOWED_ATTRIBUTES
 };
 
 
@@ -148,7 +151,7 @@ djinn.forms.richtext.setup_blur = function(ed) {
   ed.on('blur', function(e) {
     if ($(e).find('.description_feed_src')) {
       var wysiwyg_text = tinyMCE.activeEditor.getContent({format : 'text'});
-      if ($("#id_description_feed").val().length == 0 && wysiwyg_text.length > 0) {
+      if ($("#id_description_feed").val() != undefined && $("#id_description_feed").val().length == 0 && wysiwyg_text.length > 0) {
         $("#id_description_feed").val(wysiwyg_text);
       }
     }
