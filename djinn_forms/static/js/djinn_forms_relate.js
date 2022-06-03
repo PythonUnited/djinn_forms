@@ -53,7 +53,7 @@ djinn.forms.relate.handleElement = function(widget, label, value) {
       widget.find(".add-list").eq(0).val(value);
     }
 
-    tpl.attr("class", "");
+    tpl.attr("class", tpl.attr("class").replace("tpl", ""));
     tpl.attr("style", "");
     tpl.find("span").eq(0).html(label);
     tpl.find("a.delete a.change").attr("data-urn", value);
@@ -72,7 +72,7 @@ djinn.forms.relate.handleElement = function(widget, label, value) {
 
 djinn.forms.relate.init = function(widget) {
 
-  widget.find(".autocomplete").each(function() {
+  var autocompl = widget.find(".autocomplete").each(function() {
 
     var input = $(this);
 
@@ -86,7 +86,19 @@ djinn.forms.relate.init = function(widget) {
         e.preventDefault();
       }
     });
-  }); 
+  });
+
+  // autocompl.data("autocomplete")._renderItem = function(ul, item) {
+  //     $(ul).addClass("absolute z-10 mt-1 max-h-86 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm");
+  //     return $("<li class='ui-menu-item relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900'></li>")
+  //         .data("item.autocomplete", item)
+  //         // .append("<div class='flex'>")
+  //         // .append("<span class='truncate'>")
+  //         .append("<div class='flex items-center'>" + item.label + "</div>")
+  //         // .append("</span>")
+  //         // .append("</div>")
+  //         .appendTo(ul);
+  // };
 };
 
 
