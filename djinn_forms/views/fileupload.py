@@ -162,7 +162,7 @@ class UploadView(View):
                 template = "pgcontent/snippets/documentattachments.html"
 
         context['html'] = render_to_string(template,
-                                           {'attachments': attachments})
+                                           {'attachments': attachments, 'inline_edit_enabled': settings.INLINE_EDIT_ENABLED})
 
         context.update(self.extra_json_context(attachments))
 
