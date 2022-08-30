@@ -51,6 +51,7 @@
       {{ att.title }}
       
       <span class="controls pull-right">
+        {% if inline_edit_enabled %}
         <a class="edit-inline"
            {% if att|implements:"pgcontent.models.attachment.ImageAttachment" %}
            href="{% url 'pgcontent_edit_imageattachment' att.id %}"
@@ -58,8 +59,9 @@
            href="{% url 'djinn_contenttypes_edit_imgattachment' att.id %}"
            {% endif %}
            >
-          Aanpassen
+          {% trans "Edit" %}
         </a>
+        {% endif %}
         <a href="#" data-value="{{ att.id }}" 
            class="delete">
           {% trans "Remove" %}

@@ -51,10 +51,12 @@
       {{ att.title }}
       
       <span class="controls pull-right">
+        {% if inline_edit_enabled %}
         <a class="edit-inline"
            href="{% url 'pgcontent_edit_documentattachment' att.id %}">
           {% trans "Edit" %}
         </a>
+        {% endif %}
         <a href="#" data-value="{{ att.id }}" 
            class="delete">
           {% trans "Remove" %}

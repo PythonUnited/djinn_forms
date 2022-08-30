@@ -90,7 +90,7 @@ msgstr ""
 #: templates/djinn_forms/snippets/relatewidget.html:27
 #: templates/djinn_forms/snippets/relatewidget.html:36
 msgid "Remove"
-msgstr "Verwijder"
+msgstr "Verwijderen"
 
 #: templates/djinn_forms/snippets/documentsearch.html:7
 msgid "Search document"
