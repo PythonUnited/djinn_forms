@@ -83,7 +83,7 @@ class LocalRoleField(RelateField):
 
         users_or_groups = [lrole.assignee for lrole in roles]
 
-        users_or_groups = [u.profile for u in users_or_groups if u.profile]
+        users_or_groups = [u.profile for u in users_or_groups if u and u.profile]
 
         if 'rm' in data:
             try:
