@@ -19,7 +19,7 @@ class LinkWidget(Widget):
 
     media = property(_media)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
 
         lexval = ""
 

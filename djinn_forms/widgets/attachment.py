@@ -44,7 +44,7 @@ class AttachmentWidget(forms.widgets.Widget):
         else:
             return value
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
 
         value = self._normalize_value(value)
 

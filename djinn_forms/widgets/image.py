@@ -9,7 +9,7 @@ class ImageWidget(forms.widgets.Widget):
 
     template_name = "djinn_forms/snippets/imagewidget.html"
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
 
         try:
             value = self.model.objects.get(pk=value)

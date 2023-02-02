@@ -61,7 +61,7 @@ class ShareWidget(Widget):
 
         return result
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
 
         url = self.attrs.get("search_url", reverse("djinn_forms_relatesearch"))
         url = "%s?content_type=%s&searchfield=%s" % (

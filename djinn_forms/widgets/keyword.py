@@ -25,7 +25,7 @@ class KeywordWidget(Widget):
 
     media = property(_media)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
 
         url = self.attrs.get("search_url", reverse("djinn_forms_keywords"))
 

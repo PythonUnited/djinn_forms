@@ -24,7 +24,7 @@ class BaseWidget(Widget):
 
         raise NotImplementedError
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
 
         if attrs:
             self.attrs.update(attrs)

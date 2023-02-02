@@ -44,7 +44,7 @@ class RichTextWidget(Widget):
 
     media = property(_media)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
 
         """ Render the widget as HTML """
 
