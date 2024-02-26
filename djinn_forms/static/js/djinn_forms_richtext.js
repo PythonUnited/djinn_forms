@@ -135,7 +135,8 @@ djinn.forms.richtext.TINYMCE_CONFIG = {
   cleanup_on_startup: true,
   cleanup: true,
   height: "300px",
-  extended_valid_elements : 'a[href|class]'
+  extended_valid_elements : 'a[href|class]',
+  browser_spellcheck: true
   // let ook op SANITIZER_ALLOWED_ATTRIBUTES
 };
 
